@@ -66,32 +66,103 @@ Organizations implementing this system can:
 
 By implementing this DID-based identity system, we create a more secure, transparent, and user-centric approach to digital identity management. Users gain unprecedented control over their personal information, while organizations benefit from improved security and simplified compliance.
 
-Would you like me to:
-
-1. Add more technical details about the private key infrastructure?
-2. Expand on the consent management process?
-3. Add another diagram showing the technical architecture?
-4. Include specific implementation examples?
-
 # Detailed DID Implementation Setup Guide for Digital Ocean & Azure Entra
 
-## 1. Azure Entra Tenant Configuration
 
-### Enable Custom Policies
+## 1. Setting Up Azure B2C Custom Policies for DID Verification
 
-1. Access Azure Portal
+## Prerequisites
+
+- Azure subscription with B2C tenant
+- Global administrator access to your Azure AD B2C tenant
+- Azure CLI installed on your machine
+
+## Step-by-Step Setup Guide
+
+### 1. Initial Azure Setup
 
 ```bash
-# First install Azure CLI
+# Install Azure CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # Login to Azure
 az login
+
+# Set your B2C tenant
+az account set --subscription "your-subscription-name"
 ```
+
+### 2. Create Required Policy Files
+
+Create a new directory for your policies:
+
+```bash
+mkdir b2c-policies
+cd b2c-policies
+```
+
+Create the following files:
+
+1. `TrustFrameworkBase.xml`
+2. `TrustFrameworkExtensions.xml`
+3. `SignUpOrSignIn.xml`
+4. `PasswordReset.xml`
+5. `ProfileEdit.xml`
+
+### 3. Configure Base Policy File
+
+Save this as `TrustFrameworkBase.xml`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TrustFrameworkPolicy xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
+<TrustFrameworkPolicy xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="yourtenant.onmicrosoft.com"
+  PolicyId="B2C_1A_TrustFrameworkBase"
+  PublicPolicyUri="http://yourtenant.onmicrosoft.com/B2C_1A_TrustFrameworkBase">
+
+  <BuildingBlocks>
+    <!-- Add basic claims schema -->
+    <ClaimsSchema>
+      <ClaimType Id="didIdentifier">
+        <DisplayName>DID Identifier</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+    </ClaimsSchema>
+  </BuildingBlocks>
+
+  <!-- Add base technical profiles -->
+</TrustFrameworkPolicy>
+```
+
+### 4. Deploy Policies to Azure B2C
+
+```bash
+# Set variables
+B2C_TENANT="yourtenant.onmicrosoft.com"
+POLICY_PATH="./b2c-policies"
+
+# Upload policies in correct order
+az policy upload \
+  --tenant-name $B2C_TENANT \
+  --policy-path "$POLICY_PATH/TrustFrameworkBase.xml"
+
+az policy upload \
+  --tenant-name $B2C_TENANT \
+  --policy-path "$POLICY_PATH/TrustFrameworkExtensions.xml"
+
+az policy upload \
+  --tenant-name $B2C_TENANT \
+  --policy-path "$POLICY_PATH/SignUpOrSignIn.xml"
+```
+
+### 5. Configure DID Journey
+
+Create `did-journey.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
   TenantId="yourtenant.onmicrosoft.com"
   PolicyId="B2C_1A_DID_SIGNUP_SIGNIN"
@@ -102,56 +173,91 @@ az login
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
 
-  <BuildingBlocks>
-    <ClaimsSchema>
-      <!-- DID Claims -->
-      <ClaimType Id="didIdentifier">
-        <DisplayName>DID Identifier</DisplayName>
-        <DataType>string</DataType>
-      </ClaimType>
-      <ClaimType Id="verificationStatus">
-        <DisplayName>Verification Status</DisplayName>
-        <DataType>string</DataType>
-      </ClaimType>
-    </ClaimsSchema>
-  </BuildingBlocks>
-
-  <ClaimsProviders>
-    <ClaimsProvider>
-      <DisplayName>DID Claims Provider</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="DID-Validation">
-          <DisplayName>DID Validation Profile</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0">
-            <Metadata>
-              <Item Key="ServiceUrl">https://your-app.digitalocean.com/validate-did</Item>
-              <Item Key="AuthenticationType">None</Item>
-              <Item Key="SendClaimsIn">Body</Item>
-            </Metadata>
-            <InputClaims>
-              <InputClaim ClaimTypeReferenceId="didIdentifier" Required="true" />
-            </InputClaims>
-            <OutputClaims>
-              <OutputClaim ClaimTypeReferenceId="verificationStatus" />
-            </OutputClaims>
-          </TechnicalProfile>
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
-  </ClaimsProviders>
-
   <UserJourneys>
     <UserJourney Id="SignUpOrSignInWithDID">
       <OrchestrationSteps>
-        <!-- Add your orchestration steps here -->
+        <!-- Step 1: Check DID -->
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="DIDVerification" TechnicalProfileReferenceId="DID-Validation" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Sign up or sign in -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SignUpOrSignIn" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: Issue token -->
+        <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
       </OrchestrationSteps>
     </UserJourney>
   </UserJourneys>
 </TrustFrameworkPolicy>
-
 ```
 
-2. Create Application Registration
+### 6. Configure in Azure Portal
+
+1. Go to Azure Portal
+2. Navigate to your B2C tenant
+3. Select "Identity Experience Framework"
+4. Click "Policy Keys"
+5. Add necessary keys:
+   - Token signing key
+   - Token encryption key
+   - Identity provider keys (if using external providers)
+
+### 7. Test the Policy
+
+1. In Azure Portal, go to your B2C tenant
+2. Select "Identity Experience Framework"
+3. Click on your new policy (B2C_1A_DID_SIGNUP_SIGNIN)
+4. Click "Run now"
+
+### 8. Verify Configuration
+
+Check these elements:
+
+- Policy uploads successfully
+- Technical profiles are correctly configured
+- DID validation endpoint is accessible
+- Claims mapping is correct
+- User journey flows as expected
+
+### Common Issues and Solutions
+
+1. **Policy Upload Fails**
+
+```bash
+# Validate policy XML
+az policy validate \
+  --tenant-name $B2C_TENANT \
+  --policy-path "$POLICY_PATH/your-policy.xml"
+```
+
+2. **DID Validation Fails**
+
+- Check endpoint URL in technical profile
+- Verify service is running
+- Check network access
+
+3. **Claims Issues**
+
+- Verify claims schema matches your application
+- Check input/output claims mapping
+
+Need additional assistance with:
+
+- Detailed orchestration steps?
+- Additional technical profiles?
+- Error handling configurations?
+- Application registration steps?
+
+Just let me know which areas you'd like to explore further!
+
+3. Create Application Registration
 
 ```bash
 # Create app registration
@@ -1255,7 +1361,7 @@ groups:
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-    
+  
         .did-input {
             width: 100%;
             padding: 12px;
@@ -1263,7 +1369,7 @@ groups:
             border-radius: 4px;
             margin-bottom: 16px;
         }
-    
+  
         .did-button {
             background: #0078d4;
             color: white;
@@ -1273,7 +1379,7 @@ groups:
             cursor: pointer;
             width: 100%;
         }
-    
+  
         .error-text {
             color: #e81123;
             font-size: 14px;
@@ -1284,14 +1390,14 @@ groups:
 <body>
     <div class="did-container">
         <div id="api"></div>
-    
+  
         <script>
             // Custom form validation
             function validateDID(didString) {
                 const didPattern = /^did:[a-zA-Z0-9]+:[a-zA-Z0-9]+$/;
                 return didPattern.test(didString);
             }
-        
+      
             // Error handling
             function showError(message) {
                 const errorDiv = document.createElement('div');
@@ -1299,14 +1405,14 @@ groups:
                 errorDiv.textContent = message;
                 document.querySelector('.did-container').appendChild(errorDiv);
             }
-        
+      
             // Analytics tracking
             function trackPageView() {
                 if (window.applicationInsights) {
                     window.applicationInsights.trackPageView();
                 }
             }
-        
+      
             document.addEventListener('DOMContentLoaded', function() {
                 trackPageView();
             });
