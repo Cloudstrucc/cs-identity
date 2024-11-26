@@ -467,7 +467,7 @@ Before beginning the implementation, ensure you have:
 - Digital Ocean account and access
 - Development environment with Node.js installed
 
-## 1. Azure B2C Setup
+## 1. Azure B2C Setup / or Entra Setup (external and or internal)
 
 ### Initial Configuration
 
