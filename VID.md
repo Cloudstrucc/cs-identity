@@ -807,9 +807,9 @@ az policy validate \
 
 ## 1. Digital Ocean Infrastructure
 
-### ION Node Setup
+### ~~ION Node Setup (we dont support this, and I think deprecated)~~
 
-1. **Prepare Ubuntu Droplet**:
+1. ~~**Prepare Ubuntu Droplet**:~~
 
 ```bash
 # Update system and install Docker
@@ -817,7 +817,7 @@ sudo apt update
 sudo apt install -y docker.io docker-compose
 ```
 
-2. **Configure ION Node**:
+2. ~~**Configure ION Node**:~~
 
 ```yaml
 # docker-compose.yml
@@ -839,7 +839,7 @@ services:
       - ./mongodb:/data/db
 ```
 
-3. **Launch Services**:
+3. ~~**Launch Services**:~~
 
 ```bash
 # Start the ION node
