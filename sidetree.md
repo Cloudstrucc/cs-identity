@@ -1,8 +1,6 @@
-Integrating Entra Verified ID with the Sidetree protocol involves configuring Sidetree to manage DIDs while enabling interaction with Entra Verified ID for credential issuance and verification. Here's a step-by-step guide:
+# Integrating Entra Verified ID with the Sidetree protocol involves configuring Sidetree to manage DIDs while enabling interaction with Entra Verified ID for credential issuance and verification. Here's a step-by-step guide
 
----
-
-### **1. Understand the Components**
+## **1. Understand the Components**
 
 Before you begin, ensure you understand the following:
 
@@ -11,16 +9,17 @@ Before you begin, ensure you understand the following:
 
 ---
 
-### **2. Prerequisites**
+## **2. Prerequisites**
 
 1. **Set Up Entra Verified ID**
+
    * Configure your **Entra Verified ID tenant** in Azure AD.
    * Enable verifiable credential issuance and configure your  **VC templates** .
    * Follow the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/active-directory/verifiable-credentials/) to configure templates for your use case.
-  
 2. **Set Up Sidetree**
+
    * Clone the Sidetree GitHub repository:
-  
+
      ```bash
      git clone https://github.com/decentralized-identity/sidetree.git
      cd sidetree
@@ -28,20 +27,20 @@ Before you begin, ensure you understand the following:
 
    * Install dependencies:
 
-    ```bash
-    npm install
-     ```
+   ```bash
+   npm install
+   ```
 
    * Review the [Sidetree documentation](https://github.com/decentralized-identity/sidetree/blob/main/docs/README.md) for additional configuration details.
   
 3. **Blockchain Node** (for Sidetree)
 
-### **Use a Lightweight Bitcoin Node**
+## **Use a Lightweight Bitcoin Node**
 
 If you don't have the resources for a full node, you can use Bitcoin Testnet or a third-party service.
 
 1. Bitcoin Testnet:
-Install Bitcoin Core and configure it to use the testnet:
+   Install Bitcoin Core and configure it to use the testnet:
 
 ```conf
 testnet=1
@@ -61,12 +60,24 @@ Start Bitcoin Core in testnet mode:
 
 Update Sidetree to use the testnet's blockchain URI.
 
-### **Configure Sidetree**
+### Option B: Create Local Blockchain Simulator
+
+Regtest (for Bitcoin)
+
+* Bitcoin Core has a regtest mode for private development.
+* Start Bitcoin Core in regtest mode:
+
+```bash
+bitcoind -regtest -daemon
+```
+
+## **Configure Sidetree**
 
 1. **Update Sidetree Configuration**
+
    * Navigate to the Sidetree configuration files (e.g., `config.json` in the ION implementation).
    * Specify the DID method you'd like to use. For example, for ION:
-  
+
      ```json
      {
        "methodName": "ion",
@@ -75,25 +86,25 @@ Update Sidetree to use the testnet's blockchain URI.
      ```
 
 2. **Run Sidetree**
+
    * Start the Sidetree service:
-  
+
      ```bash
      npm start
      ```
 
----
-
-### **4. Create a DID Using Sidetree**
+## **4. Create a DID Using Sidetree**
 
 1. Use Sidetree to generate a DID:
+
    * Use the Sidetree client SDK or API to create a DID:
-  
-    ```bash
-     curl -X POST \
-       -H "Content-Type: application/json" \
-       -d '{"type": "create", "content": {}}' \
-       http://localhost:3000/
-     ```
+
+   ```bash
+    curl -X POST \
+      -H "Content-Type: application/json" \
+      -d '{"type": "create", "content": {}}' \
+      http://localhost:3000/
+   ```
 
    * This will return a DID that you can store in your application.
 2. Resolve the DID using Sidetree:
@@ -104,21 +115,23 @@ Update Sidetree to use the testnet's blockchain URI.
 
 ---
 
-### **5. Integrate Entra Verified ID with Sidetree**
+## **5. Integrate Entra Verified ID with Sidetree**
 
 1. **Modify Your VC Templates**
+
    * In Entra Verified ID, include the Sidetree DID in your verifiable credential templates as the **subject** of the credential.
    * Example `rules` configuration:
 
-    ```json
-     {
-       "id": "sidetree-did",
-       "type": "DID",
-       "pattern": "did:ion:.*"
-     }
-     ```
+   ```json
+    {
+      "id": "sidetree-did",
+      "type": "DID",
+      "pattern": "did:ion:.*"
+    }
+   ```
 
 2. **Issue a Verifiable Credential**
+
    * Use Entra Verified ID's API to issue credentials with a Sidetree DID as the subject:
 
      ```http
@@ -138,8 +151,9 @@ Update Sidetree to use the testnet's blockchain URI.
      ```
 
 3. **Verify a Credential**
+
    * Use Entra Verified ID's verification API:
-  
+
      ```http
      POST https://<tenant>.verifiablecredentials.azure.com/v1.0/verify
      Content-Type: application/json
@@ -149,29 +163,29 @@ Update Sidetree to use the testnet's blockchain URI.
      }
      ```
 
----
-
-### **6. Synchronize Credential Status with Sidetree**
+## **6. Synchronize Credential Status with Sidetree**
 
 1. **Credential Status**
+
    * Use Sidetree's DID document capabilities to include **credential status** endpoints, enabling revocation or updates to credentials.
    * Update the DID document with a status endpoint:
-  
-    ```json
-     {
-       "service": [
-         {
-           "id": "status",
-           "type": "CredentialStatus",
-           "serviceEndpoint": "https://example.com/status"
-         }
-       ]
-     }
-     ```
+
+   ```json
+    {
+      "service": [
+        {
+          "id": "status",
+          "type": "CredentialStatus",
+          "serviceEndpoint": "https://example.com/status"
+        }
+      ]
+    }
+   ```
 
 2. **Update the DID Document**
+
    * Use Sidetree's API to update the DID document:
-  
+
      ```bash
      curl -X POST \
        -H "Content-Type: application/json" \
@@ -179,24 +193,21 @@ Update Sidetree to use the testnet's blockchain URI.
        http://localhost:3000/
      ```
 
----
+## **7 Testing and Verifying the Node**
 
-### **7. Testing and Deployment**
+Verify Node Status:
 
-1. **Test the Integration**
-   * Issue and verify credentials using Entra Verified ID.
-   * Resolve and update the DID using Sidetree.
-2. **Deploy Sidetree**
-   * Host the Sidetree service on a production server.
-   * Ensure your blockchain node is synced and reliable.
-3. **Deploy Entra Verified ID Templates**
-   * Finalize and deploy your VC templates for production use.
+```conf
+bitcoin-cli -rpcuser=<user> -rpcpassword=<password> getblockchaininfo
+```
 
----
+Anchor Data with Sidetree:
 
-### **8. Monitor and Maintain**
+Use Sidetree's API to anchor DID operations on the blockchain:
 
-* Regularly monitor your blockchain node and Sidetree service for issues.
-* Update VC templates and Sidetree configurations as needed.
-
-Let me know if you need help with any specific step!
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"type": "anchor", "operation": {...}}' \
+  http://localhost:<sidetree_port>/anchor
+```
