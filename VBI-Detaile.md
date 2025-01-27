@@ -6,7 +6,7 @@ In today's digital landscape, protecting our identity has become more crucial th
 
 Self-sovereign identity represents a paradigm shift in how we manage digital identities. Instead of relying on centralized authorities to store and control our personal information, users maintain their own private keys and have complete visibility over who accesses their data. This approach offers several key benefits:
 
-1. **Data Ownership**: Users retain full control over their personal information
+1. **Data Ownership**: Users retain full control over 1their personal information
 2. **Transparency**: Every data access attempt is logged and requires explicit consent
 3. **Security**: Private key infrastructure ensures only authorized access
 4. **Privacy**: Users can selectively disclose only necessary information
@@ -67,7 +67,6 @@ Organizations implementing this system can:
 By implementing this DID-based identity system, we create a more secure, transparent, and user-centric approach to digital identity management. Users gain unprecedented control over their personal information, while organizations benefit from improved security and simplified compliance.
 
 # Detailed DID Implementation Setup Guide for Digital Ocean & Azure Entra
-
 
 ## 1. Setting Up Azure B2C Custom Policies for DID Verification
 
@@ -1397,7 +1396,7 @@ groups:
                 const didPattern = /^did:[a-zA-Z0-9]+:[a-zA-Z0-9]+$/;
                 return didPattern.test(didString);
             }
-      
+    
             // Error handling
             function showError(message) {
                 const errorDiv = document.createElement('div');
@@ -1405,14 +1404,14 @@ groups:
                 errorDiv.textContent = message;
                 document.querySelector('.did-container').appendChild(errorDiv);
             }
-      
+    
             // Analytics tracking
             function trackPageView() {
                 if (window.applicationInsights) {
                     window.applicationInsights.trackPageView();
                 }
             }
-      
+    
             document.addEventListener('DOMContentLoaded', function() {
                 trackPageView();
             });
@@ -2087,4 +2086,3 @@ echo "Verifying security setup..."
 ./scripts/verify-security.sh
 ```
 
-Would you like me to expand on any of these sections or add more specific implementation details?
