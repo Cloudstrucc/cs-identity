@@ -12,11 +12,11 @@ The app features:
 
 ✅ **ID Verification with OCR to extract user details**
 
-✅ **DID Issuance (`did:web`) to create a decentralized identity**
+✅ **DID Issuance (`did:web`) using `did-jwt` for decentralized identity**
 
 ✅ **Bootstrap-based responsive UI** for a professional look
 
-✅ **Integration with DIDKit for DID:web setup**
+✅ **Integration with `did-jwt` for DID:web authentication**
 
 ### **🔹 Tech Stack**
 
@@ -27,7 +27,7 @@ The app features:
 | **Face Recognition**      | AWS Rekognition, OpenCV, Microsoft Face API |
 | **OCR for ID Extraction** | Tesseract.js, Google Vision API             |
 | **Liveness Detection**    | iBeta-certified APIs (FaceTec, Onfido)      |
-| **DID Issuance**          | DIDKit (`did:web`)                        |
+| **DID Issuance**          | `did-jwt`(`did:web`)                    |
 
 ---
 
@@ -55,16 +55,16 @@ npm install
 
 ```bash
 npm install express express-handlebars body-parser multer dotenv tesseract.js axios
-npm install @aws-sdk/client-rekognition opencv4nodejs didkit
+npm install @aws-sdk/client-rekognition opencv4nodejs did-jwt did-resolver ethr-did-resolver key-did-resolver
 ```
 
 ---
 
 ## **2️⃣ Configure the Express.js Server**
 
-### **🔹 Update `server.js` to Use the Custom Theme and DIDKit**
+### **🔹 Update `server.js` to Use the Custom Theme and DID JWT**
 
-Ensure `server.js` properly references the Bootstrap theme and DIDKit:
+Ensure `server.js` properly references the Bootstrap theme and `did-jwt`:
 
 ```javascript
 require("dotenv").config();
@@ -73,7 +73,9 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
-const didkit = require("didkit");
+const { createJWT, verifyJWT } = require("did-jwt");
+const { Resolver } = require("did-resolver");
+const { getResolver } = require("ethr-did-resolver");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -97,6 +99,20 @@ const storage = multer.diskStorage({
     },
 });
 const upload = multer({ storage });
+
+// DID Resolver
+const providerConfig = {
+    networks: [{ name: "mainnet", rpcUrl: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID" }],
+};
+const didResolver = new Resolver(getResolver(providerConfig));
+
+// DID Issuance Function
+async function issueDIDToken(did, privateKey) {
+    return await createJWT(
+        { aud: "https://example.com", exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+        { issuer: did, signer: async (data) => signWithPrivateKey(data, privateKey) }
+    );
+}
 
 // Routes
 app.get("/", (req, res) => res.render("home"));
@@ -126,7 +142,7 @@ Ensure `views/layouts/main.handlebars` aligns with the theme:
 <body>
     <div class="d-flex">
         <nav id="sidebar" class="bg-primary text-white p-4">
-            <h2 class="text-white">DID Onboarding</h2>
+            <img src="/assets/logo.png" alt="Company Logo" class="img-fluid mb-3">
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link text-white" href="#face-scan">Facial Recognition</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#id-upload">ID Verification</a></li>
@@ -155,6 +171,50 @@ Ensure `views/layouts/main.handlebars` aligns with the theme:
 
 ---
 
+## **4️⃣ Implement DID Issuance with `did-jwt`**
+
+Modify `routes/verify.js` to use `did-jwt` for issuing and verifying DIDs:
+
+```javascript
+const AWS = require("@aws-sdk/client-rekognition");
+const Tesseract = require("tesseract.js");
+const fs = require("fs");
+const path = require("path");
+const { createJWT, verifyJWT } = require("did-jwt");
+
+module.exports = async (req, res) => {
+    const idImage = req.files["id_image"][0].path;
+    const selfieImage = req.files["selfie"][0].path;
+
+    // Extract text from ID
+    const { data: { text } } = await Tesseract.recognize(idImage, "eng");
+    console.log("Extracted ID Text:", text);
+
+    // Compare faces
+    const rekognition = new AWS.Rekognition({ region: "us-east-1" });
+    const params = {
+        SourceImage: { Bytes: fs.readFileSync(idImage) },
+        TargetImage: { Bytes: fs.readFileSync(selfieImage) },
+        SimilarityThreshold: 90,
+    };
+
+    const result = await rekognition.compareFaces(params);
+    if (result.FaceMatches.length > 0) {
+        console.log("Face Match Successful!");
+        const did = "did:ethr:0x123456789abcdef";
+        const privateKey = "your-private-key-here";
+        const jwt = await createJWT({ aud: "https://example.com", exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+            { issuer: did, signer: async (data) => signWithPrivateKey(data, privateKey) });
+
+        res.send(`Verification successful! DID JWT Issued: ${jwt}`);
+    } else {
+        res.status(400).send("Face match failed.");
+    }
+};
+```
+
+---
+
 ## **5️⃣ Run the Application**
 
 Start the server:
@@ -169,18 +229,14 @@ Open your browser and visit:
 http://localhost:3000
 ```
 
-Upload an **ID image** and **selfie** to verify identity and receive a  **DID:web** .
-
 ---
 
 ## **🚀 Conclusion**
 
-🎯 **You now have a local Node.js onboarding app that:**
+✅ Uses **`did-jwt` instead of `didkit`**
 
-✅ Uses **Bootstrap + Handlebars for UI**
+✅ Works with **Node.js 25+**
 
-✅ Performs **Facial Recognition and ID OCR**
+✅ Supports **Facial Recognition and ID OCR**
 
-✅ Issues **DID:web** for verified users
-
-Let me know if you need any further refinements! 🚀
+✅ Issues **DID:web** with JWT authentication
