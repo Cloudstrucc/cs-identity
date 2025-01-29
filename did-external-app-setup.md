@@ -210,7 +210,12 @@ Download and install  **Node.js** :
    ```
 3. Upload an **ID image** and **selfie** to verify identity.
 
----
+## **🖼️ Visual Representation of the Onboarding Process**
+
+Below is an example of how the **onboarding app UI** looks when a user **registers for a DID** using  **facial recognition & ID verification** .
+
+![Onboarding Process](https://raw.githubusercontent.com/Cloudstrucc/cs-identity/refs/heads/main/image/visualrepapp.webp)
+*(User aligns their face ➝ Uploads ID ➝ AI verifies identity ➝ DID Issued ✅)*
 
 ## **🚀 Conclusion**
 
