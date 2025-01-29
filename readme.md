@@ -1,10 +1,38 @@
-# **Decentralized Identity (`did:web`) Integration with Microsoft Entra Verified ID**
+
+# **Decentralized Identity (`did:web`) Integration with Multiple Identity Providers**
 
 ## **📌 Overview**
 
-Organizations today need **secure, decentralized, and user-controlled identity solutions** to enhance  **privacy, security, and interoperability** . This repository provides a **step-by-step guide** to integrating **DID:web** (Decentralized Identifiers using a web domain) with  **Microsoft Entra Verified ID** , enabling organizations to  **issue and verify Verifiable Credentials (VCs) securely** .
+Organizations today need **secure, decentralized, and user-controlled identity solutions** to enhance  **privacy, security, and interoperability** . This repository provides a **step-by-step guide** to integrating **DID:web** (Decentralized Identifiers using a web domain) with  **various identity providers** , enabling organizations to  **issue and verify Verifiable Credentials (VCs) securely** .
 
-🔗 **[Setup Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
+ **This repository includes** :
+✅ **Integration guides for multiple Identity Providers** – including **Microsoft Entra Verified ID, OpenAM, Azure B2C, and Keycloak**
+
+✅ **A Node.js onboarding app** – featuring **facial recognition, ID verification, liveness detection, and DID issuance**
+
+✅ **Deployment guides** – for hosting on **Azure (App Service, Entra External ID) and AWS (Elastic Beanstalk, Lightsail, Keycloak)**
+
+✅ **Authentication & DID-based login** – allowing users to authenticate using **OIDC, SAML, and LDAP providers**
+
+**These guides are intended for testing and integration purposes, not for production deployment.**
+
+---
+
+## **📂 Project Contents**
+
+### **1️⃣ Identity Provider Integration Guides**
+
+🔗 **[Setup Guide (Entra Verified ID &amp; DID:web - Targeted for Internal Users)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
+
+🔗 **[Setup Guide (DID:web with External Identity Providers - Keycloak, OpenAM, Azure B2C, LDAP)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+
+### **2️⃣ Onboarding App for Identity Verification**
+
+🔗 **[Node.js Onboarding App (Facial Recognition, ID Verification, and Verifiable Credential Issuance)](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+
+### **3️⃣ Deployment Guides**
+
+🔗 **[Deploy the Onboarding App to Azure &amp; AWS](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
 ---
 
@@ -35,7 +63,7 @@ Among these,  **DID:web is the simplest and most enterprise-friendly approach** 
 
 ✅ **Enterprise-Ready** – Organizations can **control their own DID infrastructure** using their domain name.
 
-✅ **Interoperability** – Works with  **Microsoft Entra Verified ID** ,  **W3C Verifiable Credentials** , and  **Self-Sovereign Identity (SSI) standards** .
+✅ **Interoperability** – Works with  **Microsoft Entra Verified ID, Azure B2C, Keycloak, OpenAM** , and  **LDAP-based authentication** .
 
 ✅ **Trust & Transparency** – Users can verify credentials  **directly from an organization's website** .
 
@@ -45,7 +73,7 @@ Among these,  **DID:web is the simplest and most enterprise-friendly approach** 
 
 ## **🔐 How This Integration Works**
 
-By integrating  **`did:web` with Microsoft Entra Verified ID** , organizations can:
+By integrating  **`did:web` with multiple identity providers** , organizations can:
 
 * **Issue verifiable credentials** for employees, customers, and partners.
 * **Allow users to authenticate** using their credentials  **without passwords** .
@@ -55,59 +83,54 @@ By integrating  **`did:web` with Microsoft Entra Verified ID** , organizations c
 
 ## **⚙️ Authentication & Verification Flow**
 
-The following diagram represents the  **authentication flow using `did:web` and Entra Verified ID** .
+The following diagram represents the  **authentication flow using `did:web` with various identity providers** .
 
 ```mermaid
 sequenceDiagram
     participant User
     participant Org_DID_Web as Organization (did:web)
-    participant Entra_VID as Microsoft Entra Verified ID
+    participant External_IDP as External Identity Provider (Azure B2C, Keycloak, OpenAM, LDAP)
     participant Verifier_App as Application (Verifier)
 
     User->>Org_DID_Web: Request Verifiable Credential
-    Org_DID_Web-->>Entra_VID: Issue Verifiable Credential
-    Entra_VID-->>User: Credential Issued
-    User->>Verifier_App: Present Credential for Authentication
-    Verifier_App-->>Entra_VID: Verify Credential
-    Entra_VID-->>Verifier_App: Credential Validated
+    Org_DID_Web-->>External_IDP: Issue Verifiable Credential (OIDC/SAML)
+    External_IDP-->>User: Credential Issued
+    User->>Verifier_App: Authenticate via Verifiable Credential
+    Verifier_App-->>External_IDP: Verify Credential
+    External_IDP-->>Verifier_App: Credential Validated
     Verifier_App-->>User: Access Granted
 ```
 
 ---
 
-**📌 What This Diagram Shows**
+## **🏛️ Use Cases for `did:web` with Identity Providers**
 
-1. **User requests a Verifiable Credential (VC)** from an organization that uses  **`did:web`** .
-2. The **organization requests Entra Verified ID** to issue a credential.
-3. **Entra Verified ID issues a verifiable credential** to the user.
-4. The **user presents their credential** to an application (verifier).
-5. The **application verifies the credential** with Entra Verified ID.
-6. If the credential is  **valid** , the  **user is granted access** .
-
-## **🏛️ Use Cases for `did:web` + Entra Verified ID**
-
-🚀 **Enterprise Identity & Access Management (IAM)** – Employees use Verifiable Credentials instead of passwords.
+🚀 **Enterprise Identity & Access Management (IAM)** – Employees and customers use  **Verifiable Credentials instead of passwords** .
 
 📜 **Regulatory Compliance & KYC (Know Your Customer)** – Governments and banks can verify customers **without storing sensitive data** centrally.
 
 🛂 **Borderless Digital Identity** – Universities, travel agencies, and healthcare providers issue credentials that  **work across different platforms** .
 
-🔐 **Passwordless Authentication** – Employees log in using their  **verifiable credentials instead of passwords** , reducing phishing risks.
+🔐 **Passwordless Authentication** – Employees and external users log in using their  **verifiable credentials instead of passwords** , reducing phishing risks.
 
 ---
 
 ## **📖 How to Set Up**
 
-To integrate **DID:web** with  **Microsoft Entra Verified ID** , follow the step-by-step guide:
+To integrate **DID:web** with  **Entra Verified ID, Azure B2C, Keycloak, OpenAM, or LDAP** , follow these guides:
 
-🔗 **[Setup Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
+### **🛠️ Identity Provider Setup**
 
-**Steps Covered:**
+* **Microsoft Entra Verified ID** : 🔗 **[Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
+* **Azure B2C** : 🔗 **[Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+* **Keycloak** : 🔗 **[Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+* **OpenAM (ForgeRock)** : 🔗 **[Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+* **Linux LDAP** : 🔗 **[Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
 
-1. **Generate a `did:web` identifier** and host `did.json` on your domain.
-2. **Configure Microsoft Entra Verified ID** as an issuer.
-3. **Issue and verify Verifiable Credentials (VCs)** for users.
-4. **Enable authentication using Verifiable Credentials** .
+### **🚀 Deploying the Onboarding App**
+
+* **Azure (App Service, Entra External ID)** : 🔗 **[Deployment Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+* **AWS (Elastic Beanstalk, Lightsail, Keycloak)** : 🔗 **[Deployment Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
 ---
 
@@ -133,6 +156,6 @@ To integrate **DID:web** with  **Microsoft Entra Verified ID** , follow the step
 
 ## **📌 Conclusion**
 
-By integrating  **DID:web with Microsoft Entra Verified ID** , organizations can  **leverage decentralized identity solutions for authentication, access management, and verifiable credentials issuance** . This approach  **improves security, enhances user privacy, and simplifies digital identity management** .
+By integrating  **DID:web with multiple identity providers** , organizations can  **leverage decentralized identity solutions for authentication, access management, and verifiable credential issuance** . This approach  **improves security, enhances user privacy, and simplifies digital identity management** .
 
 🔗 **[Get Started Here](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)** 🚀
