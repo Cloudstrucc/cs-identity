@@ -205,7 +205,3 @@ For  **detailed implementation steps** :
 🚀 **Automate DID issuance & storage** using DIDKit or Veramo.
 
 🚀 **Connect DID authentication to external identity providers (Azure B2C, Keycloak, OpenAM, etc.).**
-
----
-
-Let me know if you need **technical code samples** for any specific step! 🚀
