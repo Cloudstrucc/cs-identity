@@ -1,4 +1,3 @@
-
 # **Decentralized Identity (`did:web`) Integration with Multiple Identity Providers**
 
 ## **📌 Overview**
@@ -33,6 +32,10 @@ Organizations today need **secure, decentralized, and user-controlled identity s
 ### **3️⃣ Deployment Guides**
 
 🔗 **[Deploy the Onboarding App to Azure &amp; AWS](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+
+### **3️⃣ Access controls for device, network and app layer**
+
+🔗 **[Access Control Scenarios](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
 ---
 
