@@ -30,7 +30,7 @@ Organizations today need **secure, decentralized, and user-controlled identity s
 
 ## **2️⃣ Onboarding App for Identity Verification**
 
-🔗 **[Node.js Onboarding App (Facial Recognition, ID Verification, and Verifiable Credential Issuance)](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+🔗 **[Node.js Onboarding App (Facial Recognition, ID Verification, and Verifiable Credential Issuance)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-external-app-setup.md)**
 
 🖼 **Visual Example:**
 
