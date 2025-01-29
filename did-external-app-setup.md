@@ -1,24 +1,30 @@
+
 # **🚀 Setting Up a Node.js App for Facial Recognition, ID Verification, and DID Issuance**
 
 ## **📌 Overview**
 
-This guide will walk you through creating a **Node.js app with Express.js and Handlebars** to:
+This guide walks you through creating a **Node.js app with Express.js and Handlebars** that allows users to:
 
-* Capture a **user’s photo and ID** for verification.
-* Perform **face matching** between the live photo and the ID.
-* Implement **liveness detection** to prevent spoofing.
-* **Issue a DID (`did:web`)** for the verified user.
+✅ Capture a **user’s photo and ID** for verification.
+
+✅ Perform **face matching** between the live photo and the ID.
+
+✅ Implement **liveness detection** to prevent spoofing.
+
+✅ **Issue a DID (`did:web`)** for the verified user.
+
+✅ **Enhance the UI** using a  **Bootstrap theme** .
 
 ### **🔹 Tech Stack**
 
-| Component                       | Technology                                        |
-| ------------------------------- | ------------------------------------------------- |
-| **Backend**               | Node.js, Express.js                               |
-| **Frontend UI**           | Handlebars.js (HBS), Bootstrap                    |
-| **Face Recognition**      | AWS Rekognition, OpenCV, Microsoft Face API       |
-| **OCR for ID Extraction** | Tesseract.js (Open-source OCR), Google Vision API |
-| **Liveness Detection**    | iBeta-certified APIs (FaceTec, Onfido)            |
-| **DID Issuance**          | DIDKit (`did:web`)                              |
+| Component                       | Technology                                  |
+| ------------------------------- | ------------------------------------------- |
+| **Backend**               | Node.js, Express.js                         |
+| **Frontend UI**           | Handlebars.js (HBS), Bootstrap              |
+| **Face Recognition**      | AWS Rekognition, OpenCV, Microsoft Face API |
+| **OCR for ID Extraction** | Tesseract.js, Google Vision API             |
+| **Liveness Detection**    | iBeta-certified APIs (FaceTec, Onfido)      |
+| **DID Issuance**          | DIDKit (`did:web`)                        |
 
 ---
 
@@ -41,13 +47,13 @@ Download and install  **Node.js** :
    mkdir facial-id-verification && cd facial-id-verification
    npm init -y
    ```
-2. Install  **Express.js, Handlebars, Bootstrap, and other dependencies** :
+2. Install  **Express.js, Handlebars, and Bootstrap** :
    ```bash
-   npm install express express-handlebars body-parser multer dotenv tesseract.js axios
+   npm install express express-handlebars body-parser multer dotenv
    ```
 3. Install  **Face Recognition Libraries** :
    ```bash
-   npm install @aws-sdk/client-rekognition opencv4nodejs
+   npm install @aws-sdk/client-rekognition opencv4nodejs tesseract.js
    ```
 4. Install  **DIDKit for DID issuance** :
    ```bash
@@ -56,166 +62,182 @@ Download and install  **Node.js** :
 
 ---
 
-## **2️⃣ Step 2: Configure the Express.js Server**
+## **2️⃣ Step 2: Download and Set Up a Bootstrap Theme**
+
+We'll use the **[Start Bootstrap Resume](https://startbootstrap.com/previews/resume)** theme for the UI.
+
+### **🔹 Step 1: Download the Theme**
+
+Run the following commands:
+
+```bash
+# Navigate to your project folder
+cd facial-id-verification
+
+# Download the Resume Bootstrap theme
+curl -L -o resume-theme.zip https://github.com/StartBootstrap/startbootstrap-resume/archive/refs/heads/main.zip
+
+# Extract the theme
+unzip resume-theme.zip -d public/bootstrap-theme
+```
+
+### **🔹 Step 2: Modify Navigation Menu**
+
+Edit `public/bootstrap-theme/index.html` and update the navigation:
+
+```html
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">DID Onboarding</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#face-scan">Facial Recognition</a></li>
+            <li class="nav-item"><a class="nav-link" href="#id-upload">ID Verification</a></li>
+            <li class="nav-item"><a class="nav-link" href="#vc-issue">Issue Credential</a></li>
+        </ul>
+    </div>
+</nav>
+```
+
+---
+
+## **3️⃣ Step 3: Configure Express.js & Handlebars**
 
 ### **🔹 Create `server.js`**
 
-1. In the root directory, create a file called `server.js`:
-   ```bash
-   touch server.js
-   ```
-2. Open `server.js` and add the following code:
-   ```javascript
-   require("dotenv").config();
-   const express = require("express");
-   const exphbs = require("express-handlebars");
-   const bodyParser = require("body-parser");
-   const multer = require("multer");
-   const path = require("path");
+Create a new file and add:
 
-   const app = express();
-   const port = process.env.PORT || 3000;
+```javascript
+require("dotenv").config();
+const express = require("express");
+const exphbs = require("express-handlebars");
+const bodyParser = require("body-parser");
+const multer = require("multer");
+const path = require("path");
 
-   // Set up Handlebars as the template engine
-   app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
-   app.set("view engine", "handlebars");
+const app = express();
+const port = process.env.PORT || 3000;
 
-   // Set static folder for Bootstrap, CSS, and JS
-   app.use(express.static(path.join(__dirname, "public")));
+// Set Handlebars as the template engine
+app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
+app.set("view engine", "hbs");
 
-   // Middleware for handling form data
-   app.use(bodyParser.urlencoded({ extended: false }));
-   app.use(bodyParser.json());
+// Set static folder for Bootstrap theme
+app.use(express.static(path.join(__dirname, "public/bootstrap-theme")));
 
-   // Set up storage for uploaded images (Multer)
-   const storage = multer.diskStorage({
-       destination: "./uploads/",
-       filename: function (req, file, cb) {
-           cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
-       },
-   });
-   const upload = multer({ storage });
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-   // Routes
-   app.get("/", (req, res) => res.render("home"));
-   app.post("/verify", upload.fields([{ name: "selfie" }, { name: "id_image" }]), require("./routes/verify"));
+// Configure file uploads
+const storage = multer.diskStorage({
+    destination: "./uploads/",
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+    },
+});
+const upload = multer({ storage });
 
-   // Start the server
-   app.listen(port, () => console.log(`Server running on port ${port}`));
-   ```
+// Routes
+app.get("/", (req, res) => res.render("index"));
+app.post("/verify", upload.fields([{ name: "selfie" }, { name: "id_image" }]), require("./routes/verify"));
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
+```
 
 ---
 
-## **3️⃣ Step 3: Create Handlebars Views**
+## **4️⃣ Step 4: Add Facial Recognition & ID Verification UI**
 
-### **🔹 Set Up Views and Layouts**
+Modify `public/bootstrap-theme/index.html` to include:
 
-1. Create the directories for views:
-   ```bash
-   mkdir views layouts public uploads
-   ```
-2. Create  **Main Layout (`views/layouts/main.handlebars`)** :
-   ```html
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Facial ID Verification</title>
-       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   </head>
-   <body>
-       {{{body}}}
-   </body>
-   </html>
-   ```
-3. Create  **Home View (`views/home.handlebars`)** :
-   ```html
-   <div class="container mt-5">
-       <h2>Identity Verification</h2>
-       <form action="/verify" method="POST" enctype="multipart/form-data">
-           <label for="id_image">Upload ID Image:</label>
-           <input type="file" name="id_image" required>
-           <label for="selfie">Take a Selfie:</label>
-           <input type="file" name="selfie" required>
-           <button type="submit" class="btn btn-primary mt-3">Verify</button>
-       </form>
-   </div>
-   ```
+```html
+<section id="face-scan">
+    <div class="container text-center">
+        <h2>Facial Recognition</h2>
+        <video id="video" width="320" height="240" autoplay></video>
+        <button id="capture-btn">Scan Face</button>
+        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
+    </div>
+</section>
+
+<section id="id-upload">
+    <div class="container text-center">
+        <h2>ID Verification</h2>
+        <input type="file" id="upload-id" accept="image/*">
+        <button id="verify-id-btn">Verify ID</button>
+    </div>
+</section>
+```
 
 ---
 
-## **4️⃣ Step 4: Implement Face Recognition and DID Issuance**
+## **5️⃣ Step 5: Implement Face Recognition & DID Issuance**
 
-### **🔹 Create `routes/verify.js`**
+Create `routes/verify.js` and add:
 
-1. Create a `routes` folder:
-   ```bash
-   mkdir routes && touch routes/verify.js
-   ```
-2. Add the following  **face recognition and ID verification logic** :
-   ```javascript
-   const AWS = require("@aws-sdk/client-rekognition");
-   const Tesseract = require("tesseract.js");
-   const fs = require("fs");
-   const path = require("path");
+```javascript
+const AWS = require("@aws-sdk/client-rekognition");
+const Tesseract = require("tesseract.js");
+const fs = require("fs");
+const path = require("path");
 
-   module.exports = async (req, res) => {
-       const idImage = req.files["id_image"][0].path;
-       const selfieImage = req.files["selfie"][0].path;
+module.exports = async (req, res) => {
+    const idImage = req.files["id_image"][0].path;
+    const selfieImage = req.files["selfie"][0].path;
 
-       // Step 1: Extract Text from ID
-       const { data: { text } } = await Tesseract.recognize(idImage, "eng");
-       console.log("Extracted ID Text:", text);
+    // Extract text from ID
+    const { data: { text } } = await Tesseract.recognize(idImage, "eng");
+    console.log("Extracted ID Text:", text);
 
-       // Step 2: Compare Face (AWS Rekognition)
-       const rekognition = new AWS.Rekognition({ region: "us-east-1" });
+    // Compare faces
+    const rekognition = new AWS.Rekognition({ region: "us-east-1" });
+    const params = {
+        SourceImage: { Bytes: fs.readFileSync(idImage) },
+        TargetImage: { Bytes: fs.readFileSync(selfieImage) },
+        SimilarityThreshold: 90,
+    };
 
-       const imageBuffer1 = fs.readFileSync(idImage);
-       const imageBuffer2 = fs.readFileSync(selfieImage);
-
-       const params = {
-           SourceImage: { Bytes: imageBuffer1 },
-           TargetImage: { Bytes: imageBuffer2 },
-           SimilarityThreshold: 90,
-       };
-
-       const result = await rekognition.compareFaces(params);
-
-       if (result.FaceMatches.length > 0) {
-           console.log("Face Match Successful!");
-
-           // Step 3: Issue DID
-           const didkit = require("didkit");
-           const did = await didkit.generateDid("web", "https://example.com/user/12345");
-
-           res.send(`Verification successful! DID Issued: ${did}`);
-       } else {
-           res.status(400).send("Face match failed. Please try again.");
-       }
-   };
-   ```
+    const result = await rekognition.compareFaces(params);
+    if (result.FaceMatches.length > 0) {
+        console.log("Face Match Successful!");
+        const didkit = require("didkit");
+        const did = await didkit.generateDid("web", "https://example.com/user/12345");
+        res.send(`Verification successful! DID Issued: ${did}`);
+    } else {
+        res.status(400).send("Face match failed.");
+    }
+};
+```
 
 ---
 
-## **5️⃣ Step 5: Run the Application**
+## **6️⃣ Step 6: Run the Application**
 
-1. Start the server:
-   ```bash
-   node server.js
-   ```
-2. Open your browser and visit:
-   ```
-   http://localhost:3000
-   ```
-3. Upload an **ID image** and **selfie** to verify identity.
+Start the server:
 
-## **🖼️ Visual Representation of the Onboarding Process**
+```bash
+node server.js
+```
 
-Below is an example of how the **onboarding app UI** looks when a user **registers for a DID** using  **facial recognition & ID verification** .
+Visit:
+
+```
+http://localhost:3000
+```
+
+---
+
+## **🖼️ Onboarding UI Example**
+
+Below is an example of how the UI looks when a user  **registers for a DID** .
 
 ![Onboarding Process](https://raw.githubusercontent.com/Cloudstrucc/cs-identity/refs/heads/main/image/visualrepapp.webp)
-*(User aligns their face ➝ Uploads ID ➝ AI verifies identity ➝ DID Issued ✅)*
+
+---
 
 ## **🚀 Conclusion**
 
@@ -226,9 +248,4 @@ Below is an example of how the **onboarding app UI** looks when a user **registe
 
 ✅ Issues **DID:web** for verified users
 
----
-
-**📌 [Next Steps:](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
-
-* Deploy to  **AWS, Heroku, or Azure** .
-* Integrate with  **OIDC for authentication** .
+🔗 **[Next Steps: Deploy Your App](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)** 🚀
