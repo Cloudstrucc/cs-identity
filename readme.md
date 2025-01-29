@@ -141,13 +141,13 @@ To integrate **DID:web** with  **Entra Verified ID, Azure B2C, Keycloak, OpenAM,
 
 🔹 **[Microsoft Entra Verified ID](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
 
-🔹 **[Azure B2C](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+🔹 **[Azure B2C](https://github.com/Cloudstrucc/cs-identity/blob/main/azure-b2c-setup.md)**
 
-🔹 **[Keycloak](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+🔹 **[Keycloak](https://github.com/Cloudstrucc/cs-identity/blob/main/keycloak-setup.md)**
 
 🔹 **[OpenAM (ForgeRock)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
 
-🔹 **[Linux LDAP](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+🔹 **[Linux LDAP](https://github.com/Cloudstrucc/cs-identity/blob/main/linux-ldap-setup.md)**
 
 ---
 
