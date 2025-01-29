@@ -35,7 +35,7 @@ Organizations today need **secure, decentralized, and user-controlled identity s
 
 ### **3️⃣ Access controls for device, network and app layer**
 
-🔗 **[Access Control Scenarios](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+🔗 **[Access Control Scenarios](https://github.com/Cloudstrucc/cs-identity/blob/main/did-accesscontrol.md)**
 
 ---
 
