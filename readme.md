@@ -1,4 +1,4 @@
-# **🚀 Decentralized Identity (`did:web`) Integration with Multiple Identity Providers**
+# **🚀 Decentralized Identity (`did:web`) Integration with Multiple Identity Providers (VBI)**
 
 ## **📌 Overview**
 
