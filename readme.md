@@ -1,7 +1,3 @@
-Here’s a **professional `README.md`** file with a **business-oriented explanation** of **DID:web and Microsoft Entra Verified ID** integration, including **benefits, use cases, and a Mermaid.js diagram** for authentication flow.
-
----
-
 # **Decentralized Identity (`did:web`) Integration with Microsoft Entra Verified ID**
 
 ## **📌 Overview**
