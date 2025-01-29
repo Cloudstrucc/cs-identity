@@ -26,7 +26,7 @@ Organizations today need **secure, decentralized, and user-controlled identity s
 
 🔗 **[Entra Verified ID &amp; DID:web (For Internal Users)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
 
-🔗 **[DID:web with External Identity Providers (Keycloak, OpenAM, Azure B2C, LDAP)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
+🔗 **[DID:web with External Identity Providers (Keycloak, OpenAM, Azure B2C, LDAP)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-external-idps.md)**
 
 ## **2️⃣ Onboarding App for Identity Verification**
 
