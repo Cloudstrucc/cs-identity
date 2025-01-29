@@ -3,11 +3,12 @@
 
 ## **📌 Overview**
 
-This guide walks you through setting up the  **Node.js onboarding app** , which now integrates the **modified Bootstrap theme** from your repository at:
+This guide walks you through setting up the  **Node.js onboarding app** , which integrates the **modified Bootstrap theme** from your repository at:
 
 🔗 [onboarding-app-example-bootstrap](https://github.com/Cloudstrucc/cs-identity/tree/main/onboarding-app-example-bootstrap)
 
 The app features:
+
 ✅ **Facial Recognition for user identity verification**
 
 ✅ **ID Verification with OCR to extract user details**
@@ -54,8 +55,8 @@ npm install
 ### **🔹 Install Required Dependencies**
 
 ```bash
-npm install express express-handlebars body-parser multer dotenv tesseract.js axios
-npm install @aws-sdk/client-rekognition opencv4nodejs did-jwt did-resolver ethr-did-resolver key-did-resolver
+npm install express express-handlebars body-parser multer dotenv tesseract.js axios cors
+npm install @aws-sdk/client-rekognition opencv4nodejs did-jwt did-resolver ethr-did-resolver key-did-resolver ethers
 ```
 
 ---
@@ -73,19 +74,25 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
-const { createJWT, verifyJWT } = require("did-jwt");
-const { Resolver } = require("did-resolver");
-const { getResolver } = require("ethr-did-resolver");
+const cors = require("cors");
+const { createJWT, ES256KSigner } = require("did-jwt");
+const { ethers } = require("ethers");
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Enable CORS
+app.use(cors());
 
 // Set up Handlebars as the template engine
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Serve the modified Bootstrap theme
+// Ensure proper serving of static files
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/bootstrap-theme")));
+app.use(express.static(path.join(__dirname, "assets")));
+app.use("/css", express.static(path.join(__dirname, "public/css")));
 
 // Middleware for handling form data
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -100,26 +107,52 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// DID Resolver
-const providerConfig = {
-    networks: [{ name: "mainnet", rpcUrl: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID" }],
-};
-const didResolver = new Resolver(getResolver(providerConfig));
-
 // DID Issuance Function
 async function issueDIDToken(did, privateKey) {
+    const signer = ES256KSigner(Buffer.from(privateKey, "hex"));
+
     return await createJWT(
         { aud: "https://example.com", exp: Math.floor(Date.now() / 1000) + 60 * 60 },
-        { issuer: did, signer: async (data) => signWithPrivateKey(data, privateKey) }
+        { issuer: did, signer }
     );
 }
 
 // Routes
 app.get("/", (req, res) => res.render("home"));
-app.post("/verify", upload.fields([{ name: "selfie" }, { name: "id_image" }]), require("./routes/verify"));
+
+app.post("/verify-id", upload.single("id_image"), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "No ID image uploaded" });
+    }
+
+    try {
+        console.log("Received ID image:", req.file.filename);
+        res.json({ message: "ID Verified Successfully" });
+    } catch (error) {
+        console.error("Error verifying ID:", error);
+        res.status(500).json({ error: "ID Verification Failed" });
+    }
+});
+
+app.post("/generate-did", async (req, res) => {
+    try {
+        const did = process.env.ETHEREUM_ADDRESS;
+        const privateKey = process.env.PRIVATE_KEY;
+
+        if (!privateKey || privateKey.length !== 64) {
+            throw new Error("Invalid or missing private key");
+        }
+
+        const jwt = await issueDIDToken(did, privateKey);
+        res.json({ did, jwt });
+    } catch (error) {
+        console.error("Error issuing DID:", error);
+        res.status(500).json({ error: "Failed to issue DID" });
+    }
+});
 
 // Start the server
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`✅ Server running on http://localhost:${port}`));
 ```
 
 ---
@@ -141,9 +174,9 @@ Ensure `views/layouts/main.handlebars` aligns with the theme:
 </head>
 <body>
     <div class="d-flex">
-        <nav id="sidebar" class="bg-primary text-white p-4">
+        <nav id="sidebar" class="bg-primary text-white p-4 text-center">
             <img src="/assets/logo.png" alt="Company Logo" class="img-fluid mb-3">
-            <ul class="nav flex-column">
+            <ul class="nav flex-column mt-4">
                 <li class="nav-item"><a class="nav-link text-white" href="#face-scan">Facial Recognition</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#id-upload">ID Verification</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#vc-issue">Issue Credential</a></li>
@@ -157,86 +190,59 @@ Ensure `views/layouts/main.handlebars` aligns with the theme:
 </html>
 ```
 
-### **🔹 Modify `views/home.handlebars` to Include Updated UI and DID Issuance**
-
-```html
-<section id="face-scan" class="text-center">
-    <h2>Facial Recognition</h2>
-    <p>Align your face in the frame to verify your identity.</p>
-    <video id="video" width="320" height="240" autoplay></video>
-    <button id="capture-btn" class="btn btn-primary mt-3">Scan Face</button>
-    <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
-</section>
-```
-
 ---
 
-## **4️⃣ Implement DID Issuance with `did-jwt`**
+## **4️⃣ Generate Ethereum Address & Private Key**
 
-Modify `routes/verify.js` to use `did-jwt` for issuing and verifying DIDs:
+Use one of the following methods:
+
+### **🔹 Option 1: Using OpenSSL**
+
+```bash
+openssl rand -hex 32
+```
+
+📌 **Example Output:**
+
+```
+1c32d42309a8a3d0b87f12345b6e7f89a1b234c5d678e90f12a345b678c9d012
+```
+
+### **🔹 Option 2: Using ethers.js in Node.js**
 
 ```javascript
-const AWS = require("@aws-sdk/client-rekognition");
-const Tesseract = require("tesseract.js");
-const fs = require("fs");
-const path = require("path");
-const { createJWT, verifyJWT } = require("did-jwt");
+const { Wallet } = require("ethers");
 
-module.exports = async (req, res) => {
-    const idImage = req.files["id_image"][0].path;
-    const selfieImage = req.files["selfie"][0].path;
+const wallet = Wallet.createRandom();
 
-    // Extract text from ID
-    const { data: { text } } = await Tesseract.recognize(idImage, "eng");
-    console.log("Extracted ID Text:", text);
+console.log("Ethereum Address:", wallet.address);
+console.log("Private Key:", wallet.privateKey);
+```
 
-    // Compare faces
-    const rekognition = new AWS.Rekognition({ region: "us-east-1" });
-    const params = {
-        SourceImage: { Bytes: fs.readFileSync(idImage) },
-        TargetImage: { Bytes: fs.readFileSync(selfieImage) },
-        SimilarityThreshold: 90,
-    };
+📌 **Example Output:**
 
-    const result = await rekognition.compareFaces(params);
-    if (result.FaceMatches.length > 0) {
-        console.log("Face Match Successful!");
-        const did = "did:ethr:0x123456789abcdef";
-        const privateKey = "your-private-key-here";
-        const jwt = await createJWT({ aud: "https://example.com", exp: Math.floor(Date.now() / 1000) + 60 * 60 },
-            { issuer: did, signer: async (data) => signWithPrivateKey(data, privateKey) });
+```
+Ethereum Address: 0x9aA123f345B6789CdE456F7d89012Ef34b5678Cd
+Private Key: 1c32d42309a8a3d0b87f12345b6e7f89a1b234c5d678e90f12a345b678c9d012
+```
 
-        res.send(`Verification successful! DID JWT Issued: ${jwt}`);
-    } else {
-        res.status(400).send("Face match failed.");
-    }
-};
+Store your values in `.env`:
+
+```plaintext
+PRIVATE_KEY=1c32d42309a8a3d0b87f12345b6e7f89a1b234c5d678e90f12a345b678c9d012
+ETHEREUM_ADDRESS=0x9aA123f345B6789CdE456F7d89012Ef34b5678Cd
 ```
 
 ---
 
 ## **5️⃣ Run the Application**
 
-Start the server:
-
 ```bash
 node server.js
 ```
 
-Open your browser and visit:
+Visit:
 
 ```
 http://localhost:3000
 ```
-
----
-
-## **🚀 Conclusion**
-
-✅ Uses **`did-jwt` instead of `didkit`**
-
-✅ Works with **Node.js 25+**
-
-✅ Supports **Facial Recognition and ID OCR**
-
-✅ Issues **DID:web** with JWT authentication

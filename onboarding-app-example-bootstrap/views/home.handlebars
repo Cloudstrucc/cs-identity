@@ -1,7 +1,43 @@
-<section id="face-scan" class="text-center">
-    <h2>Facial Recognition</h2>
-    <p>Align your face in the frame to verify your identity.</p>
-    <video id="video" width="320" height="240" autoplay></video>
-    <button id="capture-btn" class="btn btn-primary mt-3">Scan Face</button>
-    <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
-</section>
+<div class="d-flex">
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="bg-primary text-white p-4 text-center">
+        <div class="sidebar-logo mb-3">
+            <img src="/assets/logo.png" alt="Company Logo" class="img-fluid">
+        </div>
+        <ul class="nav flex-column mt-4">
+            <li class="nav-item"><a class="nav-link text-white" href="#face-scan">Facial Recognition</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#id-upload">ID Verification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#vc-issue">Issue Credential</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid p-4" id="main-content">
+        <!-- Facial Recognition -->
+        <section id="face-scan" class="text-center">
+            <h2>Facial Recognition</h2>
+            <p>Align your face in the frame to verify your identity.</p>
+            <video id="video" width="320" height="240" autoplay></video><br>
+            <button id="capture-btn" class="btn btn-primary mt-3">Scan Face</button>
+            <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
+        </section>
+
+        <!-- ID Verification -->
+        <section id="id-upload" class="text-center mt-5">
+            <h2>ID Verification</h2>
+            <p>Upload your government-issued ID for verification.</p>
+            <input type="file" id="upload-id" accept="image/*" class="form-control mt-3 w-50 mx-auto">
+            <button id="verify-id-btn" class="btn btn-secondary mt-3">Verify ID</button>
+        </section>
+
+        <!-- Issue Verifiable Credential -->
+        <section id="vc-issue" class="text-center mt-5">
+            <h2>Issue Verifiable Credential</h2>
+            <p>Once verified, your decentralized identity will be issued.</p>
+            <button id="issue-vc-btn" class="btn btn-success mt-3">Get DID Credential</button>
+        </section>
+    </main>
+</div>
+
+<!-- Include JavaScript -->
+<script src="/js/scripts.js"></script>

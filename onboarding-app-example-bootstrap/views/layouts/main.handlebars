@@ -8,14 +8,21 @@
 </head>
 <body>
     <div class="d-flex">
-        <nav id="sidebar" class="bg-primary text-white p-4">
-            <h2 class="text-white">DID Onboarding</h2>
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="bg-primary text-white p-4 text-center">
+            <!-- ✅ Company Logo -->
+            <div class="logo-container mb-3">
+                <img src="/assets/logo.png" alt="Company Logo" class="img-fluid" style="max-width: 80%; height: auto;">
+            </div>
+
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link text-white" href="#face-scan">Facial Recognition</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#id-upload">ID Verification</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#vc-issue">Issue Credential</a></li>
             </ul>
         </nav>
+
+        <!-- Main Content -->
         <main class="container-fluid p-4" id="main-content">
             {{{body}}}
         </main>
