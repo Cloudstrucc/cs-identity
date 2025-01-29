@@ -223,7 +223,7 @@ Download and install  **Node.js** :
 
 ---
 
-**📌 Next Steps:**
+**📌 [Next Steps:](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
 * Deploy to  **AWS, Heroku, or Azure** .
 * Integrate with  **OIDC for authentication** .

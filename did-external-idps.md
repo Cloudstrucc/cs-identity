@@ -14,10 +14,6 @@ Decentralized Identity (`did:web`) enables  **organizations to issue verifiable 
 
 ✅ **Linux LDAP** – Authentication via enterprise directory services
 
-📌 **[Setup Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
-
----
-
 ## **💡 Why Use `did:web` for External Customers?**
 
 Unlike centralized authentication (username/password),  **DID:web provides** :
@@ -206,14 +202,6 @@ sudo apt install slapd ldap-utils
 
 ---
 
-## **📖 Full Setup Guide**
-
-For detailed step-by-step instructions:
-
-🔗 **[Read the Full Setup Guide](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
-
----
-
 ## **🚀 Conclusion**
 
 ✅ **DID:web enables decentralized authentication** across multiple external IdPs.
@@ -221,9 +209,3 @@ For detailed step-by-step instructions:
 ✅  **Supports OpenID Connect (OIDC), SAML, and LDAP-based authentication** .
 
 ✅  **Works with Keycloak, Azure B2C, OpenAM, Entra External ID, and LDAP** .
-
-🔗 **[Start Your Integration Today](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)** 🚀
-
----
-
-Let me know if you need modifications or more details on any provider! 🚀
