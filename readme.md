@@ -1,4 +1,3 @@
-
 # **🚀 Decentralized Identity (`did:web`) Integration with Multiple Identity Providers**
 
 ## **📌 Overview**
