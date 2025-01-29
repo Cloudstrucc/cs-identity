@@ -136,7 +136,3 @@ To integrate **DID:web** with  **Microsoft Entra Verified ID** , follow the step
 By integrating  **DID:web with Microsoft Entra Verified ID** , organizations can  **leverage decentralized identity solutions for authentication, access management, and verifiable credentials issuance** . This approach  **improves security, enhances user privacy, and simplifies digital identity management** .
 
 🔗 **[Get Started Here](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)** 🚀
-
----
-
-Let me know if you'd like to modify any part or add further business-oriented details! 🚀
