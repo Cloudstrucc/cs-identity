@@ -64,20 +64,29 @@ The following diagram represents the  **authentication flow using `did:web` and 
 ```mermaid
 sequenceDiagram
     participant User
-    participant Organization (DID:web)
-    participant Microsoft Entra Verified ID
-    participant Application (Verifier)
+    participant Org_DID_Web as Organization (did:web)
+    participant Entra_VID as Microsoft Entra Verified ID
+    participant Verifier_App as Application (Verifier)
 
-    User->>Organization (DID:web): Request Credential
-    Organization (DID:web)-->>Microsoft Entra Verified ID: Issue Verifiable Credential
-    Microsoft Entra Verified ID-->>User: Credential Issued
-    User->>Application (Verifier): Present Credential for Authentication
-    Application (Verifier)-->>Microsoft Entra Verified ID: Verify Credential
-    Microsoft Entra Verified ID-->>Application (Verifier): Credential Validated
-    Application (Verifier)-->>User: Access Granted
+    User->>Org_DID_Web: Request Verifiable Credential
+    Org_DID_Web-->>Entra_VID: Issue Verifiable Credential
+    Entra_VID-->>User: Credential Issued
+    User->>Verifier_App: Present Credential for Authentication
+    Verifier_App-->>Entra_VID: Verify Credential
+    Entra_VID-->>Verifier_App: Credential Validated
+    Verifier_App-->>User: Access Granted
 ```
 
 ---
+
+**📌 What This Diagram Shows**
+
+1. **User requests a Verifiable Credential (VC)** from an organization that uses  **`did:web`** .
+2. The **organization requests Entra Verified ID** to issue a credential.
+3. **Entra Verified ID issues a verifiable credential** to the user.
+4. The **user presents their credential** to an application (verifier).
+5. The **application verifies the credential** with Entra Verified ID.
+6. If the credential is  **valid** , the  **user is granted access** .
 
 ## **🏛️ Use Cases for `did:web` + Entra Verified ID**
 
