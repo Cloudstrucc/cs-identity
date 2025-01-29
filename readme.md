@@ -19,23 +19,27 @@ Organizations today need **secure, decentralized, and user-controlled identity s
 
 ## **📂 Project Contents**
 
-### **1️⃣ Identity Provider Integration Guides**
+# 1️⃣ **Identity Provider Integration Guides**
 
-🔗 **[Setup Guide (Entra Verified ID &amp; DID:web - Targeted for Internal Users)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
+🔗 **[Setup Guide (Entra Verified ID & DID:web - Targeted for Internal Users)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-vid.md)**
 
 🔗 **[Setup Guide (DID:web with External Identity Providers - Keycloak, OpenAM, Azure B2C, LDAP)](https://github.com/Cloudstrucc/cs-identity/blob/main/did-web-external-idp.md)**
 
-### **2️⃣ Onboarding App for Identity Verification**
+## 2️⃣ **Onboarding App for Identity Verification**
 
 🔗 **[Node.js Onboarding App (Facial Recognition, ID Verification, and Verifiable Credential Issuance)](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
-### **3️⃣ Deployment Guides**
+### 3️⃣ **Deployment Guides**
 
-🔗 **[Deploy the Onboarding App to Azure &amp; AWS](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
+🔗 **[Deploy the Onboarding App to Azure & AWS](https://github.com/Cloudstrucc/cs-identity/blob/main/deploy-did-onboardapp.md)**
 
-### **3️⃣ Access controls for device, network and app layer**
+#### 4️⃣ **Access Controls for Device, Network, and App Layer**
 
 🔗 **[Access Control Scenarios](https://github.com/Cloudstrucc/cs-identity/blob/main/did-accesscontrol.md)**
+
+##### 5️⃣ **Leverage Verifiable Credentials Instead of Entrust CA for Strong Security and Better User Experience**
+
+🔗 **[DID Based Authentication with Cisco VPN](https://github.com/Cloudstrucc/cs-identity/blob/main/migrationfromentrust-to-did-vid.md)**
 
 ---
 
