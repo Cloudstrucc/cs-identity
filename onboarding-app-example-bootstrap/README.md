@@ -1,0 +1,60 @@
+
+# 📖 README - Node.js Onboarding App
+
+## 🚀 Setup & Run the Application
+
+Follow the steps below to **clone, configure, and run** the onboarding app.
+
+### 📥 Clone the Repository
+
+```sh
+git clone https://github.com/Cloudstrucc/cs-identity.git
+```
+
+### 📂 Navigate to the Project Directory
+
+```sh
+cd onboarding-app-example-bootstrap
+```
+
+### 📦 Install Dependencies
+
+```sh
+npm install
+```
+
+### 🔧 Create and Configure Environment File
+
+1. Create a new `.env` file in the root directory:
+   ```sh
+   touch .env
+   ```
+2. Generate a secure private key:
+   ```sh
+   openssl rand -hex 32
+   ```
+3. Copy the output of the command and update `.env`:
+   ```sh
+   PRIVATE_KEY=your_generated_key
+   ```
+
+### 🔑 Generate Ethereum Wallet
+
+1. Run the wallet generation script:
+   ```sh
+   node genwallet.js
+   ```
+2. Copy the Ethereum address from the output and update `.env`:
+   ```sh
+   ETHERIUM_ADDRESS=your_generated_ethereum_address
+   ```
+
+### ▶️ Start the Application
+
+```sh
+node server.js
+```
+
+## ✅ Application is now running! 🎉
+
+For any issues, refer to the documentation or raise an issue in the repository.
