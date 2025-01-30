@@ -139,4 +139,4 @@ Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security moni
 * 🔗 **Integration with organization IT staff or our support team** for incident response.
 * ⚙️ **Custom rule configurations** to fit client security policies.
 
-📧 For any inquiries, contact **[support@clientdomain.com](mailto:support@clientdomain.com)** ✉️
+📧 For any inquiries, contact **[support@vanguardcs.ca](mailto:support@vanguardcs.ca)** ✉️
