@@ -69,6 +69,51 @@ npm install
 node server.js
 ```
 
+## 🛠️ Troubleshooting
+
+If you encounter errors such as `MODULE_NOT_FOUND`, follow these steps:
+
+### 🔍 Verify Required Files Exist
+
+Run:
+
+```sh
+ls
+```
+
+Ensure the following files exist:
+
+* `genwallet.js`
+* `server.js`
+
+If missing, try re-cloning the repository:
+
+```sh
+git clone https://github.com/Cloudstrucc/cs-identity.git
+cd onboarding-app-example-bootstrap
+```
+
+### 🔧 Manually Create Missing Files
+
+If the files are not in the repository, create them manually:
+
+```powershell
+New-Item -ItemType File genwallet.js
+New-Item -ItemType File server.js
+```
+
+Then, open them and add the necessary content.
+
+### 🔄 Check Node.js Installation
+
+Run:
+
+```sh
+node -v
+```
+
+Ensure Node.js is correctly installed. If not, reinstall it from [Node.js official site](https://nodejs.org/).
+
 ## ✅ Application is now running! 🎉
 
 For any issues, refer to the documentation or raise an issue in the repository.
