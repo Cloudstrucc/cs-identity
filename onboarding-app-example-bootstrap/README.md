@@ -10,7 +10,7 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 #### 🖥️ Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); echo "PRIVATE_KEY=$PRIVATE_KEY" > .env; $ETH_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" -Raw); echo "ETHERIUM_ADDRESS=$ETH_ADDRESS" >> .env; node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); echo "PRIVATE_KEY=$PRIVATE_KEY" > .env; $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env; node server.js
 ```
 
 #### 🐧 macOS / Linux (Terminal)
