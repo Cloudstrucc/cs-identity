@@ -104,7 +104,7 @@ When an issue requires custom development or feature enhancements, the process i
   5️⃣ **Initial Assessment**
 * 🛠️ Review **non-prod and prod environments** to ensure best practices and security compliance.
 
-## 7️⃣ Monthly Fixed Fee Retainer for Dedicated Support
+## 7️⃣ Monthly Fixed Fee for Dedicated Support
 
 | 💼 Plan              | 🔍 Coverage                           | 💰 Monthly Fee |
 | -------------------- | ------------------------------------- | -------------- |
@@ -120,7 +120,7 @@ When an issue requires custom development or feature enhancements, the process i
 
 ## 9️⃣ 🔐 Optional SIEM & Cybersecurity Monitoring
 
-Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security monitoring:
+Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security monitoring (configured in client tenant):
 
 * 🔍 **Continuous monitoring** of Power Platform & D365 environments.
 * 🚨 **Automated alerts** for cybersecurity threats & anomalies.
