@@ -1,4 +1,3 @@
-
 # 🚀 Power Platform & Dynamics 365 SME Support Plan & Pro Services SLA
 
 ## 1️⃣ Introduction
@@ -9,7 +8,7 @@ This document outlines the **Service Level Agreement (SLA)** for **Power Platfor
 
 ### 📩 2.1 Communication & Ticket Submission
 
-* Support requests must be submitted via a **dedicated positional mailbox** (e.g., 📧 [support@clientdomain.com](mailto:support@clientdomain.com)).
+* Support requests must be submitted via a **dedicated positional mailbox** (e.g., 📧 [support@vanguardcs.ca](mailto:support@vanguardcs.ca)).
 * The mailbox is synchronized with **Power Platform D365** to automatically create and track support tickets.
 * Tickets must include:
   * 📝 **Issue Description**
@@ -132,4 +131,4 @@ Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security moni
 * 📈 **SLA compliance** is monitored via  **D365 analytics** .
 * 🔄 SLA revisions occur **annually** or as per contract amendments.
 
-📧 For any inquiries, contact **[support@clientdomain.com](mailto:support@clientdomain.com)** ✉️
+📧 For any inquiries, contact **[support@vanguardcs.ca](mailto:support@vanguardcs.ca)** ✉️
