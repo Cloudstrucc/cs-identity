@@ -16,7 +16,7 @@ git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd 
 #### 🐧 macOS / Linux (Terminal)
 
 ```sh
-git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" > .env && ETHERIUM_ADDRESS=$(node genwallet.js) && echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env && node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" > .env && node genwallet.js | Tee -a .env && grep -o '0x[a-fA-F0-9]*' .env | head -1 | xargs -I {} echo "ETHERIUM_ADDRESS={}" >> .env && node server.js
 ```
 
 ### 📥 Clone the Repository
