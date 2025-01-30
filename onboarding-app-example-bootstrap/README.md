@@ -10,13 +10,13 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 #### 🖥️ Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); echo "PRIVATE_KEY=$PRIVATE_KEY" > .env; $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env; node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; node server.js
 ```
 
 #### 🐧 macOS / Linux (Terminal)
 
 ```sh
-git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" > .env && ETHERIUM_ADDRESS=$(node genwallet.js | grep -o '0x[a-fA-F0-9]*' | head -1) && echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env && node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && ETHERIUM_ADDRESS=$(node genwallet.js | grep -o '0x[a-fA-F0-9]*' | head -1) && echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" >> .env && node server.js
 ```
 
 ### 📥 Clone the Repository
@@ -61,7 +61,7 @@ npm install
    ```
 2. Copy the Ethereum address from the output and update `.env`:
    ```sh
-   ETHERIUM_ADDRESS=your_generated_ethereum_address
+   ETHEREUM_ADDRESS=your_generated_ethereum_address
    ```
 
 ### ▶️ Start the Application
