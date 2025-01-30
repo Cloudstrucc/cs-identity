@@ -36,6 +36,14 @@ Tickets are classified based on their  **urgency and impact** :
 * 📧 Updates are provided via email and within the  **Power Platform D365 portal** .
 * 📚 Resolutions are documented in the knowledge base for future reference.
 
+## 4️⃣ Monthly Fixed Fee for Dedicated Support
+
+| 💼 Plan              | 🔍 Coverage                           | 💰 Monthly Fee |
+| -------------------- | ------------------------------------- | -------------- |
+| **Standard**   | 📌 Up to 10 support tickets per month | $5,000         |
+| **Advanced**   | 📌 Up to 25 support tickets per month | $10,000        |
+| **Enterprise** | 🎯 Unlimited support tickets          | Custom Pricing |
+
 ## 3️⃣ Escalation Process
 
 If an issue is not resolved within the agreed timeframe, it follows the  **escalation hierarchy** :
@@ -52,11 +60,11 @@ If an issue is not resolved within the agreed timeframe, it follows the  **escal
 
 ## 4️⃣ Hours of Operation
 
-* 🕔 **Support Hours:** **5:00 AM – 9:00 AM Daily** (Including weekends)
+* 🕔 **Support Hours:** 7:00 AM – 9:00 PM Daily** (Including weekends)
 * 🌙 **After-Hours Support:** Available for  **Critical (P1) issues only** .
 * 📅 Additional hours can be arranged through a  **professional services agreement** .
 
-## 5️⃣ Professional Services Engagement
+## 7️⃣ Professional Services Engagement
 
 When an issue requires custom development or feature enhancements, the process is as follows:
 
@@ -80,55 +88,55 @@ When an issue requires custom development or feature enhancements, the process i
 * **🧾 Billing:** Based on actual hours spent, invoiced monthly.
 * **⚖️ Additional Costs:** Any external licensing or third-party tool expenses are billed separately.
 
-## 6️⃣ Support Staff Onboarding & Access Management
+## 5️⃣ Supported Power Platform Components & Integrations
 
-### 🏢 6.1 Onboarding Process
+We provide full support for the following **Power Platform** components and integrations:
 
-1️⃣ **Create or Invite Support Accounts**
+### 🏗️ Power Platform Capabilities & Support Boundaries
 
-* 👥 Internal staff receive **Entra ID accounts** with standard roles.
-* 🔗 External support staff are invited as **guest users** via Entra ID.
-  2️⃣ **Assign Azure Roles & Permissions**
-* 🔧 **Power Platform Admin** for platform-level support.
-* ⚙️ **D365 Admin** for Dynamics 365 configuration and issue resolution.
-* 🏗️ **App Admin** for app-specific troubleshooting.
-  3️⃣ **🛡️ Azure PIM (Privileged Identity Management) - Optional**
-* 🔒 **JIT Access** using **Azure PIM** for critical roles.
-* ✅ Approval required for privilege escalation to higher admin roles.
-* 🕒 **Time-bound access policies** prevent unnecessary privilege retention.
-* 🛡️  **Enhances security & enforces least privilege access control** .
-  4️⃣ **Security & IT Requirements**
-* 🔑 Staff must comply with  **client security requirements** , including **VPN access** and **hardware provisioning** if necessary.
-* 📞 Support staff require **direct access to organization staff** when needed.
-  5️⃣ **Initial Assessment**
-* 🛠️ Review **non-prod and prod environments** to ensure best practices and security compliance.
+* **Dataverse** (Data storage, security, entity modeling)
+* **Power Pages** (Web portals & customization)
+* **Canvas Apps** (Low-code applications for various use cases)
+* **Model-Driven Apps** (Data-centric applications built on Dataverse)
+* **Power Automate** (Workflows & process automation)
+* **Power BI** (Reporting & analytics)
+* **Tenant Settings** (Configuration & governance)
+* **Backup and restore**
+* **Migration (from backup)**
 
-## 7️⃣ Monthly Fixed Fee for Dedicated Support
+### 🔗 Supported Integrations
 
-| 💼 Plan              | 🔍 Coverage                           | 💰 Monthly Fee |
-| -------------------- | ------------------------------------- | -------------- |
-| **Standard**   | 📌 Up to 10 support tickets per month | $5,000         |
-| **Advanced**   | 📌 Up to 25 support tickets per month | $10,000        |
-| **Enterprise** | 🎯 Unlimited support tickets          | Custom Pricing |
+* **SharePoint** (Document & data storage integration)
+* **Email Integration** (Exchange & Outlook)
+* **Azure Storage** (Blob, Table & Queue Storage)
+* **SSO & Identity Management**
+  * **Entra ID** (Formerly Azure AD)
+  * **Entra External ID & Azure B2C** (OIDC authentication providers)
+  * **Other OIDC Providers** (Custom authentication support)
 
-## 8️⃣ Reporting & Transparency
+### 🏢 Governance & Optimization Services
+
+* **Center of Excellence (CoE) Kit Implementation** : $5,000
+* Establishes **best practices & governance policies** for Power Platform.
+* Provides  **visibility into tenant usage & security** .
+* Helps manage  **Power Apps, Power Automate, and Dataverse environments** .
+* **Optimization of Power Automate Flows, Plugins, Workflows, & Web Services**
+  * ✅ **Bug fixes** are covered under the  **support plan** .
+  * ⚡ **Performance optimizations** are billed as **professional services** per diem.
+
+## 6️⃣ Reporting & Transparency
 
 * 📊  **Monthly Reports** : Ticket trends, resolution times, and time spent.
 * 📜  **Detailed Ticket Logs** : Comprehensive tracking of support interactions.
 * 📅  **Quarterly Review Meetings** : Discuss service performance and optimization strategies.
 
-## 9️⃣ 🔐 Optional SIEM & Cybersecurity Monitoring
+## 8️⃣ 🔐 Optional SIEM & Cybersecurity Monitoring
 
-Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security monitoring (configured in client tenant):
+Clients may opt for a **SIEM service (Azure Sentinel)** to enhance security monitoring:
 
 * 🔍 **Continuous monitoring** of Power Platform & D365 environments.
 * 🚨 **Automated alerts** for cybersecurity threats & anomalies.
 * 🔗 **Integration with organization IT staff or our support team** for incident response.
 * ⚙️ **Custom rule configurations** to fit client security policies.
 
-## 🔟 SLA Compliance & Revisions
-
-* 📈 **SLA compliance** is monitored via  **D365 analytics** .
-* 🔄 SLA revisions occur **annually** or as per contract amendments.
-
-📧 For any inquiries, contact **[support@vanguardcs.ca](mailto:support@vanguardcs.ca)** ✉️
+📧 For any inquiries, contact **[support@clientdomain.com](mailto:support@clientdomain.com)** ✉️
