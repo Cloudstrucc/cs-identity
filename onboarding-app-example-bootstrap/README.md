@@ -10,13 +10,13 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 #### 🖥️ Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); echo "PRIVATE_KEY=$PRIVATE_KEY" > .env; node genwallet.js | Tee-Object -Variable ethAddress; echo "ETHERIUM_ADDRESS=$ethAddress" >> .env; node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); echo "PRIVATE_KEY=$PRIVATE_KEY" > .env; node genwallet.js | Tee-Object -Variable ethAddress; echo "ETHERIUM_ADDRESS=$ethAddress" >> .env; node server.js
 ```
 
 #### 🐧 macOS / Linux (Terminal)
 
 ```sh
-git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./onboarding-app-example-bootstrap && npm install && touch .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" > .env && ETHERIUM_ADDRESS=$(node genwallet.js) && echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env && node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" > .env && ETHERIUM_ADDRESS=$(node genwallet.js) && echo "ETHERIUM_ADDRESS=$ETHERIUM_ADDRESS" >> .env && node server.js
 ```
 
 ### 📥 Clone the Repository
@@ -28,6 +28,7 @@ git clone https://github.com/Cloudstrucc/cs-identity.git
 ### 📂 Navigate to the Project Directory
 
 ```sh
+cd cs-identity
 cd onboarding-app-example-bootstrap
 ```
 
@@ -90,6 +91,7 @@ If missing, try re-cloning the repository:
 
 ```sh
 git clone https://github.com/Cloudstrucc/cs-identity.git
+cd cs-identity
 cd onboarding-app-example-bootstrap
 ```
 
