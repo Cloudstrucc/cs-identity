@@ -1,4 +1,3 @@
-
 # 📖 README - Node.js Onboarding App
 
 ## 🚀 Setup & Run the Application
@@ -7,10 +6,10 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 
 ### ⚡ Quick Setup (One-Line Commands)
 
-#### 🖥️ Windows (PowerShell)
+#### 🖥️ Windows (PowerShell) 
 
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; cat .env | tr -d '\r' ; dos2unix .env ; node server.js
 ```
 
 #### 🐧 macOS / Linux (Terminal)
@@ -56,13 +55,27 @@ npm install
 ### 🔑 Generate Ethereum Wallet
 
 1. Run the wallet generation script:
+
    ```sh
    node genwallet.js
    ```
 2. Copy the Ethereum address from the output and update `.env`:
+
    ```sh
    ETHEREUM_ADDRESS=your_generated_ethereum_address
    ```
+
+   *NOTE - In a Windows environment make sure there are no leading or trailing spaces in your .env file otherwise the server.js will not run. You can run the following command in PowerShell to ensure this*
+
+```powershell
+cat .env | tr -d '\r'
+```
+
+    *NOTE If your `.env` file was saved with Windows-style line endings (`\r\n`), you to convert it to Unix format using the following command in your shell enviornment*
+
+```powershell
+dos2unix .env
+```
 
 ### ▶️ Start the Application
 
