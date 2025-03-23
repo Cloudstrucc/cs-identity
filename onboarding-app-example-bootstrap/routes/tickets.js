@@ -4,7 +4,7 @@ const router = express.Router();
 
 // GET route for '/newpage'
 router.get('/', (req, res) => {
-  res.render('invitation', { title: 'New Invitation' });
+  res.render('tickets', { title: 'Ticket workspace' });
 });
 
 module.exports = router;

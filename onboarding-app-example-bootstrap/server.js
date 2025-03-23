@@ -94,9 +94,15 @@ app.post("/generate-did", async (req, res) => {
     }
 });
 
-// Import and use the new route
+// Routes
 const invitation = require('./routes/invitation.js');
 app.use('/invitation', invitation);
+
+const adminDashboard = require('./routes/admin-dashboard.js');
+app.use('/admin-dashboard', adminDashboard);
+
+const tickets = require('./routes/tickets.js');
+app.use('/tickets', tickets);
 
 // ✅ Start the server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
