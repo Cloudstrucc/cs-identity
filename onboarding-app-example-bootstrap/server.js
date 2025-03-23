@@ -104,5 +104,8 @@ app.use('/admin-dashboard', adminDashboard);
 const tickets = require('./routes/tickets.js');
 app.use('/tickets', tickets);
 
+const inviteRouter = require('./routes/invite');
+app.use('/invite', inviteRouter);
+
 // ✅ Start the server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
