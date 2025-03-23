@@ -1,43 +1,124 @@
-<div class="d-flex">
-    <!-- Sidebar Navigation -->
-    <nav id="sidebar" class="bg-primary text-white p-4 text-center">
-        <div class="sidebar-logo mb-3">
-            <img src="/assets/logo.png" alt="Company Logo" class="img-fluid">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page content -->
+        <div class="row align-items-center">
+          <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
+            <div class="avatar text-info me-2">
+              <i class="fs-4" data-duoicon="world"></i>
+            </div>
+            San Francisco, CA –&nbsp;<time datetime="20:00">8:00 PM</time>
+          </div>
+          <div class="col-12 col-md order-md-0 text-center text-md-start">
+            <h1>Hello, John</h1>
+            <p class="fs-lg text-body-secondary mb-0">Here's a summary of your account activity for this week.</p>
+          </div>
         </div>
-        <ul class="nav flex-column mt-4">
-            <li class="nav-item"><a class="nav-link text-white" href="#face-scan">Facial Recognition</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#id-upload">ID Verification</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="#vc-issue">Issue Credential</a></li>
-        </ul>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="container-fluid p-4" id="main-content">
-        <!-- Facial Recognition -->
-        <section id="face-scan" class="text-center">
-            <h2>Facial Recognition</h2>
-            <p>Align your face in the frame to verify your identity.</p>
-            <video id="video" width="320" height="240" autoplay></video><br>
-            <button id="capture-btn" class="btn btn-primary mt-3">Scan Face</button>
-            <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
-        </section>
+        <!-- Divider -->
+        <hr class="my-8" />
 
-        <!-- ID Verification -->
-        <section id="id-upload" class="text-center mt-5">
-            <h2>ID Verification</h2>
-            <p>Upload your government-issued ID for verification.</p>
-            <input type="file" id="upload-id" accept="image/*" class="form-control mt-3 w-50 mx-auto">
-            <button id="verify-id-btn" class="btn btn-secondary mt-3">Verify ID</button>
-        </section>
+        <div class="row">
+          <div class="col-12 col-xxl-8">
+            <!-- Performance -->
+            <div class="card mb-6">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="fs-6 mb-0">Configure your identity</h3>
+                  </div>
+                  <div class="col-auto fs-sm me-n3">
+                    <span class="material-symbols-outlined text-primary me-1">circle</span>
+                    Configuring
+                  </div>
+                  <div class="col-auto fs-sm">
+                    <span class="material-symbols-outlined text-dark me-1">circle</span>
+                    Completed
+                  </div>
+                </div>
+              </div>
 
-        <!-- Issue Verifiable Credential -->
-        <section id="vc-issue" class="text-center mt-5">
-            <h2>Issue Verifiable Credential</h2>
-            <p>Once verified, your decentralized identity will be issued.</p>
-            <button id="issue-vc-btn" class="btn btn-success mt-3">Get DID Credential</button>
-        </section>
-    </main>
-</div>
 
-<!-- Include JavaScript -->
-<script src="/js/scripts.js"></script>
+              <div class="card-body">
+                <div class="row">
+                    <!-- Facial Recognition Section -->
+                    <div class="col-12 mb-5" id="face-scan">
+                    <div class="text-center">
+                        <h4 class="fs-6">Facial Recognition</h4>
+                        <p class="text-body-secondary">Align your face in the frame to verify your identity.</p>
+                        <!-- Updated video element with a metallic white border and glow -->
+                        <video id="video" class="img-fluid mb-3 border border-2 rounded" 
+                        style="border-color: #f0f0f0; box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);" 
+                        width="320" height="240" autoplay></video>
+                        <button id="capture-btn" class="btn btn-primary mx-auto d-block">Scan Face</button>
+                        <canvas id="canvas" width="320" height="240" class="d-none"></canvas>
+                    </div>
+                    </div>
+
+                    <!-- ID Verification Section -->
+                    <div class="col-12 mb-5" id="face-scan2">
+                    <div class="text-center">
+                        <h4 class="fs-6">ID Verification</h4>
+                        <p class="text-body-secondary">Upload your government-issued ID for verification.</p>
+                        <input type="file" id="upload-id" accept="image/*" class="form-control mt-3 mx-auto w-75">
+                        <button id="verify-id-btn" class="btn btn-secondary mt-3">Verify ID</button>
+                    </div>
+                    </div>
+
+                    <!-- Issue Verifiable Credential Section -->
+                    <div class="col-12" id="face-scan3">
+                    <div class="text-center">
+                        <h4 class="fs-6">Issue Verifiable Credential</h4>
+                        <p class="text-body-secondary">Once verified, your decentralized identity will be issued.</p>
+                        <button id="issue-vc-btn" class="btn btn-success mt-3">Get DID Credential</button>
+                    </div>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12 col-xxl-4">
+             <!-- Activity -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="fs-6 mb-0">Recent activity</h3>
+              </div>
+              <div class="card-body">
+                <ul class="activity">
+                  <li data-icon="thumb_up">
+                    <div>
+                      <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1hr ago</span></h6>
+                      <p class="mb-0">Liked a post by @john_doe</p>
+                    </div>
+                  </li>
+                  <li data-icon="chat_bubble">
+                    <div>
+                      <h6 class="fs-base mb-1">Jessica Miller <span class="fs-sm fw-normal text-body-secondary ms-1">3hr ago</span></h6>
+                      <p class="mb-0">Commented on a photo</p>
+                    </div>
+                  </li>
+                  <li data-icon="share">
+                    <div>
+                      <h6 class="fs-base mb-1">Emily Thompson <span class="fs-sm fw-normal text-body-secondary ms-1">3hr ago</span></h6>
+                      <p class="mb-0">Shared an article: "Top 10 Travel Destinations"</p>
+                    </div>
+                  </li>
+                  <li data-icon="person_add">
+                    <div>
+                      <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1 day ago</span></h6>
+                      <p class="mb-0">Started following @jane_smith</p>
+                    </div>
+                  </li>
+                  <li data-icon="account_circle">
+                    <div>
+                      <h6 class="fs-base mb-1">Olivia Davis <span class="fs-sm fw-normal text-body-secondary ms-1">2 days ago</span></h6>
+                      <p class="mb-0">Updated profile picture</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
