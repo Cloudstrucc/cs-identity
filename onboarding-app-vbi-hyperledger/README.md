@@ -1,7 +1,7 @@
 # Decentralized Identity (DID) Onboarding Platform Architecture & Implementation Guide
 
 ## 📌 Overview
-ff
+
 This document outlines the solution architecture and implementation steps for a **Decentralized Identity (DID) onboarding platform** using **Hyperledger Fabric**, **DIDComm agents**, and **facial recognition with government-issued ID verification**. Once verified, users are issued a DID and a scannable QR/RFID for integration with a wallet app. The system also integrates with enterprise identity providers like **Microsoft Entra ID (Azure AD)** for enhanced identity governance.
 
 This architecture is intended to offer scalable, secure, and user-centric identity management that integrates physical and digital access, bridges traditional IAM (Identity Access Management) infrastructure, and aligns with global decentralized identity standards such as **W3C DID**, **Verifiable Credentials**, and **OIDC4VP**.
