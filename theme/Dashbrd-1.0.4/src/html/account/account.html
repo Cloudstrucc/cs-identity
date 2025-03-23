@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="account" page="account"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="account" page="account"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="user"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Account</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Account</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Account</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <div class="row gx-2">
+              <div class="col-6 col-sm-auto">
+                <a class="btn btn-light d-block" href="#!"> Edit </a>
+              </div>
+              <div class="col-6 col-sm-auto">
+                <a class="btn btn-danger d-block" href="#!"> Delete </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <!-- Nav -->
+            <nav class="nav nav-pills position-sticky flex-column mb-8" id="accountNav" style="top: 32px">
+              <a class="nav-link" href="#general">General</a>
+              <a class="nav-link" href="#billing">Billing</a>
+              <a class="nav-link" href="#security">Security</a>
+              <a class="nav-link text-danger" href="#">Delete account</a>
+            </nav>
+          </div>
+          <div class="col-12 col-lg-9" data-bs-spy="scroll" data-bs-target="#accountNav" data-bs-smooth-scroll="true" tabindex="0">
+            <!-- General -->
+            <section class="card card-line bg-body-tertiary border-transparent mb-5" id="general">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <div class="avatar avatar-xl">
+                      <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <h2 class="fs-5 mb-0">Michael Johnson</h2>
+                    <div class="text-body-secondary">Quantum Dynamics</div>
+                  </div>
+                </div>
+                <hr />
+                <div class="mb-4">
+                  <div class="form-label">Bio</div>
+                  <div>
+                    Hi! I'm Michael Johnson, a software engineer from San Francisco, California. I'm passionate about technology, design, and startups. I'm
+                    currently working at Quantum Dynamics as a front-end developer.
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="form-label">Email</div>
+                  <a href="mailto:michael.johnson@company.com" class="text-body"> michael.johnson@company.com </a>
+                </div>
+                <div class="mb-4">
+                  <div class="form-label">Phone</div>
+                  <a href="tel:+1234567890" class="text-body"> +1 (234) 567-890 </a>
+                </div>
+              </div>
+            </section>
+
+            <!-- Billing -->
+            <section class="card card-line bg-body-tertiary border-transparent mb-5" id="billing">
+              <div class="card-body">
+                <h2 class="fs-5 mb-1">Billing</h2>
+                <p class="text-body-secondary">Billing information is securely stored with our payment processor and is not accessible to us.</p>
+                <div class="card border-transparent">
+                  <div class="card-body py-0">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <span class="material-symbols-outlined text-body-tertiary">credit_card</span>
+                          </div>
+                          <div class="col">**** **** **** 1234 <small class="text-body-secondary ms-1">(exp. 12/24)</small></div>
+                          <div class="col-auto">
+                            <span class="badge bg-success-subtle text-success">Primary</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <span class="material-symbols-outlined text-body-tertiary">credit_card</span>
+                          </div>
+                          <div class="col">**** **** **** 5678 <small class="text-body-secondary ms-1">(exp. 08/27)</small></div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Security -->
+            <section class="card bg-body-tertiary border-transparent" id="security">
+              <div class="card-body">
+                <h2 class="fs-5 mb-1">Security</h2>
+                <p class="text-body-secondary">Secure your account with a strong password and two-factor authentication.</p>
+                <div class="card border-transparent mb-4">
+                  <div class="card-body py-0">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <span class="material-symbols-outlined text-body-tertiary">phone_iphone</span>
+                          </div>
+                          <div class="col">iPhone 15 <small class="text-body-secondary ms-1">Seattle, Washington · 2 hours ago</small></div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <span class="material-symbols-outlined text-body-tertiary">laptop_mac</span>
+                          </div>
+                          <div class="col">MacBook Pro <small class="text-body-secondary ms-1">San Francisco, California · 1 day ago</small></div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <button class="btn btn-dark">Sign out from all devices</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

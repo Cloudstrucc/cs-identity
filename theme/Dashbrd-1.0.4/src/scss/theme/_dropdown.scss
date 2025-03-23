@@ -1,0 +1,39 @@
+//
+// dropdown.scss
+//
+
+.dropdown-menu {
+  --#{$prefix}dropdown-item-border-radius: #{$dropdown-item-border-radius};
+  --#{$prefix}dropdown-link-active-hover-bg: #{$dropdown-link-active-hover-bg};
+}
+
+// Item
+
+.dropdown-item {
+  border-radius: var(--#{$prefix}dropdown-item-border-radius);
+
+  &.active,
+  &:active {
+    &:hover,
+    &:focus {
+      background-color: var(--#{$prefix}dropdown-link-active-hover-bg);
+    }
+  }
+}
+
+// Divider
+
+.dropdown-divider {
+  --#{$prefix}dropdown-divider-margin-x: #{$dropdown-divider-margin-x};
+  margin-left: var(--#{$prefix}dropdown-divider-margin-x);
+  margin-right: var(--#{$prefix}dropdown-divider-margin-x);
+}
+
+// Header
+
+.dropdown-header {
+  --#{$prefix}dropdown-header-font-size: #{$dropdown-header-font-size};
+  --#{$prefix}dropdown-header-font-weight: #{$dropdown-header-font-weight};
+  font-size: var(--#{$prefix}dropdown-header-font-size);
+  font-weight: var(--#{$prefix}dropdown-header-font-weight);
+}

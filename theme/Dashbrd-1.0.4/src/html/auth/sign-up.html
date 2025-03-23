@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body class="d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12" style="max-width: 25rem">
+          <!-- Heading -->
+          <h1 class="fs-1 text-center">Sign up</h1>
+
+          <!-- Subheading -->
+          <p class="lead text-center text-body-secondary">Join our platform and take control of your workflow.</p>
+
+          <!-- Form -->
+          <form class="mb-5">
+            <div class="mb-4">
+              <label class="visually-hidden" for="email">Email Address</label>
+              <input class="form-control" id="email" type="email" placeholder="Enter your email address..." />
+            </div>
+            <button class="btn btn-secondary w-100" type="submit">Sign up</button>
+          </form>
+
+          <!-- Text -->
+          <p class="text-center text-body-secondary mb-0">Already have an account? <a href="./sign-in.html">Sign in</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

@@ -1,0 +1,48 @@
+//
+// activity.scss
+//
+
+.activity {
+  --#{$prefix}activity-item-gap: #{$activity-item-gap};
+  --#{$prefix}activity-icon-size: #{$activity-icon-size};
+  --#{$prefix}activity-icon-gap: #{$activity-icon-gap};
+  --#{$prefix}activity-icon-bg: #{$activity-icon-bg};
+  --#{$prefix}activity-icon-color: #{$activity-icon-color};
+  --#{$prefix}activity-line-width: #{$activity-line-width};
+  --#{$prefix}activity-line-color: #{$activity-line-color};
+  display: grid;
+  row-gap: var(--#{$prefix}activity-item-gap);
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.activity > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--#{$prefix}activity-icon-size) auto;
+  column-gap: var(--#{$prefix}activity-icon-gap);
+  align-items: baseline;
+}
+
+.activity > li::before {
+  content: attr(data-icon);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--#{$prefix}activity-icon-size);
+  height: var(--#{$prefix}activity-icon-size);
+  background-color: var(--#{$prefix}activity-icon-bg);
+  border-radius: var(--#{$prefix}border-radius-pill);
+  font-family: 'Material Symbols Outlined';
+  color: var(--#{$prefix}activity-icon-color);
+}
+
+.activity > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--#{$prefix}activity-icon-size) + 0.25rem);
+  bottom: calc((var(--#{$prefix}activity-item-gap) - 0.25rem) * -1);
+  left: calc(var(--#{$prefix}activity-icon-size) / 2);
+  border-left: var(--#{$prefix}activity-line-width) solid var(--#{$prefix}activity-line-color);
+  transform: translateX(-100%);
+}

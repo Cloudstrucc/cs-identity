@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="orders" page="orders"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="orders" page="orders"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="credit-card"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Orders</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Orders</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Orders</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <a class="btn btn-secondary d-block" href="#!"> <span class="material-symbols-outlined me-1">add</span> New Order </a>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12">
+            <!-- Filters -->
+            <div class="card card-line bg-body-tertiary border-transparent mb-7">
+              <div class="card-body p-4">
+                <div class="row align-items-center">
+                  <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <div class="text-body-secondary">No orders selected.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg">
+                    <div class="row gx-3">
+                      <div class="col col-lg-auto ms-auto">
+                        <div class="input-group bg-body">
+                          <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search" />
+                          <span class="input-group-text" id="search">
+                            <span class="material-symbols-outlined">search</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">filter_list</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Filter</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterUser">User</label>
+                                </div>
+                                <div class="col-9">
+                                  <select
+                                    class="form-select"
+                                    id="filterUser"
+                                    data-choices='{"searchEnabled": false, "choices": [
+                                  {
+                                    "value": "Emily Thompson",
+                                    "label": "Emily Thompson",
+                                    "customProperties": {
+                                      "avatarSrc": "{{webRoot}}/assets/img/photos/photo-1.jpg"
+                                    }
+                                  },
+                                  {
+                                    "value": "Michael Johnson",
+                                    "label": "Michael Johnson",
+                                    "customProperties": {
+                                      "avatarSrc": "{{webRoot}}/assets/img/photos/photo-2.jpg"
+                                    }
+                                  },
+                                  {
+                                    "value": "Robert Garcia",
+                                    "label": "Robert Garcia",
+                                    "customProperties": {
+                                      "avatarSrc": "{{webRoot}}/assets/img/photos/photo-3.jpg"
+                                    }
+                                  },
+                                  {
+                                    "value": "Jessica Miller",
+                                    "label": "Jessica Miller",
+                                    "customProperties": {
+                                      "avatarSrc": "{{webRoot}}/assets/img/photos/photo-4.jpg"
+                                    }
+                                  }
+                                ]}'
+                                  ></select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterCompany">Company</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterCompany" data-choices='{"placeholder": "some"}'>
+                                    <option value="TechPinnacle Solutions">TechPinnacle Solutions</option>
+                                    <option value="Quantum Dynamics">Quantum Dynamics</option>
+                                    <option value="Pinnacle Technologies">Pinnacle Technologies</option>
+                                    <option value="Apex Innovations">Apex Innovations</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterLocation">Location</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterLocation" data-choices>
+                                    <option value="San Francisco, CA">San Francisco, CA</option>
+                                    <option value="Austin, TX">Austin, TX</option>
+                                    <option value="Miami, FL">Miami, FL</option>
+                                    <option value="Seattle, WA">Seattle, WA</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto ms-n2">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">sort_by_alpha</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Sort</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row gx-3">
+                                <div class="col">
+                                  <select class="form-select" id="sort" data-choices='{"searchEnabled": false}'>
+                                    <option value="user">User</option>
+                                    <option value="company">Company</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="location">Location</option>
+                                  </select>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortAsc" autocomplete="off" checked />
+                                    <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip" data-bs-title="Ascending">
+                                      <span class="material-symbols-outlined">arrow_upward</span>
+                                    </label>
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortDesc" autocomplete="off" />
+                                    <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip" data-bs-title="Descending">
+                                      <span class="material-symbols-outlined">arrow_downward</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive mb-7">
+              <table class="table align-middle mb-0">
+                <thead>
+                  <th style="width: 0px">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="tableCheckAll" />
+                      <label class="form-check-label" for="tableCheckAll"></label>
+                    </div>
+                  </th>
+                  <th>ID</th>
+                  <th>Product</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Price</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckOne" />
+                        <label class="form-check-label" for="tableCheckOne"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3456</td>
+                    <td>Apple MacBook Pro</td>
+                    <td>2021-08-12</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$2,499</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckTwo" />
+                        <label class="form-check-label" for="tableCheckTwo"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3455</td>
+                    <td>Apple iPhone 12 Pro</td>
+                    <td>2021-08-11</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                    <td>$1,099</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckThree" />
+                        <label class="form-check-label" for="tableCheckThree"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3454</td>
+                    <td>Apple AirPods Pro</td>
+                    <td>2021-08-10</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                    <td>$249</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFour" />
+                        <label class="form-check-label" for="tableCheckFour"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3453</td>
+                    <td>Apple Watch Series 6</td>
+                    <td>2021-08-09</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$399</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFive" />
+                        <label class="form-check-label" for="tableCheckFive"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3452</td>
+                    <td>Apple iPad Pro</td>
+                    <td>2021-08-08</td>
+                    <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                    <td>$799</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSix" />
+                        <label class="form-check-label" for="tableCheckSix"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3451</td>
+                    <td>Apple MacBook Air</td>
+                    <td>2021-08-07</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$999</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSeven" />
+                        <label class="form-check-label" for="tableCheckSeven"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3450</td>
+                    <td>Apple HomePod Mini</td>
+                    <td>2021-08-06</td>
+                    <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                    <td>$99</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckEight" />
+                        <label class="form-check-label" for="tableCheckEight"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3449</td>
+                    <td>Apple Magic Keyboard</td>
+                    <td>2021-08-05</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                    <td>$299</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckNine" />
+                        <label class="form-check-label" for="tableCheckNine"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3448</td>
+                    <td>Apple Magic Mouse</td>
+                    <td>2021-08-04</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$99</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckTen" />
+                        <label class="form-check-label" for="tableCheckTen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3447</td>
+                    <td>Apple AirTag</td>
+                    <td>2021-08-03</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$29</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckEleven" />
+                        <label class="form-check-label" for="tableCheckEleven"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3446</td>
+                    <td>Apple Pencil</td>
+                    <td>2021-08-02</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$99</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckTwelve" />
+                        <label class="form-check-label" for="tableCheckTwelve"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3445</td>
+                    <td>Apple Smart Keyboard</td>
+                    <td>2021-08-01</td>
+                    <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                    <td>$199</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckThirteen" />
+                        <label class="form-check-label" for="tableCheckThirteen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3444</td>
+                    <td>Apple TV 4K</td>
+                    <td>2021-07-31</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$179</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFourteen" />
+                        <label class="form-check-label" for="tableCheckFourteen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3443</td>
+                    <td>Apple TV HD</td>
+                    <td>2021-07-30</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$149</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFifteen" />
+                        <label class="form-check-label" for="tableCheckFifteen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3442</td>
+                    <td>Apple iPod touch</td>
+                    <td>2021-07-29</td>
+                    <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                    <td>$199</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSixteen" />
+                        <label class="form-check-label" for="tableCheckSixteen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3441</td>
+                    <td>Apple iPod nano</td>
+                    <td>2021-07-28</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$149</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSeventeen" />
+                        <label class="form-check-label" for="tableCheckSeventeen"></label>
+                      </div>
+                    </td>
+                    <td class="text-body-secondary">#3440</td>
+                    <td>Apple iPod shuffle</td>
+                    <td>2021-07-27</td>
+                    <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                    <td>$49</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <!-- Text -->
+            <p class="text-body-secondary mb-0">1 – 10 (2550 total)</p>
+          </div>
+          <div class="col-auto">
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination mb-0">
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link active" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

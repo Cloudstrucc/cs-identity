@@ -1,0 +1,93 @@
+//
+// tiptap.scss
+//
+
+*:has(> .tiptap) {
+  display: contents;
+}
+
+// Editor
+
+.tiptap {
+  --#{$prefix}tiptap-min-height: #{$tiptap-min-height};
+  --#{$prefix}tiptap-placeholder-color: #{$tiptap-placeholder-color};
+  min-height: var(--#{$prefix}tiptap-min-height);
+}
+
+// Prevent flash of unstyled content
+
+.tiptap:not(.is-editor-created) {
+  transition: none !important;
+}
+
+// Placeholder
+
+.tiptap > p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--#{$prefix}tiptap-placeholder-color);
+  pointer-events: none;
+}
+
+// Popover
+
+.tiptap-popover {
+  --#{$prefix}popover-max-width: none;
+}
+
+.tiptap-popover .popover-body {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: map-get($spacers, 4);
+}
+
+.tiptap-popover .popover-body > .btn {
+  --#{$prefix}btn-padding-y: 0;
+  --#{$prefix}btn-padding-x: 0;
+  --#{$prefix}btn-color: var(--#{$prefix}body-secondary);
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}body-bg);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}body-bg);
+  --#{$prefix}btn-active-color: var(--#{$prefix}body-color);
+}
+
+.tiptap-popover .popover-body > .btn > .material-symbols-outlined {
+  transform: scale(1.5);
+  transform-origin: center;
+}
+
+// Tippy arrow
+
+.tippy-arrow {
+  display: block;
+  width: $popover-arrow-width;
+  height: $popover-arrow-height;
+}
+
+.tippy-arrow::before,
+.tippy-arrow::after {
+  content: '';
+  position: absolute;
+  display: block;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0;
+}
+
+.tippy-arrow::before {
+  bottom: 0;
+  border-width: $popover-arrow-height calc(#{$popover-arrow-width} * 0.5) 0;
+  border-top-color: $popover-arrow-border;
+}
+
+.tippy-arrow::after {
+  bottom: $popover-border-width;
+  border-width: $popover-arrow-height calc(#{$popover-arrow-width} * 0.5) 0;
+  border-top-color: $popover-bg;
+}
+
+// Formatting
+
+* + h2 {
+  margin-top: map-get($spacers, 8);
+}

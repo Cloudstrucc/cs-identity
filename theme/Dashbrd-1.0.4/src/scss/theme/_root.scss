@@ -1,0 +1,18 @@
+//
+// root.scss
+//
+
+:root,
+[data-bs-theme='light'] {
+  --#{$prefix}border-color-dark: #{$border-dark-color};
+}
+
+@if $enable-dark-mode {
+  @include color-mode(dark, true) {
+    --#{$prefix}light: #{$light-dark};
+    --#{$prefix}light-rgb: #{to-rgb($light-dark)};
+    --#{$prefix}dark: #{$dark-dark};
+    --#{$prefix}dark-rgb: #{to-rgb($dark-dark)};
+    --#{$prefix}border-color-dark: #{$border-dark-color-dark};
+  }
+}

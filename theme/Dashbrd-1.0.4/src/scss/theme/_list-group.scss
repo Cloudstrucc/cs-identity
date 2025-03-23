@@ -1,0 +1,7 @@
+// 
+// list-group.scss
+// 
+
+.list-group-item:not(:last-child) {
+  border-bottom-color: var(--#{$prefix}border-color);
+}

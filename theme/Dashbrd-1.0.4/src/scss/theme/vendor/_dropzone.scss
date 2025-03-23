@@ -1,0 +1,122 @@
+//
+// dropzone.scss
+//
+
+.dropzone {
+  --#{$prefix}dropzone-message-padding-y: #{$dropzone-message-padding-y};
+  --#{$prefix}dropzone-message-padding-x: #{$dropzone-message-padding-x};
+  --#{$prefix}dropzone-message-border-width: #{$dropzone-message-border-width};
+  --#{$prefix}dropzone-message-border-color: #{$dropzone-message-border-color};
+  --#{$prefix}dropzone-message-border-radius: #{$dropzone-message-border-radius};
+  --#{$prefix}dropzone-message-bg: #{$dropzone-message-bg};
+  --#{$prefix}dropzone-message-font-size: #{$dropzone-message-font-size};
+  --#{$prefix}dropzone-message-color: #{$dropzone-message-color};
+  --#{$prefix}dropzone-preview-item-padding-y: #{$dropzone-preview-item-padding-y};
+  --#{$prefix}dropzone-preview-item-border-width: #{$dropzone-preview-item-border-width};
+  --#{$prefix}dropzone-preview-item-border-color: #{$dropzone-preview-item-border-color};
+  --#{$prefix}dropzone-preview-image-size: #{$dropzone-preview-image-size};
+  --#{$prefix}dropzone-preview-image-border-radius: #{$dropzone-preview-image-border-radius};
+  --#{$prefix}dropzone-size-font-size: #{$dropzone-size-font-size};
+  --#{$prefix}dropzone-size-color: #{$dropzone-size-color};
+  --#{$prefix}dropzone-error-message-font-size: #{$dropzone-error-message-font-size};
+  --#{$prefix}dropzone-error-message-color: #{$dropzone-error-message-color};
+
+  .dz-message {
+    padding: var(--#{$prefix}dropzone-message-padding-y) var(--#{$prefix}dropzone-message-padding-x);
+    border: var(--#{$prefix}dropzone-message-border-width) dashed var(--#{$prefix}dropzone-message-border-color);
+    border-radius: var(--#{$prefix}dropzone-message-border-radius);
+    background-color: var(--#{$prefix}dropzone-message-bg);
+    font-size: var(--#{$prefix}dropzone-message-font-size);
+    text-align: center;
+    color: var(--#{$prefix}dropzone-message-color);
+  }
+
+  .dz-message > .dz-button {
+    appearance: none;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: default;
+  }
+
+  .dz-message:has(+ .dz-preview) {
+    margin-bottom: map-get($spacers, 2);
+  }
+
+  // Preview
+
+  .dz-preview {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: calc(var(--#{$prefix}gutter-x) / 2);
+    align-items: center;
+    padding-top: var(--#{$prefix}dropzone-preview-item-padding-y);
+    padding-bottom: var(--#{$prefix}dropzone-preview-item-padding-y);
+  }
+
+  .dz-preview + .dz-preview {
+    border-top: var(--#{$prefix}dropzone-preview-item-border-width) solid var(--#{$prefix}dropzone-preview-item-border-color);
+  }
+
+  // Image
+
+  .dz-preview > .dz-image {
+    height: var(--#{$prefix}dropzone-preview-image-size);
+    width: var(--#{$prefix}dropzone-preview-image-size);
+    min-width: var(--#{$prefix}dropzone-preview-image-size);
+    border-radius: var(--#{$prefix}dropzone-preview-image-border-radius);
+  }
+
+  .dz-preview > .dz-image > img {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  .dz-preview > .dz-image:has(> img:not([src])) {
+    display: none;
+  }
+
+  // Details
+
+  .dz-preview > .dz-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dz-preview > .dz-details > .dz-filename {
+    order: -1;
+  }
+
+  .dz-preview > .dz-details > .dz-size {
+    font-size: var(--#{$prefix}dropzone-size-font-size);
+    color: var(--#{$prefix}dropzone-size-color);
+  }
+
+  .dz-preview > .dz-details > .dz-size > span > strong {
+    font-weight: $font-weight-normal !important;
+  }
+
+  // Error message
+
+  .dz-error-message {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    margin-top: calc(var(--#{$prefix}gutter-x) / 2);
+    font-size: var(--#{$prefix}dropzone-error-message-font-size);
+    color: var(--#{$prefix}dropzone-error-message-color);
+  }
+
+  .dz-error-message:has([data-dz-errormessage]:empty) {
+    display: none;
+  }
+
+  // Extras
+
+  .dz-progress,
+  .dz-success-mark,
+  .dz-error-mark {
+    display: none;
+  }
+}

@@ -1,0 +1,20 @@
+// 
+// accordion.scss
+// 
+
+.accordion {
+  --#{$prefix}accordion-button-font-weight: #{$accordion-button-font-weight};
+}
+
+.accordion-item:not(:last-child) {
+  border-bottom-color: var(--#{$prefix}border-color);
+}
+
+.accordion-button {
+  font-weight: var(--#{$prefix}accordion-button-font-weight);
+  box-shadow: 0 0 transparent !important;
+}
+
+.accordion-body {
+  padding-top: 0;
+}

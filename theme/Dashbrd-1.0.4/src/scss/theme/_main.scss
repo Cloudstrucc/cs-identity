@@ -1,0 +1,10 @@
+// 
+// main.scss
+// 
+
+.main {
+  --#{$prefix}main-padding-top: #{$main-padding-top};
+  --#{$prefix}main-padding-bottom: #{$main-padding-bottom};
+  padding-top: var(--#{$prefix}main-padding-top);
+  padding-bottom: var(--#{$prefix}main-padding-bottom);
+}

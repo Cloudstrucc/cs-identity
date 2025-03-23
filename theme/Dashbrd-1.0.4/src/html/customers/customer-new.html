@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {{> partials/head title="Dashbrd"}}
+</head>
+
+<body>
+
+  <!-- Sidenav -->
+  {{> partials/sidenav category="customers" page="customer-new"}}
+
+  <!-- Topnav -->
+  {{> partials/topnav category="customers" page="customer-new"}}
+
+  <!-- Main -->
+  <main class="main px-lg-6">
+
+    <!-- Content -->
+    <div class="container-lg">
+
+      <!-- Page header -->
+      <div class="row align-items-center mb-7">
+        <div class="col-auto">
+
+          <!-- Avatar -->
+          <div class="avatar avatar-xl rounded text-primary">
+            <i class="fs-2" data-duoicon="user"></i>
+          </div>
+
+        </div>
+        <div class="col">
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Customers</a></li>
+              <li class="breadcrumb-item active" aria-current="page">New customer</li>
+            </ol>
+          </nav>
+
+          <!-- Heading -->
+          <h1 class="fs-4 mb-0">New customer</h1>
+
+        </div>
+        <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+
+          <!-- Action -->
+          <a class="btn btn-light d-block" href="#!">
+            Save draft
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Page content -->
+      <div class="row">
+        <div class="col">
+
+          <!-- Form -->
+          <form>
+            <div class="mb-4">
+              <label class="form-label" for="name">Full name</label>
+              <input class="form-control" id="name" type="text" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="company">Company</label>
+              <input class="form-control" id="company" type="text" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="phone">Phone</label>
+              <input type="text" class="form-control mb-3" id="phone" placeholder="(___)___-____"
+                data-inputmask="'mask': '(999)999-9999'">
+            </div>
+            <div class="mb-4">
+              <label class="form-label" for="location">Location</label>
+              <input class="form-control" id="location" type="text" />
+            </div>
+            <div class="mb-4">
+              <label class="form-label mb-0" for="tiptapExample">About</label>
+              <div class="form-text mt-0 mb-3">
+                A brief description of the customer.
+              </div>
+              <di class="form-control" id="tiptapExample"></di>
+            </div>
+            <div class="mb-7">
+              <label for="dropzone">Files</label>
+              <div class="form-text mt-0 mb-3">
+                Attach files to this customer.
+              </div>
+              <div class="dropzone" id="dropzone"></div>
+            </div>
+            <button type="submit" class="btn btn-secondary w-100">
+              Save customer
+            </button>
+            <button type="reset" class="btn btn-link w-100 mt-3">
+              Reset form
+            </button>
+          </form>
+
+        </div>
+      </div>
+  </main>
+
+  <!-- JAVASCRIPT -->
+  {{> partials/scripts}}
+</body>
+
+</html>

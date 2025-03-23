@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="posts" page="posts"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="posts" page="posts"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="message-2"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Posts</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Posts</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Posts</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <a class="btn btn-secondary d-block" href="#!"> <span class="material-symbols-outlined me-1">add</span> New post </a>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12">
+            <!-- Filters -->
+            <div class="card card-line bg-body-tertiary border-transparent mb-7">
+              <div class="card-body p-4">
+                <div class="row align-items-center">
+                  <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+                    <ul class="nav nav-pills">
+                      <li class="nav-item">
+                        <a class="nav-link bg-dark active" aria-current="page" href="#!">Published</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#!">Drafts</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-12 col-lg">
+                    <div class="row gx-3">
+                      <div class="col col-lg-auto ms-auto">
+                        <div class="input-group bg-body">
+                          <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search" />
+                          <span class="input-group-text" id="search">
+                            <span class="material-symbols-outlined">search</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">filter_list</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Filter</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterUser">User</label>
+                                </div>
+                                <div class="col-9">
+                                  <select
+                                    class="form-select"
+                                    id="filterUser"
+                                    data-choices='{"searchEnabled": false, "choices": [
+                              {
+                                "value": "Emily Thompson",
+                                "label": "Emily Thompson",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-1.jpg"
+                                }
+                              },
+                              {
+                                "value": "Michael Johnson",
+                                "label": "Michael Johnson",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-2.jpg"
+                                }
+                              },
+                              {
+                                "value": "Robert Garcia",
+                                "label": "Robert Garcia",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-3.jpg"
+                                }
+                              },
+                              {
+                                "value": "Jessica Miller",
+                                "label": "Jessica Miller",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-4.jpg"
+                                }
+                              }
+                            ]}'
+                                  ></select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterCompany">Company</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterCompany" data-choices='{"placeholder": "some"}'>
+                                    <option value="TechPinnacle Solutions">TechPinnacle Solutions</option>
+                                    <option value="Quantum Dynamics">Quantum Dynamics</option>
+                                    <option value="Pinnacle Technologies">Pinnacle Technologies</option>
+                                    <option value="Apex Innovations">Apex Innovations</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterLocation">Location</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterLocation" data-choices>
+                                    <option value="San Francisco, CA">San Francisco, CA</option>
+                                    <option value="Austin, TX">Austin, TX</option>
+                                    <option value="Miami, FL">Miami, FL</option>
+                                    <option value="Seattle, WA">Seattle, WA</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto ms-n2">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">sort_by_alpha</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Sort</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row gx-3">
+                                <div class="col">
+                                  <select class="form-select" id="sort" data-choices='{"searchEnabled": false}'>
+                                    <option value="user">User</option>
+                                    <option value="company">Company</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="location">Location</option>
+                                  </select>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortAsc" autocomplete="off" checked />
+                                    <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip" data-bs-title="Ascending">
+                                      <span class="material-symbols-outlined">arrow_upward</span>
+                                    </label>
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortDesc" autocomplete="off" />
+                                    <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip" data-bs-title="Descending">
+                                      <span class="material-symbols-outlined">arrow_downward</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="row gx-lg-10">
+              <div class="col-12 col-lg-8 col-xxl-9">
+                <!-- List -->
+                <div class="list-group list-group-flush border-top border-bottom mb-7">
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Exploring JavaScript ES6 Features</h3>
+                          <p class="text-body-secondary">
+                            A comprehensive guide on the new features introduced in ES6, including arrow functions, template literals, and classes.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 12, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="avatar avatar-xl rounded">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-1.png" alt="..." />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Mastering CSS Grid Layout</h3>
+                          <p class="text-body-secondary">
+                            Learn how to build complex, responsive grid layouts with ease using CSS Grid. Examples included for practical learning.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 10, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Understanding React Hooks</h3>
+                          <p class="text-body-secondary">
+                            React hooks are powerful tools for managing state and lifecycle in functional components. Discover their full potential.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 8, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">A Beginner's Guide to Node.js</h3>
+                          <p class="text-body-secondary">
+                            Node.js allows JavaScript to be used for server-side scripting. Learn how to set up your first Node.js application.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 6, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="avatar avatar-xl rounded">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-2.png" alt="..." />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Optimizing Website Performance</h3>
+                          <p class="text-body-secondary">
+                            Performance optimization is critical for a fast website. Explore techniques to improve load times and user experience.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 5, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="avatar avatar-xl rounded">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-3.png" alt="..." />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Introduction to TypeScript</h3>
+                          <p class="text-body-secondary">
+                            TypeScript brings static typing to JavaScript. In this post, we delve into its core features and setup process.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 3, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Building Reusable Components in React</h3>
+                          <p class="text-body-secondary">
+                            Learn how to build modular, reusable components in React to enhance code maintainability and scalability.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 1, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Introduction to Docker for Beginners</h3>
+                          <p class="text-body-secondary">
+                            Docker is an essential tool for developers. Discover how to containerize applications and improve your development workflow.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on August 30, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">REST vs GraphQL: Which to Choose?</h3>
+                          <p class="text-body-secondary">
+                            A comparison between REST and GraphQL APIs, discussing their advantages and limitations in different use cases.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on August 28, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item py-7 px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-6">Deploying Applications on AWS</h3>
+                          <p class="text-body-secondary">
+                            AWS offers a variety of services to deploy scalable applications. Learn the basics of EC2, S3, and Lambda deployment.
+                          </p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on August 25, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="row align-items-center mb-8">
+                  <div class="col">
+                    <!-- Text -->
+                    <p class="text-body-secondary mb-0">1 – 10 (2550 total)</p>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination mb-0">
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link active" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-xxl-3">
+                <!-- Heading -->
+                <h3 class="fs-5">Top authors</h3>
+
+                <!-- List group -->
+                <div class="list-group list-group-flush">
+                  <div class="list-group-item px-0">
+                    <div class="row gx-4 align-items-center">
+                      <div class="col-auto">
+                        <div class="avatar avatar-sm">
+                          <img class="avatar-img" src="../assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>Emily Thompson</div>
+                        <div class="fs-sm text-body-secondary text-truncate">
+                          <a class="text-reset" href="mailto:james.smith@example.com">emily.thompson@example.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item px-0">
+                    <div class="row gx-4 align-items-center">
+                      <div class="col-auto">
+                        <div class="avatar avatar-sm">
+                          <img class="avatar-img" src="../assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>Michael Johnson</div>
+                        <div class="fs-sm text-body-secondary text-truncate">
+                          <a class="text-reset" href="mailto:james.smith@example.com">michael.johnson@example.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item px-0">
+                    <div class="row gx-4 align-items-center">
+                      <div class="col-auto">
+                        <div class="avatar avatar-sm">
+                          <img class="avatar-img" src="../assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>Robert Garcia</div>
+                        <div class="fs-sm text-body-secondary text-truncate">
+                          <a class="text-reset" href="mailto:james.smith@example.com">robert.garcia@example.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item px-0">
+                    <div class="row gx-4 align-items-center">
+                      <div class="col-auto">
+                        <div class="avatar avatar-sm">
+                          <img class="avatar-img" src="../assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>Jessica Miller</div>
+                        <div class="fs-sm text-body-secondary text-truncate">
+                          <a class="text-reset" href="mailto:james.smith@example.com">jessica.Miller@example.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

@@ -1,0 +1,10 @@
+// 
+// icons.scss
+// 
+
+.material-symbols-outlined {
+  --#{$prefix}icon-font-size: 1em;
+  line-height: inherit;
+  font-size: var(--#{$prefix}icon-font-size);
+  vertical-align: bottom;
+}

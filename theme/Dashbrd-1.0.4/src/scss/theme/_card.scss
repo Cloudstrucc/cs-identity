@@ -1,0 +1,24 @@
+// 
+// card.scss
+// 
+
+// Line
+
+.card-line::after {
+  --#{$prefix}card-line-offset-start: calc(#{$form-check-padding-start} + #{$table-cell-padding-x} * 2 - #{$table-border-width});
+  --#{$prefix}card-line-height: 0;
+  --#{$prefix}card-line-border-width: var(--#{$prefix}border-width);
+  --#{$prefix}card-line-border-color: var(--#{$prefix}border-color);
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: var(--#{$prefix}card-line-offset-start);
+  height: var(--#{$prefix}card-line-height);
+  border-right: var(--#{$prefix}card-line-border-width) solid var(--#{$prefix}card-line-border-color);
+}
+
+@each $spacer, $value in $spacers {
+  .card-line.mb-#{$spacer}::after {
+    --#{$prefix}card-line-height: calc(#{$value} + var(--#{$prefix}border-width));
+  }
+}

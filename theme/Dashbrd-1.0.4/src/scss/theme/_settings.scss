@@ -1,0 +1,18 @@
+//
+// settings.scss
+//
+
+// Navigation position
+
+[data-bs-navigation-position='sidenav'] {
+  #topnav-lg {
+    display: none !important;
+  }
+}
+
+[data-bs-navigation-position='topnav'] {
+  #sidenav-sm,
+  #sidenav-lg {
+    display: none !important;
+  }
+}

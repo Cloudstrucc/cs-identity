@@ -1,0 +1,11 @@
+//
+// button-group.scss
+//
+
+.btn-group {
+  gap: var(--#{$prefix}border-width);
+}
+
+.btn-group > .btn {
+  margin-left: 0 !important;
+}

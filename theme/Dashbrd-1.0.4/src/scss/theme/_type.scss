@@ -1,0 +1,114 @@
+//
+// type.scss
+//
+
+// Headings
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.fs-1,
+.fs-2,
+.fs-3,
+.fs-4,
+.fs-5,
+.fs-6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+  letter-spacing: var(--#{$prefix}headings-letter-spacing);
+}
+
+h1,
+.h1,
+.fs-1 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 1)};
+}
+
+h2,
+.h2,
+.fs-2 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 2)};
+}
+
+h3,
+.h3,
+.fs-3 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 3)};
+}
+
+h4,
+.h4,
+.fs-4 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 4)};
+}
+
+h5,
+.h5,
+.fs-5 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 5)};
+}
+
+h6,
+.h6,
+.fs-6 {
+  --#{$prefix}letter-spacing: #{map-get($headings-letter-spacing, 6)};
+}
+
+.display-1 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 1)};
+}
+
+.display-2 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 2)};
+}
+
+.display-3 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 3)};
+}
+
+.display-4 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 4)};
+}
+
+.display-5 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 5)};
+}
+
+.display-6 {
+  --#{$prefix}letter-spacing: #{map-get($display-letter-spacing, 6)};
+}
+
+// Code
+
+code {
+  --#{$prefix}code-padding-y: #{$code-padding-y};
+  --#{$prefix}code-padding-x: #{$code-padding-x};
+  --#{$prefix}code-border-radius: #{$code-border-radius};
+  --#{$prefix}code-bg: #{$code-bg};
+  padding: var(--#{$prefix}code-padding-y) var(--#{$prefix}code-padding-x);
+  border-radius: var(--#{$prefix}code-border-radius);
+  background-color: var(--#{$prefix}code-bg);
+}
+
+// Blockquote
+
+.blockquote {
+  --#{$prefix}blockquote-spacing: #{$blockquote-spacing};
+  --#{$prefix}blockquote-border-width: #{$blockquote-border-width};
+  --#{$prefix}blockquote-border-color: #{$blockquote-border-color};
+  padding-left: var(--#{$prefix}blockquote-spacing);
+  border-left: var(--#{$prefix}blockquote-border-width) solid var(--#{$prefix}blockquote-border-color);
+}

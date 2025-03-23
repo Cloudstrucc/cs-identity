@@ -1,0 +1,20 @@
+// 
+// form-control.scss
+//
+
+// Flush
+
+.form-control-flush {
+  min-height: auto;
+  padding: 0;
+  border-radius: 0;
+  border-color: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+// File
+
+.form-control::file-selector-button {
+  background: inherit;
+}

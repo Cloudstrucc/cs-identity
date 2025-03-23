@@ -1,0 +1,46 @@
+//
+// buttons.scss
+//
+
+.btn {
+  --#{$prefix}btn-border-color: transparent;
+  --#{$prefix}btn-hover-border-color: transparent;
+  --#{$prefix}btn-active-border-color: transparent;
+  --#{$prefix}btn-disabled-border-color: transparent;
+  min-width: calc(
+    var(--#{$prefix}btn-padding-y) * 2 + var(--#{$prefix}btn-border-width) * 2 + var(--#{$prefix}btn-font-size) * var(--#{$prefix}btn-line-height)
+  );
+}
+
+// Link
+
+.btn-link {
+  --#{$prefix}btn-hover-bg: var(--#{$prefix}tertiary-bg);
+  --#{$prefix}btn-active-bg: var(--#{$prefix}secondary-bg);
+}
+
+// Dark mode
+
+@include color-mode(dark) {
+  .btn-light {
+    @include button-variant(
+      $light-dark,
+      $light-dark,
+      $hover-background: tint-color($light-dark, $btn-hover-bg-tint-amount),
+      $hover-border: tint-color($light-dark, $btn-hover-border-tint-amount),
+      $active-background: tint-color($light-dark, $btn-active-bg-tint-amount),
+      $active-border: tint-color($light-dark, $btn-active-border-tint-amount)
+    );
+  }
+
+  .btn-dark {
+    @include button-variant(
+      $dark-dark,
+      $dark-dark,
+      $hover-background: tint-color($dark-dark, $btn-hover-bg-tint-amount),
+      $hover-border: tint-color($dark-dark, $btn-hover-border-tint-amount),
+      $active-background: tint-color($dark-dark, $btn-active-bg-tint-amount),
+      $active-border: tint-color($dark-dark, $btn-active-border-tint-amount)
+    );
+  }
+}

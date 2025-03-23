@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="documentation" page="getting-started"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="documentation" page="getting-started"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="book-3"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Docs</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Getting started</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Getting started</h1>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="mt-8 mb-0" />
+
+        <!-- Content -->
+        <div class="row">
+          <div class="col-12 col-lg-3 order-lg-1 d-none d-lg-block">
+            <!-- Nav -->
+            <nav class="nav nav-pills position-sticky flex-column py-8" id="docNav" style="top: 0">
+              <a class="nav-link" href="#welcome">Welcome</a>
+              <a class="nav-link" href="#components">Components</a>
+              <a class="nav-link" href="#developmentSetup">Development setup</a>
+              <a class="nav-link" href="#compilingTheTheme">Compiling the theme</a>
+              <a class="nav-link" href="#fileStructure">File structure</a>
+              <a class="nav-link" href="#handlebars">Handlebars</a>
+            </nav>
+          </div>
+          <div class="col-12 col-lg-9 order-lg-0" data-bs-spy="scroll" data-bs-target="#docNav" data-bs-smooth-scroll="true" tabindex="0">
+            <section class="pt-8" id="welcome">
+              <h2 class="fs-5">Welcome to Dashbrd</h2>
+              <p class="mb-0">
+                This guide will walk you through getting set up and using the key features of the theme, including how to compile the source, understand the
+                file structure, and work with the build tools. If you run into any questions along the way, don’t hesitate to reach out to us!
+              </p>
+            </section>
+
+            <section class="pt-8" id="components">
+              <h2 class="fs-5">New and enhanced components</h2>
+              <p class="mb-0">
+                Dashbrd takes Bootstrap to the next level by extending its components and introducing new ones, as well as additional plugins. For a complete
+                overview of what's available, take a look at the components on the <code>components.html</code> page.
+              </p>
+            </section>
+
+            <section class="pt-8" id="developmentSetup">
+              <h2 class="fs-5">Development setup</h2>
+              <p>Here’s how to get started:</p>
+              <ol>
+                <li>
+                  Ensure Node.js is installed on your machine. Dashbrd relies on npm for managing dependencies, and you can install Node easily from the
+                  <a href="https://nodejs.org/en/download/" target="_blank">Node.js Downloads page</a>.
+                </li>
+                <li>Extract the theme files, then open your command line, making sure it points to the root folder of the extracted theme.</li>
+                <li>Run <code>npm install</code> from the command line at the theme’s root to download all the dependencies needed for Dashbrd.</li>
+              </ol>
+              <p class="mb-0">
+                That's it! If you’re not familiar with the terminal, don’t worry – this is about as complex as it gets. To stop the server later, simply press
+                Control + C.
+              </p>
+            </section>
+
+            <section class="pt-8" id="compilingTheTheme">
+              <h2 class="fs-5">Compiling the theme</h2>
+              <p>
+                Dashbrd uses Webpack and npm-scripts to handle development. You’ll be working from the root directory of the theme to run the following
+                commands:
+              </p>
+              <ul class="mb-0">
+                <li>
+                  <code>npm start</code>: This compiles and watches the SCSS, JavaScript, and HTML files. It also sets up a live reload server, so your browser
+                  updates immediately when you save any changes. A new browser tab will automatically open.
+                </li>
+                <li><code>npm run build</code>: This generates the production files and places them in the <code>/dist</code> folder.</li>
+              </ul>
+            </section>
+
+            <section class="pt-8" id="fileStructure">
+              <h2 class="fs-5">File Structure</h2>
+              <p>Here’s a breakdown of the file structure in Dashbrd:</p>
+              <ul class="mb-0">
+                <li>📁 <code>dist</code>: Production-ready files.</li>
+                <li>📁 <code>node_modules</code>: Directory for npm dependencies.</li>
+                <li>
+                  📁 <code>src</code>: The source files for the theme.
+                  <ul>
+                    <li><code>favicon</code>: Favicon files.</li>
+                    <li><code>html</code>: HTML source files.</li>
+                    <li><code>img</code>: Image assets.</li>
+                    <li><code>js</code>: JavaScript source files.</li>
+                    <li><code>partials</code>: HTML partial files.</li>
+                    <li><code>scss</code>: Theme SCSS files.</li>
+                  </ul>
+                </li>
+                <li>
+                  Other key files include:
+                  <ul>
+                    <li><code>.browserslistrc</code>: Specifies target browsers and Node.js versions for tools.</li>
+                    <li><code>.gitignore</code>: Keeps unnecessary files out of Git.</li>
+                    <li><code>LICENSE.md</code>: Theme license.</li>
+                    <li><code>package-lock.json</code>: Describes the exact dependency tree used.</li>
+                    <li><code>package.json</code>: List of npm dependencies.</li>
+                    <li><code>README.md</code>: Theme overview.</li>
+                    <li><code>webpack.config.js</code>: Webpack configuration.</li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+
+            <section class="pt-8" id="handlebars">
+              <h2 class="fs-5">Handlebars Webpack Plugin</h2>
+              <p>
+                Dashbrd simplifies the use of partials during development with the <code>handlebars-webpack-plugin</code>. It’s mainly used for a few components
+                that appear on multiple pages. To add new partials, simply create them inside the <code>/partials</code> directory and reference them with
+                <code>\{{> }}</code> in any file.
+              </p>
+              <p class="mb-0">
+                For further details, refer to the
+                <a href="https://www.npmjs.com/package/handlebars-webpack-plugin" target="_blank">official package documentation</a>.
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

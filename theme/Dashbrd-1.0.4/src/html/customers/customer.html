@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="customers" page="customer"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="customers" page="customer"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Stats -->
+        <div class="row mb-8">
+          <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
+            <div class="card bg-body-tertiary border-transparent">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <!-- Heading -->
+                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Earned</h4>
+
+                    <!-- Text -->
+                    <div class="fs-4 fw-semibold">$1,250</div>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-lg bg-body text-primary">
+                      <i class="fs-4" data-duoicon="credit-card"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
+            <div class="card bg-body-tertiary border-transparent">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <!-- Heading -->
+                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Hours logged</h4>
+
+                    <!-- Text -->
+                    <div class="fs-4 fw-semibold">35.5 hrs</div>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-lg bg-body text-primary">
+                      <i class="fs-4" data-duoicon="clock"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-md-0">
+            <div class="card bg-body-tertiary border-transparent">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <!-- Heading -->
+                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Avg. time</h4>
+
+                    <!-- Text -->
+                    <div class="fs-4 fw-semibold">2:55 hrs</div>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-lg bg-body text-primary">
+                      <i class="fs-4" data-duoicon="slideshow"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-xxl-3">
+            <div class="card bg-body-tertiary border-transparent">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <!-- Heading -->
+                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Weekly growth</h4>
+
+                    <!-- Text -->
+                    <div class="fs-4 fw-semibold">14.5%</div>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-lg bg-body text-primary">
+                      <i class="fs-4" data-duoicon="discount"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12 col-xxl-4">
+            <div class="position-sticky mb-8" style="top: 40px">
+              <!-- Card -->
+              <div class="card bg-body mb-3">
+                <!-- Image -->
+                <div
+                  class="card-img-top pb-13"
+                  style="background: no-repeat url({{webRoot}}/assets/img/backgrounds/background-1.jpg) center center / cover"
+                ></div>
+
+                <!-- Avatar -->
+                <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
+                  <img class="avatar-img border border-white border-3" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                </div>
+
+                <!-- Body -->
+                <div class="card-body text-center">
+                  <!-- Heading -->
+                  <h1 class="card-title fs-5">John Williams</h1>
+
+                  <!-- Text -->
+                  <p class="text-body-secondary mb-6">James is a long-standing customer with a passion for technology.</p>
+
+                  <!-- List -->
+                  <ul class="list-group list-group-flush mb-0">
+                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                      <span class="text-body-secondary">Company</span>
+                      <span>TechPinnacle Solutions</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                      <span class="text-body-secondary">Phone</span>
+                      <a class="text-body" href="tel:(202) 555-0126">(202) 555-0126</a>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                      <span class="text-body-secondary">Location</span>
+                      <span>San Francisco, CA</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="row gx-3">
+                <div class="col">
+                  <button class="btn btn-light w-100">Call</button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-light w-100">Message</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xxl">
+            <section class="mb-8">
+              <!-- Header -->
+              <div class="d-flex align-items-center justify-content-between mb-5">
+                <h2 class="fs-5 mb-0">Recent orders</h2>
+                <div class="d-flex">
+                  <div class="dropdown">
+                    <button class="btn btn-light px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <span class="material-symbols-outlined">filter_list</span>
+                    </button>
+                    <div class="dropdown-menu rounded-3 p-6">
+                      <h4 class="fs-lg mb-4">Filter</h4>
+                      <form style="width: 350px" id="filterForm">
+                        <div class="row align-items-center mb-3">
+                          <div class="col-3">
+                            <label class="form-label mb-0" for="filterUser">User</label>
+                          </div>
+                          <div class="col-9">
+                            <select
+                              class="form-select"
+                              id="filterUser"
+                              data-choices='{"searchEnabled": false, "choices": [
+                            {
+                              "value": "Emily Thompson",
+                              "label": "Emily Thompson",
+                              "customProperties": {
+                                "avatarSrc": "{{webRoot}}/assets/img/photos/photo-1.jpg"
+                              }
+                            },
+                            {
+                              "value": "Michael Johnson",
+                              "label": "Michael Johnson",
+                              "customProperties": {
+                                "avatarSrc": "{{webRoot}}/assets/img/photos/photo-2.jpg"
+                              }
+                            },
+                            {
+                              "value": "Robert Garcia",
+                              "label": "Robert Garcia",
+                              "customProperties": {
+                                "avatarSrc": "{{webRoot}}/assets/img/photos/photo-3.jpg"
+                              }
+                            },
+                            {
+                              "value": "Jessica Miller",
+                              "label": "Jessica Miller",
+                              "customProperties": {
+                                "avatarSrc": "{{webRoot}}/assets/img/photos/photo-4.jpg"
+                              }
+                            }
+                          ]}'
+                            ></select>
+                          </div>
+                        </div>
+                        <div class="row align-items-center mb-3">
+                          <div class="col-3">
+                            <label class="form-label mb-0" for="filterCompany">Company</label>
+                          </div>
+                          <div class="col-9">
+                            <select class="form-select" id="filterCompany" data-choices='{"placeholder": "some"}'>
+                              <option value="TechPinnacle Solutions">TechPinnacle Solutions</option>
+                              <option value="Quantum Dynamics">Quantum Dynamics</option>
+                              <option value="Pinnacle Technologies">Pinnacle Technologies</option>
+                              <option value="Apex Innovations">Apex Innovations</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row align-items-center">
+                          <div class="col-3">
+                            <label class="form-label mb-0" for="filterLocation">Location</label>
+                          </div>
+                          <div class="col-9">
+                            <select class="form-select" id="filterLocation" data-choices>
+                              <option value="San Francisco, CA">San Francisco, CA</option>
+                              <option value="Austin, TX">Austin, TX</option>
+                              <option value="Miami, FL">Miami, FL</option>
+                              <option value="Seattle, WA">Seattle, WA</option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="dropdown ms-1">
+                    <button class="btn btn-light px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <span class="material-symbols-outlined">sort_by_alpha</span>
+                    </button>
+                    <div class="dropdown-menu rounded-3 p-6">
+                      <h4 class="fs-lg mb-4">Sort</h4>
+                      <form style="width: 350px" id="filterForm">
+                        <div class="row gx-3">
+                          <div class="col">
+                            <select class="form-select" id="sort" data-choices='{"searchEnabled": false}'>
+                              <option value="user">User</option>
+                              <option value="company">Company</option>
+                              <option value="phone">Phone</option>
+                              <option value="location">Location</option>
+                            </select>
+                          </div>
+                          <div class="col-auto">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                              <input type="radio" class="btn-check" name="sortRadio" id="sortAsc" autocomplete="off" checked />
+                              <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip" data-bs-title="Ascending">
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                              </label>
+                              <input type="radio" class="btn-check" name="sortRadio" id="sortDesc" autocomplete="off" />
+                              <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip" data-bs-title="Descending">
+                                <span class="material-symbols-outlined">arrow_downward</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-body-secondary">#3456</td>
+                      <td>Apple MacBook Pro</td>
+                      <td>2021-08-12</td>
+                      <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                      <td>$2,499</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3455</td>
+                      <td>Apple iPhone 12 Pro</td>
+                      <td>2021-08-11</td>
+                      <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                      <td>$1,099</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3454</td>
+                      <td>Apple AirPods Pro</td>
+                      <td>2021-08-10</td>
+                      <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                      <td>$249</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3453</td>
+                      <td>Apple Watch Series 6</td>
+                      <td>2021-08-09</td>
+                      <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                      <td>$399</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3452</td>
+                      <td>Apple iPad Pro</td>
+                      <td>2021-08-08</td>
+                      <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                      <td>$799</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3451</td>
+                      <td>Apple MacBook Air</td>
+                      <td>2021-08-07</td>
+                      <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                      <td>$999</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3450</td>
+                      <td>Apple HomePod Mini</td>
+                      <td>2021-08-06</td>
+                      <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                      <td>$99</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3449</td>
+                      <td>Apple Magic Keyboard</td>
+                      <td>2021-08-05</td>
+                      <td><span class="badge bg-secondary-subtle text-secondary">Pending</span></td>
+                      <td>$299</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3448</td>
+                      <td>Apple Magic Mouse</td>
+                      <td>2021-08-04</td>
+                      <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                      <td>$99</td>
+                    </tr>
+                    <tr>
+                      <td class="text-body-secondary">#3447</td>
+                      <td>Apple AirTag</td>
+                      <td>2021-08-03</td>
+                      <td><span class="badge bg-success-subtle text-success">Completed</span></td>
+                      <td>$29</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section>
+              <!-- Header -->
+              <div class="row align-items-center justify-content-between mb-5">
+                <div class="col">
+                  <h2 class="fs-5 mb-0">Files</h2>
+                </div>
+                <div class="col-auto">
+                  <a class="btn btn-light" href="#"> <span class="material-symbols-outlined text-body-secondary me-1">upload</span> Upload </a>
+                </div>
+              </div>
+
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar rounded text-primary">
+                            <i class="fs-4" data-duoicon="id-card"></i>
+                          </div>
+                          <div class="ms-4">
+                            <div class="fw-normal">invoice.pdf</div>
+                            <div class="fs-sm text-body-secondary">1.5mb · PNG</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-body-secondary">Uploaded on Mar 01, 2024</td>
+                      <td style="width: 0">
+                        <button class="btn btn-sm btn-light">Download</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar rounded text-primary">
+                            <i class="fs-4" data-duoicon="id-card"></i>
+                          </div>
+                          <div class="ms-4">
+                            <div class="fw-normal">agreement_123.pdf</div>
+                            <div class="fs-sm text-body-secondary">3.7mb · PDF</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-body-secondary">Updated on Mar 03, 2024</td>
+                      <td style="width: 0">
+                        <button class="btn btn-sm btn-light">Download</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar rounded text-primary">
+                            <i class="fs-4" data-duoicon="id-card"></i>
+                          </div>
+                          <div class="ms-4">
+                            <div class="fw-normal">receipt_456.pdf</div>
+                            <div class="fs-sm text-body-secondary">2.1mb · PDF</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-body-secondary">Uploaded on Mar 05, 2024</td>
+                      <td style="width: 0">
+                        <button class="btn btn-sm btn-light">Download</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

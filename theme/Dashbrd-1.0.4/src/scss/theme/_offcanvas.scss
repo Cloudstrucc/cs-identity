@@ -1,0 +1,15 @@
+// 
+// offcanvas.scss
+// 
+
+.offcanvas {
+  --#{$prefix}offcanvas-header-padding-y: #{$offcanvas-header-padding-y};
+  --#{$prefix}offcanvas-header-border-width: #{$offcanvas-header-border-width};
+  --#{$prefix}offcanvas-header-border-color: #{$offcanvas-header-border-color};
+}
+
+.offcanvas-header {
+  padding-top: var(--#{$prefix}offcanvas-header-padding-y);
+  padding-bottom: var(--#{$prefix}offcanvas-header-padding-y);
+  border-bottom: var(--#{$prefix}offcanvas-header-border-width) solid var(--#{$prefix}offcanvas-header-border-color);
+}

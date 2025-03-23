@@ -1,0 +1,68 @@
+//
+// utilities.scss
+// Extended from Bootstrap
+//
+
+@import 'bootstrap/scss/functions';
+@import './variables';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+// Bootstrap overrides
+
+$utilities: map-merge(
+  $utilities,
+  (
+    'border':
+      map-merge(
+        map-get($utilities, 'border'),
+        (
+          responsive: true,
+        )
+      ),
+    'border-top':
+      map-merge(
+        map-get($utilities, 'border-top'),
+        (
+          responsive: true,
+        )
+      ),
+    'border-end':
+      map-merge(
+        map-get($utilities, 'border-end'),
+        (
+          responsive: true,
+        )
+      ),
+    'border-bottom':
+      map-merge(
+        map-get($utilities, 'border-bottom'),
+        (
+          responsive: true,
+        )
+      ),
+    'border-start':
+      map-merge(
+        map-get($utilities, 'border-start'),
+        (
+          responsive: true,
+        )
+      ),
+    'border-color':
+      map-merge(
+        map-get($utilities, 'border-color'),
+        (
+          values:
+            map-merge(
+              map-get(map-get($utilities, 'border-color'), 'values'),
+              (
+                dark: var(--#{$prefix}border-color-dark),
+                transparent: transparent,
+              )
+            ),
+        )
+      ),
+  )
+);

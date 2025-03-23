@@ -1,0 +1,17 @@
+//
+// duoicons.scss
+//
+
+.duo-icon {
+  width: 1em;
+  height: 1em;
+}
+
+// Prevent content from jittering on icon load
+
+[data-duoicon] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}

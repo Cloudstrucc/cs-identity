@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="account" page="account-settings"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="account" page="account-settings"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="user"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Account</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Account Settings</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Account</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <a class="btn btn-secondary d-block" href="#!"> Save </a>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <!-- Nav -->
+            <nav class="nav nav-pills position-sticky flex-column mb-8" id="accountNav" style="top: 32px">
+              <a class="nav-link" href="#general">General</a>
+              <a class="nav-link" href="#billing">Billing</a>
+              <a class="nav-link" href="#notifications">Notifications</a>
+              <a class="nav-link text-danger" href="#">Delete account</a>
+            </nav>
+          </div>
+          <div class="col-12 col-lg-9" data-bs-spy="scroll" data-bs-target="#accountNav" data-bs-smooth-scroll="true" tabindex="0">
+            <!-- General -->
+            <section class="card bg-body-tertiary border-transparent card-line mb-5" id="general">
+              <div class="card-body">
+                <h2 class="fs-5 mb-1">General</h2>
+                <p class="text-body-secondary">Update your general account information.</p>
+                <div class="mb-3">
+                  <label for="avatar" class="form-label">Avatar</label>
+                  <input class="form-control bg-body" type="file" id="avatar" />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="fullName">Full Name</label>
+                  <input class="form-control bg-body" type="text" id="fullName" />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="company">Company</label>
+                  <input class="form-control bg-body" type="text" id="company" />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="tiptapExample">Bio</label>
+                  <div class="form-control bg-body" id="tiptapExample"></div>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="email">Email</label>
+                  <input class="form-control bg-body" type="email" />
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="phone">Phone</label>
+                  <input class="form-control bg-body mb-3" id="phone" type="text" placeholder="(___)___-____" data-inputmask="'mask': '(999)999-9999'" />
+                </div>
+              </div>
+            </section>
+
+            <!-- Billing -->
+            <section class="card bg-body-tertiary border-transparent card-line mb-5" id="billing">
+              <div class="card-body">
+                <div class="row align-items-center mb-4">
+                  <div class="col">
+                    <h2 class="fs-5 mb-1">Billing</h2>
+                    <p class="text-body-secondary mb-0">Billing information is securely stored with our payment processor and is not accessible to us.</p>
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-sm btn-dark">+ Add Card</button>
+                  </div>
+                </div>
+                <div class="card border-transparent">
+                  <div class="card-body">
+                    <div class="row gx-3">
+                      <div class="col-12 col-md">
+                        <div class="mb-4 mb-lg-0">
+                          <label class="form-label" for="cardNumber">Card Number</label>
+                          <input
+                            class="form-control"
+                            id="cardNumber"
+                            type="text"
+                            placeholder="**** **** **** ****"
+                            data-inputmask="'mask': '9999 9999 9999 9999', 'placeholder': '*'"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-auto">
+                        <div class="mb-4 mb-lg-0">
+                          <label class="form-label" for="CVC/CVV">CVC/CVV</label>
+                          <input class="form-control" id="CVC/CVV" type="text" placeholder="****" data-inputmask="'mask': '9999', 'placeholder': '*'" />
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-auto">
+                        <div>
+                          <label class="form-label" for="expiryDate">Expiry Date</label>
+                          <input class="form-control" id="expiryDate" type="text" data-flatpickr />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Security -->
+            <section class="card bg-body-tertiary border-transparent mb-0" id="notifications">
+              <div class="card-body">
+                <h2 class="fs-5 mb-1">Notifications</h2>
+                <p class="text-body-secondary">Manage your notification settings.</p>
+                <div class="card border-transparent">
+                  <div class="card-body py-0">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <label class="form-check-label" for="emailNotifications">Email notifications</label>
+                          </div>
+                          <div class="col-auto">
+                            <div class="form-check">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="emailNotifications" checked />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <label class="form-check-label" for="smsNotifications">SMS notifications</label>
+                          </div>
+                          <div class="col-auto">
+                            <div class="form-check">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="smsNotifications" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <label class="form-check-label" for="pushNotifications">Push notifications</label>
+                          </div>
+                          <div class="col-auto">
+                            <div class="form-check">
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="pushNotifications" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

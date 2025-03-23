@@ -1,0 +1,42 @@
+//
+// nav.scss
+//
+
+// Pills
+
+.nav-pills {
+  --#{$prefix}nav-pills-link-border-width: #{$nav-pills-link-border-width};
+  --#{$prefix}nav-pills-link-border-color: #{$nav-pills-link-border-color};
+  --#{$prefix}nav-pills-link-hover-bg: #{$nav-pills-link-hover-bg};
+  --#{$prefix}nav-pills-link-hover-border-color: #{$nav-pills-link-hover-border-color};
+  --#{$prefix}nav-pills-link-active-border-color: #{$nav-pills-link-active-border-color};
+  --#{$prefix}nav-pills-link-active-hover-bg: #{$nav-pills-link-active-hover-bg};
+}
+
+.nav-pills .nav-link {
+  border: var(--#{$prefix}nav-pills-link-border-width) solid var(--#{$prefix}nav-pills-link-border-color);
+
+  &:hover {
+    background-color: var(--#{$prefix}nav-pills-link-hover-bg);
+    border-color: var(--#{$prefix}nav-pills-link-hover-border-color);
+  }
+
+  &.active {
+    background-color: var(--#{$prefix}nav-pills-link-active-bg);
+    border-color: var(--#{$prefix}nav-pills-link-active-border-color);
+
+    &:hover {
+      background-color: var(--#{$prefix}nav-pills-link-active-hover-bg);
+    }
+  }
+}
+
+// Underline
+
+.nav-underline {
+  --#{$prefix}nav-underline-link-active-font-weight: #{$nav-underline-link-active-font-weight};
+}
+
+.nav-underline .nav-link.active {
+  font-weight: var(--#{$prefix}nav-underline-link-active-font-weight);
+}

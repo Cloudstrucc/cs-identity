@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="dashboards" page="crypto"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="dashboards" page="crypto"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page content -->
+        <div class="row align-items-center mb-8">
+          <div class="col-12 col-sm">
+            <!-- Heading -->
+            <h4 class="fs-base fw-normal text-body-secondary mb-1">Performance</h4>
+
+            <!-- Heading -->
+            <div class="fs-2 fw-semibold">
+              <span class="fs-6 align-text-top me-1">$</span>129,705<span class="fs-5">.65</span
+              ><span class="badge bg-success-subtle text-success fs-sm align-text-top ms-2">+12%</span>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <select
+              class="form-select"
+              id="cryptoPerformanceChartType"
+              data-choices='{"searchEnabled": false, "choices": [{ "value": "trading", "label": "Trading profits" }, { "value": "staking", "label": "Staking rewards" }, { "value": "mining", "label": "Mining income" }]}'
+            ></select>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart mb-8">
+          <canvas class="chart-canvas" id="cryptoPerformanceChart"></canvas>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-xxl-8">
+            <div class="card mb-6">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="fs-6 mb-0">Watchlist</h3>
+                  </div>
+                  <div class="col-auto my-n3 me-n3">
+                    <a class="btn btn-sm btn-link" href="#!"> + Add </a>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-flush align-middle mb-0">
+                  <tbody>
+                    <thead>
+                      <th class="fs-sm">Name</th>
+                      <th class="fs-sm">Last price (USD)</th>
+                      <th class="fs-sm">Change</th>
+                      <th class="fs-sm" colspan="2">Last 24hr</th>
+                    </thead>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar avatar-sm me-3">
+                            <img class="avatar-img" src="{{webRoot}}/assets/img/crypto/btc.svg" alt="Bitcoin" />
+                          </div>
+                          <strong class="fw-semibold">Bitcoin</strong>
+                        </div>
+                      </td>
+                      <td>63,879.81</td>
+                      <td>
+                        <span class="badge bg-success-subtle text-success">+0.53%</span>
+                      </td>
+                      <td>
+                        <div class="chart" style="height: 1rem; width: 3rem">
+                          <canvas class="chart-canvas" data-crypto-currency-success-chart></canvas>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-light">Trade</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar avatar-sm me-3">
+                            <img class="avatar-img" src="{{webRoot}}/assets/img/crypto/ethereum.svg" alt="Ethereum" />
+                          </div>
+                          <strong class="fw-semibold">Ethereum</strong>
+                        </div>
+                      </td>
+                      <td>2,642.53</td>
+                      <td>
+                        <span class="badge bg-success-subtle text-success">+1.84%</span>
+                      </td>
+                      <td>
+                        <div class="chart" style="height: 1rem; width: 3rem">
+                          <canvas class="chart-canvas" data-crypto-currency-success-chart></canvas>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-light">Trade</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar avatar-sm me-3">
+                            <img class="avatar-img" src="{{webRoot}}/assets/img/crypto/dogecoin.svg" alt="Dogecoin" />
+                          </div>
+                          <strong class="fw-semibold">Dogecoin</strong>
+                        </div>
+                      </td>
+                      <td>0.118413</td>
+                      <td>
+                        <span class="badge bg-success-subtle text-success">+1.06%</span>
+                      </td>
+                      <td>
+                        <div class="chart" style="height: 1rem; width: 3rem">
+                          <canvas class="chart-canvas" data-crypto-currency-success-chart></canvas>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-light">Trade</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar avatar-sm me-3">
+                            <img class="avatar-img" src="{{webRoot}}/assets/img/crypto/tether.svg" alt="Tether" />
+                          </div>
+                          <strong class="fw-semibold">Tether</strong>
+                        </div>
+                      </td>
+                      <td>0.9999</td>
+                      <td>
+                        <span class="badge bg-danger-subtle text-danger">-0.02%</span>
+                      </td>
+                      <td>
+                        <div class="chart" style="height: 1rem; width: 3rem">
+                          <canvas class="chart-canvas" data-crypto-currency-danger-chart></canvas>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-light">Trade</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="avatar avatar-sm me-3">
+                            <img class="avatar-img" src="{{webRoot}}/assets/img/crypto/cardano.svg" alt="Cardano" />
+                          </div>
+                          <strong class="fw-semibold">Cardano</strong>
+                        </div>
+                      </td>
+                      <td>0.3844</td>
+                      <td>
+                        <span class="badge bg-danger-subtle text-danger">-0.93%</span>
+                      </td>
+                      <td>
+                        <div class="chart" style="height: 1rem; width: 3rem">
+                          <canvas class="chart-canvas" data-crypto-currency-danger-chart></canvas>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <button class="btn btn-sm btn-light">Trade</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Industry news -->
+            <div class="card mb-6 mb-xxl-0">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="fs-6 mb-0">Industry news</h3>
+                  </div>
+                  <div class="col-auto my-n3 me-n3">
+                    <a class="btn btn-sm btn-link" href="#!">
+                      Browse all
+                      <span class="material-symbols-outlined">arrow_right_alt</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body py-3">
+                <!-- List -->
+                <div class="list-group list-group-flush">
+                  <div class="list-group-item px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-base">Bitcoin Hits New All-Time High</h3>
+                          <p class="text-body-secondary">Bitcoin's value surges past $70,000 amid global economic uncertainty.</p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 12, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="avatar avatar-xl rounded">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-1.png" alt="..." />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-base">Ethereum Completes Major Network Upgrade</h3>
+                          <p class="text-body-secondary">The Ethereum 2.0 upgrade promises faster transactions and reduced energy consumption.</p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 10, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-group-item px-0">
+                    <div class="row">
+                      <div class="col">
+                        <a class="text-reset" href="#!">
+                          <h3 class="fs-base">Regulatory Crackdown on Crypto Exchanges Intensifies</h3>
+                          <p class="text-body-secondary">Governments worldwide tighten restrictions on cryptocurrency trading platforms.</p>
+                        </a>
+                        <div class="d-flex align-items-center">
+                          <div class="fs-sm text-body-secondary me-3">Published on September 8, 2024</div>
+                          <div class="dropdown">
+                            <a class="fs-lg text-reset" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="material-symbols-outlined">more_horiz</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Action</a></li>
+                              <li><a class="dropdown-item" href="#">Another action</a></li>
+                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-xxl-4">
+            <!-- Portfolio -->
+            <div class="card mb-6">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="fs-6 mb-0">Portfolio</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart mb-6 mx-auto" style="height: 17.5rem">
+                  <canvas class="chart-canvas" id="cryptoPortfolioChart"></canvas>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-auto fs-sm">
+                    <span class="material-symbols-outlined me-1" style="color: rgba(var(--bs-primary-rgb), 1)">circle</span>
+                    Bitcon
+                  </div>
+                  <div class="col-auto fs-sm">
+                    <span class="material-symbols-outlined me-1" style="color: rgba(var(--bs-primary-rgb), 0.5)">circle</span>
+                    Ethereum
+                  </div>
+                  <div class="col-auto fs-sm">
+                    <span class="material-symbols-outlined me-1" style="color: rgba(var(--bs-primary-rgb), 0.25)">circle</span>
+                    Tether
+                  </div>
+                  <div class="col-auto fs-sm">
+                    <span class="material-symbols-outlined me-1" style="color: rgba(var(--bs-primary-rgb), 0.125)">circle</span>
+                    Dogecoin
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transactions -->
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="fs-6 mb-0">Latest transactions</h3>
+                  </div>
+                  <div class="col-auto my-n3 me-n3">
+                    <a class="btn btn-sm btn-link" href="#!">
+                      Browse all
+                      <span class="material-symbols-outlined">arrow_right_alt</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="activity">
+                  <li data-icon="shopping_cart">
+                    <div>
+                      <h6 class="fs-base mb-1">Bought 1.5 BTC <span class="fs-sm fw-normal text-body-secondary ms-1">Oct 1</span></h6>
+                      <p class="mb-0">Transaction completed on Coinbase</p>
+                    </div>
+                  </li>
+                  <li data-icon="sell">
+                    <div>
+                      <h6 class="fs-base mb-1">Sold 0.75 ETH <span class="fs-sm fw-normal text-body-secondary ms-1">Sep 30</span></h6>
+                      <p class="mb-0">Sale processed through Binance</p>
+                    </div>
+                  </li>
+                  <li data-icon="account_balance_wallet">
+                    <div>
+                      <h6 class="fs-base mb-1">Transferred 2.3 LTC to Wallet <span class="fs-sm fw-normal text-body-secondary ms-1">Sep 30</span></h6>
+                      <p class="mb-0">Funds moved to external wallet</p>
+                    </div>
+                  </li>
+                  <li data-icon="call_received">
+                    <div>
+                      <h6 class="fs-base mb-1">Received 0.4 BTC <span class="fs-sm fw-normal text-body-secondary ms-1">Sep 29</span></h6>
+                      <p class="mb-0">Received from peer-to-peer transaction</p>
+                    </div>
+                  </li>
+                  <li data-icon="currency_exchange">
+                    <div>
+                      <h6 class="fs-base mb-1">Staked 50 ADA <span class="fs-sm fw-normal text-body-secondary ms-1">Sep 28</span></h6>
+                      <p class="mb-0">Staking initiated on Cardano blockchain</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

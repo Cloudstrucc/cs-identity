@@ -1,0 +1,18 @@
+// 
+// pagination.scss
+// 
+
+.pagination {
+  --#{$prefix}pagination-spacer: #{$pagination-spacer};
+}
+
+.page-item + .page-item {
+  margin-left: var(--#{$prefix}pagination-spacer);
+}
+
+.page-item .page-link {
+  min-width: calc(var(--#{$prefix}pagination-padding-y) * 2 + var(--#{$prefix}pagination-border-width) * 2 + var(--#{$prefix}pagination-font-size) * #{$line-height-base});
+  margin-left: 0 !important;
+  border-radius: var(--#{$prefix}pagination-border-radius);
+  text-align: center;
+}

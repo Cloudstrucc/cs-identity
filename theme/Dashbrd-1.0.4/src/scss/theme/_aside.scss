@@ -1,0 +1,75 @@
+//
+// aside.scss
+//
+
+.aside {
+  --#{$prefix}aside-offset-start: 0;
+  --#{$prefix}aside-width: #{$aside-width};
+  --#{$prefix}aside-padding-x: #{$aside-padding-x};
+  --#{$prefix}aside-padding-y: #{$aside-padding-y};
+  --#{$prefix}aside-bg: #{$aside-bg};
+  --#{$prefix}aside-border-width: #{$aside-border-width};
+  --#{$prefix}aside-border-color: #{$aside-border-color};
+  --#{$prefix}aside-navbar-padding-x: #{$aside-navbar-padding-x};
+  --#{$prefix}aside-navbar-padding-y: #{$aside-navbar-padding-y};
+  --#{$prefix}aside-nav-pills-link-active-bg: #{$aside-nav-pills-link-active-bg};
+
+  @each $breakpoint, $value in $grid-breakpoints {
+    &:has(.navbar-expand-#{$breakpoint}) {
+      @include media-breakpoint-up(#{$breakpoint}) {
+        position: fixed;
+        left: var(--#{$prefix}aside-offset-start);
+        height: 100%;
+        width: var(--#{$prefix}aside-width);
+        padding: var(--#{$prefix}aside-padding-y) var(--#{$prefix}aside-padding-x);
+        background-color: var(--#{$prefix}aside-bg);
+        border-right: var(--#{$prefix}aside-border-width) solid var(--#{$prefix}aside-border-color);
+
+        // Navbar
+
+        & > .navbar {
+          --#{$prefix}navbar-padding-x: var(--#{$prefix}aside-navbar-padding-x);
+          --#{$prefix}navbar-padding-y: var(--#{$prefix}aside-navbar-padding-y);
+        }
+
+        & > .navbar .navbar-nav,
+        & > .navbar .navbar-nav .nav {
+          --#{$prefix}nav-pills-link-active-bg: var(--#{$prefix}aside-nav-pills-link-active-bg);
+        }
+
+        // Siblings
+
+        :root:not([data-bs-navigation-position='topnav']) & ~ .navbar,
+        :root:not([data-bs-navigation-position='topnav']) & ~ .main {
+          margin-left: $aside-width;
+        }
+
+        :root:not([data-bs-navigation-position='topnav']) &.aside-sm ~ .navbar,
+        :root:not([data-bs-navigation-position='topnav']) &.aside-sm ~ .main {
+          margin-left: $aside-width-sm;
+        }
+
+        :root:not([data-bs-navigation-position='topnav']) &.aside-sm + .aside ~ .navbar,
+        :root:not([data-bs-navigation-position='topnav']) &.aside-sm + .aside ~ .main {
+          margin-left: $aside-width-sm + $aside-width;
+        }
+      }
+    }
+  }
+}
+
+// Small
+
+.aside-sm {
+  --#{$prefix}aside-width: #{$aside-width-sm};
+  --#{$prefix}aside-border-width: #{$aside-border-width-sm};
+  --#{$prefix}aside-border-color: #{$aside-border-color-sm};
+
+  .navbar-nav .nav-link[data-bs-toggle='collapse']::after {
+    display: none;
+  }
+}
+
+.aside-sm + .aside {
+  --#{$prefix}aside-offset-start: #{$aside-width-sm};
+}

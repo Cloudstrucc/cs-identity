@@ -1,0 +1,14 @@
+//
+// form-check.scss
+//
+
+.form-check-input {
+  margin-top: calc((#{$form-check-min-height} - #{$form-check-input-width}) / 2);
+}
+
+// Switch
+
+.form-switch .form-check-input {
+  height: $form-switch-height;
+  margin-top: calc((#{$font-size-base} * #{$line-height-base} - #{$form-switch-height}) / 2);
+}

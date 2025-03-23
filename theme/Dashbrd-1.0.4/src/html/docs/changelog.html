@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="documentation" page="changelog"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="documentation" page="changelog"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="clipboard"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Docs</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Changelog</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Changelog</h1>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="mt-8 mb-0" />
+
+        <!-- Content -->
+        <div class="row">
+          <div class="col-12 col-lg-3 order-lg-1 d-none d-lg-block">
+            <!-- Nav -->
+            <nav class="nav nav-pills position-sticky flex-column py-8" id="docNav" style="top: 0">
+              <a class="nav-link" href="#v104">v1.0.4</a>
+              <a class="nav-link" href="#v103">v1.0.3</a>
+              <a class="nav-link" href="#v102">v1.0.2</a>
+              <a class="nav-link" href="#v101">v1.0.1</a>
+              <a class="nav-link" href="#v100">v1.0.0</a>
+            </nav>
+          </div>
+          <div class="col-12 col-lg-9 order-lg-0" data-bs-spy="scroll" data-bs-target="#docNav" data-bs-smooth-scroll="true" tabindex="0">
+            <div class="list-group list-group-flush py-2">
+              <div class="list-group-item py-7 px-0" id="v104">
+                <h2 class="fs-lg mb-4">v1.0.4 <span class="fs-base fw-normal text-body-secondary">– December 22th, 2024</span></h2>
+                <ul class="mb-0">
+                  <li>Added top navigation position.</li>
+                  <li>Made small visual adjustments.</li>
+                </ul>
+              </div>
+              <div class="list-group-item py-7 px-0" id="v103">
+                <h2 class="fs-lg mb-4">v1.0.3 <span class="fs-base fw-normal text-body-secondary">– October 04th, 2024</span></h2>
+                <ul class="mb-0">
+                  <li>Added Crypto and SaaS dashboard variations.</li>
+                  <li>Added <code>luxon</code> date adapter for <code>Chart.js</code>.</li>
+                  <li>Made small visual adjustments.</li>
+                </ul>
+              </div>
+              <div class="list-group-item py-7 px-0" id="v102">
+                <h2 class="fs-lg mb-4">v1.0.2 <span class="fs-base fw-normal text-body-secondary">– September 26th, 2024</span></h2>
+                <ul class="mb-0">
+                  <li>Added dark mode and a color mode switcher.</li>
+                </ul>
+              </div>
+              <div class="list-group-item py-7 px-0" id="v101">
+                <h2 class="fs-lg mb-4">v1.0.1 <span class="fs-base fw-normal text-body-secondary">– September 21st, 2024</span></h2>
+                <ul class="mb-0">
+                  <li>Added "Posts" section.</li>
+                  <li>Added formatting toolbar to Tiptap editor; improved Tiptap editor implementation.</li>
+                  <li>Improved HTML folder structure.</li>
+                  <li>Updated documentation for third-party form vendor plugins.</li>
+                  <li>Made small visual adjustments.</li>
+                </ul>
+              </div>
+              <div class="list-group-item py-7 px-0" id="v100">
+                <h2 class="fs-lg mb-4">v1.0.0 <span class="fs-base fw-normal text-body-secondary">– September 16th, 2024</span></h2>
+                <ul class="mb-0">
+                  <li>Initial release of Dashbrd 🎉.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

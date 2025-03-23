@@ -1,0 +1,14 @@
+//
+// reboot.scss
+//
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  --#{$prefix}letter-spacing-base: #{$letter-spacing-base};
+  min-height: 100%;
+  letter-spacing: var(--#{$prefix}letter-spacing-base);
+}

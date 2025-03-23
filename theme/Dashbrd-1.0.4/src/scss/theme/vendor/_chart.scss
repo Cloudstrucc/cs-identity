@@ -1,0 +1,34 @@
+//
+// chart.scss
+//
+
+// Chart
+
+.chart {
+  --#{$prefix}chart-height: #{$chart-height};
+  position: relative;
+  height: var(--#{$prefix}chart-height);
+}
+
+
+// Sizes
+
+.chart-sm {
+  --#{$prefix}chart-height: #{$chart-height-sm};
+}
+
+
+// Tooltip
+
+#chart-tooltip {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#chart-tooltip .popover-arrow {
+  position: inherit;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateX(-.5rem);
+}

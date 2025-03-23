@@ -1,0 +1,147 @@
+//
+// navbar.scss
+//
+
+.navbar {
+  --#{$prefix}navbar-active-bg: #{$navbar-light-active-bg};
+  --#{$prefix}navbar-active-border-color: #{$navbar-light-active-border-color};
+  --#{$prefix}navbar-nav-link-padding-y: #{$navbar-nav-link-padding-y};
+  --#{$prefix}navbar-nav-link-border-radius: #{$navbar-nav-link-border-radius};
+}
+
+// Toggler
+
+.navbar-toggler {
+  --#{$prefix}navbar-toggler-border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Nav
+
+.navbar-nav {
+  --#{$prefix}nav-link-padding-x: #{$navbar-nav-link-padding-x};
+}
+
+// Link
+
+.navbar .navbar-nav > .nav-link,
+.navbar .navbar-nav > .nav-item > .nav-link {
+  display: flex;
+  align-items: center;
+  padding-top: var(--#{$prefix}navbar-nav-link-padding-y);
+  padding-bottom: var(--#{$prefix}navbar-nav-link-padding-y);
+  border-radius: var(--#{$prefix}navbar-nav-link-border-radius);
+}
+
+// Link collapse
+
+.navbar .navbar-nav .nav-link[data-bs-toggle='collapse']::after {
+  content: escape-svg($navbar-nav-link-toggle);
+  margin-left: auto;
+  transition: $transition-base;
+  transform-origin: center center;
+}
+
+.navbar .navbar-nav .nav-link[data-bs-toggle='collapse'][aria-expanded='true']::after {
+  transform: rotate(45deg);
+}
+
+// Icons
+
+.navbar .navbar-nav .nav-link > .material-symbols-outlined {
+  transform: scale(1.25);
+  transform-origin: center center;
+}
+
+// Dropdown
+
+.navbar-expand {
+  @each $breakpoint, $value in $grid-breakpoints {
+    &-#{$breakpoint} {
+      @include media-breakpoint-down(#{$breakpoint}) {
+        .navbar-nav .nav-item > .dropdown-toggle::after {
+          margin-left: auto;
+        }
+
+        .navbar-nav .nav-item > .nav-link + .dropdown-menu {
+          --#{$prefix}dropdown-box-shadow: 0 0 transparent;
+          --#{$prefix}dropdown-item-padding-y: calc(#{$nav-link-padding-y} + #{$nav-pills-link-border-width});
+        }
+      }
+    }
+  }
+}
+
+// Vertical
+
+.navbar-expand {
+  @each $breakpoint, $value in $grid-breakpoints {
+    &-#{$breakpoint} {
+      @include media-breakpoint-up(#{$breakpoint}) {
+        &.navbar-vertical {
+          height: inherit;
+          overflow-y: auto;
+        }
+
+        &.navbar-vertical > .container-fluid {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          height: inherit;
+        }
+
+        &.navbar-vertical .navbar-collapse {
+          flex-direction: column;
+          align-items: stretch;
+          width: 100%;
+          height: inherit;
+        }
+      }
+    }
+  }
+}
+
+.navbar-vertical .navbar-nav,
+.navbar-vertical .navbar-nav .nav {
+  flex-direction: column;
+  width: 100%;
+}
+
+.navbar-vertical .navbar-nav .nav {
+  --#{$prefix}navbar-subnav-offset-start: #{$navbar-subnav-offset-start};
+  --#{$prefix}navbar-subnav-padding-y: #{$navbar-subnav-padding-y};
+  position: relative;
+  max-width: calc(100% - var(--#{$prefix}navbar-subnav-offset-start));
+  padding-top: var(--#{$prefix}navbar-subnav-padding-y);
+  padding-bottom: var(--#{$prefix}navbar-subnav-padding-y);
+  margin-left: var(--#{$prefix}navbar-subnav-offset-start);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--#{$prefix}navbar-subnav-padding-y) * -1);
+    bottom: calc((var(--#{$prefix}nav-link-padding-y) * 2 + 1em * #{$line-height-base}) / 2 + var(--#{$prefix}border-radius));
+    left: calc(var(--#{$prefix}navbar-subnav-offset-start) / -2 + var(--#{$prefix}border-width));
+    border-right: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-dark);
+  }
+
+  & > .nav-link {
+    position: relative;
+    padding-left: calc(var(--#{$prefix}nav-link-padding-x) / 2);
+    padding-right: calc(var(--#{$prefix}nav-link-padding-x) / 2);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 50%;
+      width: calc(var(--#{$prefix}navbar-subnav-offset-start) / 2);
+      border-bottom-left-radius: var(--#{$prefix}border-radius);
+      border-left: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-dark);
+      border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-dark);
+      transform: translateX(-100%);
+    }
+  }
+}

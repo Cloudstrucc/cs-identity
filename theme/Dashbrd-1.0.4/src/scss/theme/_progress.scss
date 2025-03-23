@@ -1,0 +1,13 @@
+// 
+// progress.scss
+// 
+
+// Circle
+
+.progress-circle {
+  --#{$prefix}progress-bar-bg: currentColor;
+  width: var(--#{$prefix}progress-height);
+  border-radius: var(--#{$prefix}border-radius-pill);
+  background-image: conic-gradient(var(--#{$prefix}progress-bar-bg), var(--#{$prefix}progress-bar-bg) calc(360deg * var(--#{$prefix}progress-circle-value) / 100), transparent calc(360deg * var(--#{$prefix}progress-circle-value) / 100), transparent);
+}
+

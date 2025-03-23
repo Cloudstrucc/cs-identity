@@ -1,0 +1,11 @@
+// 
+// toasts.scss
+// 
+
+.toast-header {
+  border-bottom-color: transparent;
+}
+
+.toast-header + .toast-body {
+  padding-top: 0;
+}

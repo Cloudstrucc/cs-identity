@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="projects" page="projects"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="projects" page="projects"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="clipboard"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Projects</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Projects</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Projects</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <a class="btn btn-secondary d-block" href="#!"> <span class="material-symbols-outlined me-1">add</span> New project </a>
+          </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="row">
+          <div class="col-12">
+            <!-- Filters -->
+            <div class="card card-line bg-body-tertiary border-transparent mb-7">
+              <div class="card-body p-4">
+                <div class="row align-items-center">
+                  <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <div class="text-body-secondary">2 projects selected</div>
+                      </div>
+                      <div class="col-auto border-start border-dark">
+                        <a class="badge text-bg-danger" href="#"> Delete </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg">
+                    <div class="row gx-3">
+                      <div class="col col-lg-auto ms-auto">
+                        <div class="input-group bg-body">
+                          <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search" />
+                          <span class="input-group-text" id="search">
+                            <span class="material-symbols-outlined">search</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">filter_list</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Filter</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterUser">User</label>
+                                </div>
+                                <div class="col-9">
+                                  <select
+                                    class="form-select"
+                                    id="filterUser"
+                                    data-choices='{"searchEnabled": false, "choices": [
+                              {
+                                "value": "Emily Thompson",
+                                "label": "Emily Thompson",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-1.jpg"
+                                }
+                              },
+                              {
+                                "value": "Michael Johnson",
+                                "label": "Michael Johnson",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-2.jpg"
+                                }
+                              },
+                              {
+                                "value": "Robert Garcia",
+                                "label": "Robert Garcia",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-3.jpg"
+                                }
+                              },
+                              {
+                                "value": "Jessica Miller",
+                                "label": "Jessica Miller",
+                                "customProperties": {
+                                  "avatarSrc": "{{webRoot}}/assets/img/photos/photo-4.jpg"
+                                }
+                              }
+                            ]}'
+                                  ></select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center mb-3">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterCompany">Company</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterCompany" data-choices='{"placeholder": "some"}'>
+                                    <option value="TechPinnacle Solutions">TechPinnacle Solutions</option>
+                                    <option value="Quantum Dynamics">Quantum Dynamics</option>
+                                    <option value="Pinnacle Technologies">Pinnacle Technologies</option>
+                                    <option value="Apex Innovations">Apex Innovations</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col-3">
+                                  <label class="form-label mb-0" for="filterLocation">Location</label>
+                                </div>
+                                <div class="col-9">
+                                  <select class="form-select" id="filterLocation" data-choices>
+                                    <option value="San Francisco, CA">San Francisco, CA</option>
+                                    <option value="Austin, TX">Austin, TX</option>
+                                    <option value="Miami, FL">Miami, FL</option>
+                                    <option value="Seattle, WA">Seattle, WA</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto ms-n2">
+                        <div class="dropdown">
+                          <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span class="material-symbols-outlined">sort_by_alpha</span>
+                          </button>
+                          <div class="dropdown-menu rounded-3 p-6">
+                            <h4 class="fs-lg mb-4">Sort</h4>
+                            <form style="width: 350px" id="filterForm">
+                              <div class="row gx-3">
+                                <div class="col">
+                                  <select class="form-select" id="sort" data-choices='{"searchEnabled": false}'>
+                                    <option value="user">User</option>
+                                    <option value="company">Company</option>
+                                    <option value="phone">Phone</option>
+                                    <option value="location">Location</option>
+                                  </select>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortAsc" autocomplete="off" checked />
+                                    <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip" data-bs-title="Ascending">
+                                      <span class="material-symbols-outlined">arrow_upward</span>
+                                    </label>
+                                    <input type="radio" class="btn-check" name="sortRadio" id="sortDesc" autocomplete="off" />
+                                    <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip" data-bs-title="Descending">
+                                      <span class="material-symbols-outlined">arrow_downward</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive mb-7">
+              <table class="table table-selectable align-middle mb-0">
+                <thead>
+                  <th style="width: 0px">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="tableCheckAll" />
+                      <label class="form-check-label" for="tableCheckAll"></label>
+                    </div>
+                  </th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Author</th>
+                  <th>Team</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckOne" />
+                        <label class="form-check-label" for="tableCheckOne"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-1.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Filters AI</div>
+                          <div class="fs-sm text-body-secondary">Updated on Apr 10, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success">Ready to Ship</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        Michael Johnson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckTwo" checked="checked" />
+                        <label class="form-check-label" for="tableCheckTwo"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-2.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Design landing page</div>
+                          <div class="fs-sm text-body-secondary">Created on Mar 05, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-danger-subtle text-danger">Cancelled</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                        Emily Thompson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckThree" checked="checked" />
+                        <label class="form-check-label" for="tableCheckThree"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar text-primary">
+                          <i class="fs-4" data-duoicon="book-3"></i>
+                        </div>
+                        <div class="ms-4">
+                          <div>Update documentation</div>
+                          <div class="fs-sm text-body-secondary">Created on Jan 22, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-secondary-subtle text-secondary">In Testing</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        Michael Johnson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFour" />
+                        <label class="form-check-label" for="tableCheckFour"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-3.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Update Touche</div>
+                          <div class="fs-sm text-body-secondary">Updated on Apr 14, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success">Ready to Ship</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                        Jessica Miller
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckFive" />
+                        <label class="form-check-label" for="tableCheckFive"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar text-primary">
+                          <i class="fs-4" data-duoicon="box"></i>
+                        </div>
+                        <div class="ms-4">
+                          <div>Add Transactions</div>
+                          <div class="fs-sm text-body-secondary">Created on Apr 25, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-light text-body-secondary">Backlog</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        Olivia Davis
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSix" />
+                        <label class="form-check-label" for="tableCheckSix"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-1.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Filters AI</div>
+                          <div class="fs-sm text-body-secondary">Updated on Apr 10, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success">Ready to Ship</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        Michael Johnson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckSeven" />
+                        <label class="form-check-label" for="tableCheckSeven"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-2.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Design landing page</div>
+                          <div class="fs-sm text-body-secondary">Created on Mar 05, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-danger-subtle text-danger">Cancelled</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                        Emily Thompson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckEight" />
+                        <label class="form-check-label" for="tableCheckEight"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar text-primary">
+                          <i class="fs-4" data-duoicon="book-3"></i>
+                        </div>
+                        <div class="ms-4">
+                          <div>Update documentation</div>
+                          <div class="fs-sm text-body-secondary">Created on Jan 22, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-secondary-subtle text-secondary">In Testing</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-2.jpg" alt="..." />
+                        </div>
+                        Michael Johnson
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckNine" />
+                        <label class="form-check-label" for="tableCheckNine"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/projects/project-3.png" alt="..." />
+                        </div>
+                        <div class="ms-4">
+                          <div>Update Touche</div>
+                          <div class="fs-sm text-body-secondary">Updated on Apr 14, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success">Ready to Ship</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                        Jessica Miller
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-5.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 0px">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckTen" />
+                        <label class="form-check-label" for="tableCheckTen"></label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar text-primary">
+                          <i class="fs-4" data-duoicon="box"></i>
+                        </div>
+                        <div class="ms-4">
+                          <div>Add Transactions</div>
+                          <div class="fs-sm text-body-secondary">Created on Apr 25, 2024</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="badge bg-light text-body-secondary">Backlog</span>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center text-nowrap">
+                        <div class="avatar avatar-xs me-2">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-4.jpg" alt="..." />
+                        </div>
+                        Olivia Davis
+                      </div>
+                    </td>
+                    <td>
+                      <div class="avatar-group">
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-3.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-6.jpg" alt="..." />
+                        </div>
+                        <div class="avatar avatar-xs">
+                          <img class="avatar-img" src="{{webRoot}}/assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <!-- Text -->
+            <p class="text-body-secondary mb-0">1 – 10 (2550 total)</p>
+          </div>
+          <div class="col-auto">
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination mb-0">
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link active" href="#">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

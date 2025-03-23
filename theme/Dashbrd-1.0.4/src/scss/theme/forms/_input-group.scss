@@ -1,0 +1,53 @@
+// 
+// input-group.scss
+// 
+
+.input-group {
+  --#{$prefix}input-group-bg: #{$input-bg};
+  --#{$prefix}input-group-border-width: #{$input-border-width};
+  --#{$prefix}input-group-border-color: #{$input-border-color};
+  --#{$prefix}input-group-border-radius: #{$input-border-radius};
+  --#{$prefix}input-group-box-shadow: #{$input-box-shadow};
+  --#{$prefix}input-group-focus-border-bg: #{$input-focus-bg};
+  --#{$prefix}input-group-focus-border-color: #{$input-focus-border-color};
+  --#{$prefix}input-group-focus-box-shadow: #{$input-focus-box-shadow};
+  background-color: var(--#{$prefix}input-group-bg);
+  border: var(--#{$prefix}input-group-border-width) solid var(--#{$prefix}input-group-border-color);
+  @include border-radius(var(--#{$prefix}input-group-border-radius));
+  @include box-shadow(var(--#{$prefix}input-group-box-shadow));
+  @include transition($transition-base);
+}
+
+// Sizing
+
+.input-group-sm {
+  --#{$prefix}input-group-border-radius: #{$input-border-radius-sm};
+}
+
+.input-group-lg {
+  --#{$prefix}input-group-border-radius: #{$input-border-radius-lg};
+}
+
+// Border
+
+.input-group > * {
+  background-color: transparent !important;
+  border-width: 0 !important;
+  box-shadow: 0 0 !important;
+}
+
+.input-group:focus-within {
+  background-color: var(--#{$prefix}input-group-focus-bg);
+  border-color: var(--#{$prefix}input-group-focus-border-color);
+  @include box-shadow(var(--#{$prefix}input-group-focus-box-shadow));
+}
+
+// Text
+
+.input-group >  .input-group-text + .form-control {
+  padding-left: 0;
+}
+
+.input-group > .form-control:has(+ .input-group-text) {
+  padding-right: 0;
+}

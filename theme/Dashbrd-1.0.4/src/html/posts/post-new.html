@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="posts" page="post-new"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="posts" page="post-new"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="message-2"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Posts</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New post</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">New post</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <div class="row gx-2">
+              <div class="col-6 col-sm-auto">
+                <button class="btn btn-light w-100">Edit</button>
+              </div>
+              <div class="col-6 col-sm-auto">
+                <button class="btn btn-secondary w-100" type="submit" form="form">Publish</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="my-8" />
+
+        <!-- Alert -->
+        <div class="alert alert-warning alert-dismissible">
+          <strong class="fw-semibold">Heads up!</strong> To access the formatting options, highlight the text you'd like to style. A toolbar will appear,
+          allowing you to bold, italicize, and more.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-lg-3 order-lg-1">
+            <!-- Card -->
+            <div class="card position-sticky mb-8" style="top: 40px">
+              <div class="card-body py-3">
+                <div class="list-group list-group-flush">
+                  <div class="list-group-item px-0">
+                    <div class="row gx-4 align-items-center">
+                      <div class="col-auto">
+                        <div class="avatar avatar-sm">
+                          <img class="avatar-img" src="../assets/img/photos/photo-1.jpg" alt="..." />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>Emily Thompson</div>
+                        <div class="fs-sm text-body-secondary text-truncate">
+                          <a class="text-reset" href="mailto:james.smith@example.com">emily.thompson@example.com</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item px-0">
+                    <div class="form-check form-switch d-flex ps-0 mb-2">
+                      <label class="form-check-label me-auto" for="allowComments">Allow comments</label>
+                      <input class="form-check-input" type="checkbox" role="switch" id="allowComments" checked="checked" />
+                    </div>
+                    <div class="form-check form-switch d-flex ps-0">
+                      <label class="form-check-label me-auto" for="postAsAnonymous">Post as anonymous</label>
+                      <input class="form-check-input" type="checkbox" role="switch" id="postAsAnonymous" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-9 order-lg-0">
+            <!-- Content -->
+            <form id="form">
+              <div class="mb-4">
+                <label class="visually-hidden" for="title">Title</label>
+                <input
+                  class="form-control form-control-flush fs-5 fw-semibold"
+                  id="title"
+                  type="text"
+                  placeholder="Title"
+                  value="Embracing Modern Web Development Practices"
+                />
+              </div>
+              <div class="mb-7">
+                <label class="visually-hidden" for="post">Content</label>
+                <div class="form-control form-control-flush" id="post" data-placeholder="Enter your post content here..."></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>

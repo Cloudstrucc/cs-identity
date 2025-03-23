@@ -1,0 +1,8 @@
+// 
+// alert.scss
+// 
+
+.alert {
+  --#{$prefix}alert-border-color: #{$alert-border-color};
+  border-color: --#{$prefix}alert-border-color;
+}

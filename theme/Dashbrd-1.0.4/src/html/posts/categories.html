@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> partials/head title="Dashbrd"}}
+  </head>
+
+  <body>
+    <!-- Sidenav -->
+    {{> partials/sidenav category="posts" page="categories"}}
+
+    <!-- Topnav -->
+    {{> partials/topnav category="posts" page="categories"}}
+
+    <!-- Main -->
+    <main class="main px-lg-6">
+      <!-- Content -->
+      <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-xl rounded text-primary">
+              <i class="fs-2" data-duoicon="message-2"></i>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Posts</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Categories</li>
+              </ol>
+            </nav>
+
+            <!-- Heading -->
+            <h1 class="fs-4 mb-0">Categories</h1>
+          </div>
+          <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+            <!-- Action -->
+            <a class="btn btn-secondary d-block" href="#!"> <span class="material-symbols-outlined me-1">add</span> New category </a>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <!-- Card -->
+            <a class="card bg-primary-subtle border-transparent mb-6" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 12 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-1 text-primary opacity-50" data-duoicon="confetti"></i>
+                  </div>
+                </div>
+                <h3 class="fs-5">Announcements</h3>
+                <p class="text-body-secondary">For company updates, system changes, or important notices.</p>
+                <div class="text-body-secondary">20 posts</div>
+              </div>
+            </a>
+
+            <!-- Card -->
+            <a class="card bg-danger-subtle border-transparent mb-6" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 12 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-2 text-danger opacity-50" data-duoicon="chart-pie"></i>
+                  </div>
+                </div>
+                <h3 class="fs-6">Reports & analytics</h3>
+                <div class="text-body-secondary">28 posts</div>
+              </div>
+            </a>
+
+            <!-- Card -->
+            <a class="card bg-warning-subtle border-transparent mb-6 mb-lg-0" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 16 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-2 text-warning opacity-50" data-duoicon="user-card"></i>
+                  </div>
+                </div>
+                <h3 class="fs-6">Events & webinars</h3>
+                <div class="text-body-secondary">34 posts</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <!-- Card -->
+            <a class="card bg-warning-subtle border-transparent mb-6" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 9 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-2 text-warning opacity-50" data-duoicon="user"></i>
+                  </div>
+                </div>
+                <h3 class="fs-6">Client success stories</h3>
+                <div class="text-body-secondary">64 posts</div>
+              </div>
+            </a>
+
+            <!-- Card -->
+            <a class="card bg-success-subtle border-transparent mb-6" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 19 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-1 text-success opacity-50" data-duoicon="slideshow"></i>
+                  </div>
+                </div>
+                <h3 class="fs-5">Marketing campaigns</h3>
+                <p class="text-body-secondary">Posts related to new campaigns, marketing strategies, and promotions.</p>
+                <div class="text-body-secondary">62 posts</div>
+              </div>
+            </a>
+
+            <!-- Card -->
+            <a class="card bg-primary-subtle border-transparent mb-6 mb-md-0" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 10 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-2 text-primary opacity-50" data-duoicon="message-3"></i>
+                  </div>
+                </div>
+                <h3 class="fs-6">Team highlights</h3>
+                <div class="text-body-secondary">42 posts</div>
+              </div>
+            </a>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <!-- Card -->
+            <a class="card bg-danger-subtle border-transparent mb-6" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 26 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-1 text-danger opacity-50" data-duoicon="bank"></i>
+                  </div>
+                </div>
+                <h3 class="fs-5">Training & resources</h3>
+                <p class="text-body-secondary">Access to learning materials, tutorials, or resources for users and staff.</p>
+                <div class="text-body-secondary">38 posts</div>
+              </div>
+            </a>
+
+            <!-- Card -->
+            <a class="card bg-primary-subtle border-transparent" href="#!">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <small class="text-body-secondary"> 6 followers</small>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fs-2 text-primary opacity-50" data-duoicon="apple"></i>
+                  </div>
+                </div>
+                <h3 class="fs-6">Industry news</h3>
+                <div class="text-body-secondary">59 posts</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    {{> partials/scripts}}
+  </body>
+</html>
