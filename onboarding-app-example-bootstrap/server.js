@@ -94,5 +94,9 @@ app.post("/generate-did", async (req, res) => {
     }
 });
 
+// Import and use the new route
+const invitation = require('./routes/invitation.js');
+app.use('/invitation', invitation);
+
 // ✅ Start the server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
