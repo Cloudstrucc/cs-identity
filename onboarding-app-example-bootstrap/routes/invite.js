@@ -24,16 +24,8 @@ router.post('/', upload.none(), async (req, res) => {
   // Save code and expiration in your store (e.g., database)
   invitationStore[email] = { code, expiresAt };
 
-  // Configure nodemailer transporter (example uses Gmail; adjust for your SMTP service)
-  // const transporter = nodemailer.createTransport({
-  //   service: 'Gmail',
-  //   auth: {
-  //     user: 'fpearson613@gmail.com',    // Replace with your email
-  //     pass: 'Gaby613$'        // Replace with your email password or app password
-  //   }
-  // });
 
-  
+
   const transporter = nodemailer.createTransport({
     host: 'smtp.sendgrid.net',
     port: 587,
