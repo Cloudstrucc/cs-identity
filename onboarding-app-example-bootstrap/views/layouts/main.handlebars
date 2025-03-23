@@ -6,6 +6,8 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
     
     <!-- Settings -->
+
+
     <script>
       /*!
        * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
@@ -169,6 +171,7 @@
     
     <!-- Title -->
     <title>Vanguard Cloud Services</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js/dist/face-api.min.js"></script>
   </head>
 <body>
     <!-- Sidenav -->
@@ -743,7 +746,24 @@
     
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
+    
+
        
     <script src="./assets/js/scripts.js"></script>
+
+     
+  <!-- Inline script that uses faceapi -->
+  <script>
+    // Wait for the DOM and the face-api.js library to load
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Load models from your /models folder
+      await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('../../../models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('../../../models'),
+        faceapi.nets.faceRecognitionNet.loadFromUri('../../../models')
+      ]);
+      console.log("Face-api models loaded.");
+    });
+  </script>
 </body>
 </html>
