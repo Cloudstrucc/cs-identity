@@ -39,13 +39,10 @@ router.post('/', upload.none(), async (req, res) => {
     secure: false, // TLS will be used via STARTTLS
     auth: {
       user: "apikey",
-      pass: "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"
+      pass: process.env.SENDGRID_API_KEY      
     },
-    // tls: {
-    //   ciphers: 'SSLv3'
-    // }
   });
-  
+
   
 
   // Create the HTML email template
