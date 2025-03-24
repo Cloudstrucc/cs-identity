@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
-// GET route for '/newpage'
-router.get('/', (req, res) => {
+// GET route for '/invitation'
+router.get('/invitation', (req, res) => {
   res.render('invitation', { title: 'New Invitation' });
 });
 

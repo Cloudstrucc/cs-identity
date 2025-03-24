@@ -99,7 +99,7 @@ app.post("/generate-did", async (req, res) => {
 
 // Routes
 const invitation = require('./routes/invitation.js');
-app.use('/invitation', invitation);
+app.get('/invitation', invitation);
 
 const setupIdentity = require('./routes/setup-identity.js');
 app.get('/setup-identity', setupIdentity);
