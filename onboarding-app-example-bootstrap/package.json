@@ -18,5 +18,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
     "tesseract.js": "^6.0.0"
+  }, 
+  "scripts": {
+      "start": "node index.js"
   }
 }
