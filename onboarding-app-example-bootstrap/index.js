@@ -111,7 +111,7 @@ const tickets = require('./routes/tickets.js');
 app.get('/tickets', tickets);
 
 const inviteRouter = require('./routes/invite.js');
-app.get('/invite', inviteRouter);
+app.use('/invite', inviteRouter);
 
 const usersRouter = require('./routes/users.js');
 app.get('/users', usersRouter);
