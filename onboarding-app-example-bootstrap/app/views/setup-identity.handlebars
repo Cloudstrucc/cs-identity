@@ -1,0 +1,313 @@
+
+  <style>
+    /* Checkmark animation */
+    .checkmark {
+      font-size: 48px;
+      color: #28a745;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .checkmark.show {
+      opacity: 1;
+    }
+    /* Next button pulse animation */
+    .animate-next {
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    /* Extra spacing for retry buttons */
+    #retry-face-btn, #retry-id-btn {
+      margin-top: 20px;
+    }
+  </style>
+  <!-- Wizard Page Content -->
+  <div class="container-lg">
+    <!-- Page header -->    
+    <div class="row align-items-center">
+          <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
+            <div class="avatar text-info me-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fs-4 duo-icon duo-icon-world" data-duoicon="world"><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Z" class="duoicon-secondary-layer" opacity=".3"></path><path fill="currentColor" d="M12 4a7.988 7.988 0 0 0-6.335 3.114l-.165.221V9.02c0 1.25.775 2.369 1.945 2.809l.178.06 1.29.395c1.373.42 2.71-.697 2.577-2.096l-.019-.145-.175-1.049a1 1 0 0 1 .656-1.108l.108-.03.612-.14a2.667 2.667 0 0 0 1.989-3.263A7.987 7.987 0 0 0 12 4Zm2 9.4-1.564 1.251a.5.5 0 0 0-.041.744l1.239 1.239c.24.24.415.538.508.864l.175.613c.147.521.52.948 1.017 1.163a8.026 8.026 0 0 0 2.533-1.835l-.234-1.877a2 2 0 0 0-1.09-1.54l-1.47-.736A1 1 0 0 0 14 13.4Z" class="duoicon-primary-layer"></path></svg>
+            </div>
+            San Francisco, CA –&nbsp;<time datetime="20:00">8:00 PM</time>
+          </div>
+          <div class="col-12 col-md order-md-0 text-center text-md-start">
+            <h1>Hello, Fred</h1>
+            <p class="fs-lg text-body-secondary mb-0">Here's a summary of your account activity for this week.</p>
+          </div>
+        </div>
+
+    <!-- Divider -->
+    <hr class="my-8" />
+
+    <div class="row">
+      <div class="col-12">
+        <!-- Wizard Card -->
+        <div class="card mb-12">
+          <div class="card-header">
+            <h3 class="fs-6 mb-0">Configure your identity</h3>
+            <!-- Wizard Step Navigation -->
+            <ul class="nav nav-pills mt-3" id="identityWizard" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button type="button" class="nav-link active" id="wizard-step1-tab" data-bs-toggle="pill" data-bs-target="#wizard-step1" role="tab" aria-controls="wizard-step1" aria-selected="true">
+                  1. Facial Recognition
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button type="button" class="nav-link" id="wizard-step2-tab" data-bs-toggle="pill" data-bs-target="#wizard-step2" role="tab" aria-controls="wizard-step2" aria-selected="false">
+                  2. ID Verification
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button type="button" class="nav-link" id="wizard-step3-tab" data-bs-toggle="pill" data-bs-target="#wizard-step3" role="tab" aria-controls="wizard-step3" aria-selected="false">
+                  3. Issue Credential
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <!-- Wizard Content -->
+            <div class="tab-content" id="wizardTabContent">
+              <!-- Step 1: Facial Recognition -->
+              <div class="tab-pane fade show active" id="wizard-step1" role="tabpanel" aria-labelledby="wizard-step1-tab">
+                <div class="text-center">
+                  <h4 class="fs-6">Facial Recognition</h4>
+                  <p class="text-body-secondary">Align your face in the frame to verify your identity.</p>
+                  <!-- Video element with metallic white border -->
+                  <video id="video" class="img-fluid mb-3 border border-2 rounded" style="border-color: #f0f0f0; box-shadow: 0 0 8px rgba(255,255,255,0.7);" width="320" height="240" autoplay></video>
+                  <canvas id="canvas" width="320" height="240" class="d-none"></canvas>
+                  <!-- Checkmark animation for face capture -->
+                  <div id="face-checkmark" class="checkmark mt-2">&#10004;</div>
+                  <!-- Retry button for face capture (hidden by default) -->
+                  <button id="retry-face-btn" type="button" class="btn btn-warning mt-2 d-none">Retry Face Capture</button>
+                  <!-- Capture button -->
+                  <button id="capture-btn" type="button" class="btn btn-primary mx-auto">Scan Face</button>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-dark" id="step1-next-btn" disabled>Next</button>
+                </div>
+              </div>
+
+              <!-- Step 2: ID Verification -->
+              <div class="tab-pane fade" id="wizard-step2" role="tabpanel" aria-labelledby="wizard-step2-tab">
+                <div class="text-center">
+                  <h4 class="fs-6">ID Verification</h4>
+                  <p class="text-body-secondary">Upload your government-issued ID for verification.</p>
+                  <input type="file" id="upload-id" accept="image/*" class="form-control mt-3 mx-auto w-75">
+                  <!-- Verify button -->
+                  <button id="verify-id-btn" type="button" class="btn btn-secondary mt-3">Verify ID</button>
+                  <!-- Retry button for ID verification (hidden by default) -->
+                  <button id="retry-id-btn" type="button" class="btn btn-warning mt-3 d-none">Retry ID Verification</button>
+                  <!-- Checkmark animation for ID verification -->
+                  <div id="id-checkmark" class="checkmark mt-2"></div>
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                  <button type="button" class="btn btn-dark" onclick="new bootstrap.Tab(document.querySelector('#wizard-step1-tab')).show()">Back</button>
+                  <button type="button" class="btn btn-dark" id="step2-next-btn" disabled>Next</button>
+                </div>
+              </div>
+
+              <!-- Step 3: Issue Verifiable Credential -->
+              <div class="tab-pane fade" id="wizard-step3" role="tabpanel" aria-labelledby="wizard-step3-tab">
+                <div class="text-center">
+                  <h4 class="fs-6">Issue Verifiable Credential</h4>
+                  <p class="text-body-secondary">Once verified, your decentralized identity will be issued.</p>
+                  <button id="issue-vc-btn" type="button" class="btn btn-success mt-3">Get DID Credential</button>
+                </div>
+                <div class="d-flex justify-content-start mt-4">
+                  <button type="button" class="btn btn-dark" onclick="new bootstrap.Tab(document.querySelector('#wizard-step2-tab')).show()">Back</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Wizard Card -->
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/scripts.js"></script>
+
+  <!-- JavaScript: Face detection, matching & UI animations -->
+  <script>
+    // Load face-api.js models from the specified folders
+    window.addEventListener('DOMContentLoaded', async () => {
+      await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models/tiny_face_detector_model'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models/face_landmark_68'),
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models/face_recognition')
+      ]);
+      console.log("Face-api models loaded.");
+    });
+
+    // STEP 1: Capture Face Descriptor from live video
+    const captureBtn = document.getElementById('capture-btn');
+    const videoEl = document.getElementById('video');
+    const canvasEl = document.getElementById('canvas');
+    const faceCheckmark = document.getElementById('face-checkmark');
+    const retryFaceBtn = document.getElementById('retry-face-btn');
+    const step1NextBtn = document.getElementById('step1-next-btn');
+    const wizardStep1Tab = document.getElementById('wizard-step1-tab');
+
+    captureBtn.addEventListener('click', async () => {
+      const context = canvasEl.getContext('2d');
+      context.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+      
+      const detection = await faceapi
+        .detectSingleFace(canvasEl, new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+      
+      if (detection) {
+        localStorage.setItem('faceDescriptor', JSON.stringify(Array.from(detection.descriptor)));
+        // Hide capture button and video element
+        captureBtn.style.display = 'none';
+        //videoEl.style.display = 'none';        
+        videoEl.style.display = 'none';
+        // Show the checkmark animation
+        faceCheckmark.classList.add('show');
+        // Enable and animate the Next button
+        step1NextBtn.disabled = false;
+        step1NextBtn.classList.add('animate-next');
+        // Append a checkmark to the Step 1 tab if not already there
+        if (!wizardStep1Tab.innerHTML.includes('&#10004;')) {
+          wizardStep1Tab.innerHTML += ' <span class="ms-2 text-success">&#10004;</span>';
+        }
+        // Reveal the retry button for face capture
+        retryFaceBtn.classList.remove('d-none');
+      } else {
+        alert("No face detected. Please try again.");
+      }
+    });
+
+    // Retry Face Capture: Reset UI for Step 1
+    retryFaceBtn.addEventListener('click', () => {
+      localStorage.removeItem('faceDescriptor');
+      faceCheckmark.classList.remove('show');      
+      videoEl.style.display = 'inline-block';
+      captureBtn.style.display = 'block';
+      step1NextBtn.disabled = true;
+      step1NextBtn.classList.remove('animate-next');
+      // Hide the retry button after pressing it
+      retryFaceBtn.style.display = 'none';
+    });
+
+
+    // Navigation: Step 1 to Step 2
+    step1NextBtn.addEventListener('click', () => {
+      new bootstrap.Tab(document.querySelector('#wizard-step2-tab')).show();
+    });
+
+    // STEP 2: Verify ID Photo against stored Face Descriptor
+    const verifyIdBtn = document.getElementById('verify-id-btn');
+    const retryIdBtn = document.getElementById('retry-id-btn');
+    const idCheckmark = document.getElementById('id-checkmark');
+    const step2NextBtn = document.getElementById('step2-next-btn');
+    const wizardStep2Tab = document.getElementById('wizard-step2-tab');
+
+    verifyIdBtn.addEventListener('click', async () => {
+      const fileInput = document.getElementById('upload-id');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please upload an image for ID verification.");
+        return;
+      }
+      
+      const loadImage = (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error("Error loading image."));
+            img.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      };
+      
+      let img;
+      try {
+        img = await loadImage(file);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to load image. Please try again.");
+        return;
+      }
+      
+      console.log("Image dimensions:", img.width, img.height);
+      
+      const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.7 });
+      const detection = await faceapi
+        .detectSingleFace(img, detectorOptions)
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+      
+      if (!detection) {
+        alert("No face detected in the ID image.");
+        return;
+      }
+      
+      const idDescriptor = Array.from(detection.descriptor);
+      const stored = localStorage.getItem('faceDescriptor');
+      if (!stored) {
+        alert("No face descriptor found from facial recognition. Please capture your face first.");
+        return;
+      }
+      const faceDescriptor = JSON.parse(stored);
+      
+      console.log("Stored descriptor length:", faceDescriptor.length);
+      console.log("ID descriptor length:", idDescriptor.length);
+      
+      const distance = faceapi.euclideanDistance(faceDescriptor, idDescriptor);
+      console.log("Distance:", distance);
+      
+      // If match is successful, update UI for Step 2
+      if (distance < 0.7) {
+        // Hide the file input and Verify button
+        fileInput.style.display = 'none';
+        verifyIdBtn.style.display = 'none';
+        // Show ID checkmark animation
+        idCheckmark.innerHTML = "&#10004;";
+        idCheckmark.classList.add('show');
+        alert("Face match successful!");
+        // Enable and animate Next button
+        step2NextBtn.disabled = false;
+        step2NextBtn.classList.add('animate-next');
+        // Append a checkmark to the Step 2 tab if not already there
+        if (!wizardStep2Tab.innerHTML.includes('&#10004;')) {
+          wizardStep2Tab.innerHTML += ' <span class="ms-2 text-success">&#10004;</span>';
+        }
+        // Reveal the Retry ID Verification button
+        retryIdBtn.classList.remove('d-none');
+      } else {
+        alert("Face match unsuccessful. Please try again.");
+        step2NextBtn.disabled = true;
+        step2NextBtn.classList.remove('animate-next');
+      }
+    });
+
+    // Retry ID Verification: Reset UI for Step 2
+    retryIdBtn.addEventListener('click', () => {
+      const fileInput = document.getElementById('upload-id');
+      fileInput.style.display = '';  // Restore default
+      fileInput.value = '';          // Clear selection
+      verifyIdBtn.style.display = 'inline-block';
+      idCheckmark.classList.remove('show');
+      idCheckmark.innerHTML = "";
+      step2NextBtn.disabled = true;
+      step2NextBtn.classList.remove('animate-next');
+      retryIdBtn.classList.add('d-none');
+    });
+
+    // Navigation: Step 2 to Step 3
+    step2NextBtn.addEventListener('click', () => {
+      new bootstrap.Tab(document.querySelector('#wizard-step3-tab')).show();
+    });
+  </script>
+

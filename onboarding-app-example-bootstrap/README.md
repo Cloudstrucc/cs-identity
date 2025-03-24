@@ -183,6 +183,12 @@ az webapp create \
 
 4️⃣ **ZIP Deploy your app**
 
+```bash
+zip -r app.zip . -x node_modules/\* tests/\*
+```
+
+Once zipped upload to the file share for the cloudshell.
+
 Change into the directory containing your ZIP (e.g. Cloud Shell’s `clouddrive`), then:
 
 ```bash

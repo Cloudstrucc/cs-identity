@@ -1,0 +1,65 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Compiled output
+dist/
+build/
+*.tsbuildinfo
+
+# Uploads & temp files
+uploads/
+tmp/
+*.tmp
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# Dependency directories
+public/bootstrap-theme/node_modules/
+public/bootstrap-theme/package-lock.json
+
+# Handlebars precompiled views
+views/**/*.hbs.js
+
+# OpenCV Build
+opencv-build/
+
+# Private keys or sensitive files
+keys/
+private.pem
+cert.pem
