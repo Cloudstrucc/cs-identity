@@ -753,17 +753,17 @@
 
      
   <!-- Inline script that uses faceapi -->
-  <script>
+  {{!-- <script>
     // Wait for the DOM and the face-api.js library to load
-    window.addEventListener('DOMContentLoaded', async () => {
+    //window.addEventListener('DOMContentLoaded', async () => {
       // Load models from your /models folder
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri('../../../models'),
         faceapi.nets.faceLandmark68Net.loadFromUri('../../../models'),
         faceapi.nets.faceRecognitionNet.loadFromUri('../../../models')
       ]);
-      console.log("Face-api models loaded.");
+      //console.log("Face-api models loaded.");
     });
-  </script>
+  </script> --}}
 </body>
 </html>

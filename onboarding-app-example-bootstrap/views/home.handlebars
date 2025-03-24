@@ -108,9 +108,9 @@
   window.addEventListener('DOMContentLoaded', async () => {
       // Load models from your /models folder
       await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models/tiny_face_detector_model')
+        faceapi.nets.tinyFaceDetector.loadFromUri('/models/tiny_face_detector_model'),
         faceapi.nets.faceLandmark68Net.loadFromUri('/models/face_landmark_68'),
-  faceapi.nets.faceRecognitionNet.loadFromUri('/models/face_recognition')
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models/face_recognition')
       ]);
       console.log("Face-api models loaded.");
     });
