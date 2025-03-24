@@ -8,21 +8,25 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 
 ### Pre-requisites
 
-Ensrue that you are usnig Node 18, or 20. E.G install NVM and use command nvm use 20 before running the npm install
+Ensrue that you are usnig Node 18, or 20. **E.G install NVM and use command nvm use 20 before running the npm install**
 
 #### 🖥️ Windows (PowerShell)
 
+This command works only if you are using Node 20
+
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; cat .env | tr -d '\r' ; dos2unix .env ; node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; cat .env | tr -d '\r' ; dos2unix .env ; node index.js
 ```
 
 #### 🐧 macOS / Linux (Terminal)
 
+This command works only if you are using Node 20
+
 ```sh
-git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && ETHERIUM_ADDRESS=$(node genwallet.js | grep -o '0x[a-fA-F0-9]*' | head -1) && echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" >> .env && node server.js
+git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && ETHERIUM_ADDRESS=$(node genwallet.js | grep -o '0x[a-fA-F0-9]*' | head -1) && echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" >> .env && node index.js
 ```
 
-### 📥 Clone the Repository
+### 📥 Clone the Repository (follow this step if opting to not use the useful commands above)
 
 ```sh
 git clone https://github.com/Cloudstrucc/cs-identity.git
@@ -84,7 +88,7 @@ dos2unix .env
 ### ▶️ Start the Application
 
 ```sh
-node server.js
+node server.js OR npm start
 ```
 
 ## 🛠️ Troubleshooting
@@ -149,7 +153,7 @@ For any issues, refer to the documentation or raise an issue in the repository.
 
 ---
 
-### 🔢 Deployment Steps for Azure 
+### 🔢 Deployment Steps for Azure
 
 Pre-requisites, install the Azure CLI SDK on your machine and make sure you can run the az commands from your terminal. You can also use the Azure shell if you have access to it.
 
@@ -186,10 +190,20 @@ az webapp create \
 4️⃣ **ZIP Deploy your app**
 
 ```bash
+npm ci --only=production
 zip -r app.zip . -x node_modules/\* tests/\*
+
+# if you have issues with npm ci you can zip by excluding node_modules
+zip -r app.zip . -x "*.git*" "tests/*"
+
+#This will produce an app.zip file at the root of your project that you will then upload to the azure shell files via the #Manage Files menu on the shell ribbon.
 ```
 
-Once zipped upload to the file share for the cloudshell.
+You will need to ensure to explicitly tell Azure to build during the deploy (so running npm install). If you keep the node modules in your zip file the zip file is over the limit of 150mb that uploads are allowed directly via the azure shell. If you want to upload files larger with the app including the node_modules, you can do so using azure storage (but not documneted here).
+
+```bash
+az webapp config appsettings set   --resource-group CLIENT13   --name vbi-demo-dev   --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+```
 
 Change into the directory containing your ZIP (e.g. Cloud Shell’s `clouddrive`), then:
 
@@ -212,3 +226,4 @@ https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
 
 * Deployment via ZIP on the **F1 (Free)** tier does **not** rebuild your code.
 * If you run into size limits (>150 MB), upload the ZIP to Azure Blob Storage and deploy via its SAS URL instead.
+* You can configure an identity provider in the web app in azure so that the app isnt just being accessed anonymously.

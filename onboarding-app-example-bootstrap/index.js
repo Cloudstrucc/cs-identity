@@ -121,5 +121,5 @@ app.get('/user-details', usersDetailsRouter);
 
 // ✅ Start the server
 // app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
