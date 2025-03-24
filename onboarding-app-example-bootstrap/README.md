@@ -220,6 +220,17 @@ az webapp deployment source config-zip \
 https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
 ```
 
+## Steps to redeploy
+
+```bash
+npm ci --only=productionzip -r app.zip . -x ".git" "tests/*
+
+az webapp config appsettings set   --resource-group CLIENT13   --name vbi-demo-dev   --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+az webapp deploy   --resource-group CLIENT13   --name vbi-demo-dev   --src-path app.zip   --type zip
+```
+
+
 ---
 
 ### 💡 Notes
