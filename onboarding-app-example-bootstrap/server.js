@@ -65,8 +65,6 @@ app.post("/verify-id", upload.single("id_image"), async (req, res) => {
         res.status(500).json({ error: "ID Verification Failed" });
     }
 });
-
-
   
 
 // ✅ DID Issuance Function
@@ -103,14 +101,20 @@ app.post("/generate-did", async (req, res) => {
 const invitation = require('./routes/invitation.js');
 app.use('/invitation', invitation);
 
+const setupIdentity = require('./routes/setup-identity.js');
+app.get('/setup-identity', setupIdentity);
+
 const adminDashboard = require('./routes/admin-dashboard.js');
-app.use('/admin-dashboard', adminDashboard);
+app.get('/admin-dashboard', adminDashboard);
 
 const tickets = require('./routes/tickets.js');
-app.use('/tickets', tickets);
+app.get('/tickets', tickets);
 
 const inviteRouter = require('./routes/invite');
-app.use('/invite', inviteRouter);
+app.get('/invite', inviteRouter);
+
+const usersRouter = require('./routes/users');
+app.get('/users', usersRouter);
 
 // ✅ Start the server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
