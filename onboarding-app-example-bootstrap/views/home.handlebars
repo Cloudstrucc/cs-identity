@@ -186,7 +186,7 @@
     retryFaceBtn.addEventListener('click', () => {
       localStorage.removeItem('faceDescriptor');
       faceCheckmark.classList.remove('show');      
-      videoEl.style.display = 'block';
+      videoEl.style.display = 'inline-block';
       captureBtn.style.display = 'block';
       step1NextBtn.disabled = true;
       step1NextBtn.classList.remove('animate-next');
