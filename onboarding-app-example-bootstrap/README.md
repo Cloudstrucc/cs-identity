@@ -222,12 +222,34 @@ https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
 
 ## Steps to redeploy
 
+Before deploying to azure, set up your project to only include what is required. Its also recommented that your purge the package-lock.json file
+
 ```bash
 npm ci --only=production ; zip -r app.zip . -x ".git" "tests/*"
+```
 
-az webapp config appsettings set   --resource-group CLIENT13   --name vbi-demo-dev   --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true \
+Next run the following az command in the azure shell whcih will re-deploy the application:
 
-az webapp deploy   --resource-group CLIENT13   --name vbi-demo-dev   --src-path app.zip   --type zip
+```bash
+
+
+az webapp config appsettings set \
+  --resource-group CLIENT13 \
+  --name vbi-demo-dev \
+  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true &&
+
+az webapp deploy \
+  --resource-group CLIENT13 \
+  --name vbi-demo-dev \
+  --src-path app.zip \
+  --type zip &&
+
+az webapp config appsettings set \
+  --resource-group CLIENT13 \
+  --name vbi-demo-dev \
+  --settings FRONTEND_URL="https://vbi-demo-dev.azurewebsites.net"
+
+
 ```
 
 ---
