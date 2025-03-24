@@ -8,7 +8,7 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 
 ### Pre-requisites
 
-Ensrue that you are usnig Node 18, or 20. 
+Ensrue that you are usnig Node 18, or 20.
 
 #### 🖥️ Windows (PowerShell)
 
@@ -136,3 +136,71 @@ Ensure Node.js is correctly installed. If not, reinstall it from [Node.js offici
 ## ✅ Application is now running! 🎉
 
 For any issues, refer to the documentation or raise an issue in the repository.
+
+---
+
+## 🚀 Deploy to Azure App Service (Free Tier)
+
+### 📋 Prerequisites
+
+* An Azure subscription
+* Azure CLI installed (or open Azure Cloud Shell via portal.azure.com)
+* A ZIP of your built app (e.g. `app.zip`)
+
+---
+
+### 🔢 Deployment Steps
+
+1️⃣ **Login & select subscription**
+
+```bash
+az login
+az account set --subscription "<YOUR_SUBSCRIPTION_NAME_OR_ID>"
+```
+
+2️⃣ **Create Resource Group & Free App Service Plan**
+
+```bash
+az group create --name myResourceGroup --location eastus
+az appservice plan create \
+  --name myAppPlan \
+  --resource-group myResourceGroup \
+  --sku F1 \
+  --is-linux
+```
+
+3️⃣ **Create the Web App**
+
+*(Choose a globally‑unique name — no spaces)*
+
+```bash
+az webapp create \
+  --resource-group myResourceGroup \
+  --plan myAppPlan \
+  --name <YOUR-UNIQUE-APP-NAME> \
+  --runtime "NODE|18-lts"
+```
+
+4️⃣ **ZIP Deploy your app**
+
+Change into the directory containing your ZIP (e.g. Cloud Shell’s `clouddrive`), then:
+
+```bash
+az webapp deployment source config-zip \
+  --resource-group myResourceGroup \
+  --name <YOUR-UNIQUE-APP-NAME> \
+  --src app.zip
+```
+
+✅ **Done!** Your app is live at:
+
+```
+https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
+```
+
+---
+
+### 💡 Notes
+
+* Deployment via ZIP on the **F1 (Free)** tier does **not** rebuild your code.
+* If you run into size limits (>150 MB), upload the ZIP to Azure Blob Storage and deploy via its SAS URL instead.
