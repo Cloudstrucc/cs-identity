@@ -164,6 +164,7 @@
         localStorage.setItem('faceDescriptor', JSON.stringify(Array.from(detection.descriptor)));
         // Hide capture button and video element
         captureBtn.style.display = 'none';
+        //videoEl.style.display = 'none';        
         videoEl.style.display = 'none';
         // Show the checkmark animation
         faceCheckmark.classList.add('show');
@@ -184,7 +185,7 @@
     // Retry Face Capture: Reset UI for Step 1
     retryFaceBtn.addEventListener('click', () => {
       localStorage.removeItem('faceDescriptor');
-      faceCheckmark.classList.remove('show');
+      faceCheckmark.classList.remove('show');      
       videoEl.style.display = 'block';
       captureBtn.style.display = 'block';
       step1NextBtn.disabled = true;
