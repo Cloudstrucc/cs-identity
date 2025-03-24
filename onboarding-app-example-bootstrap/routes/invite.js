@@ -29,7 +29,7 @@ router.post('/', upload.none(), async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.sendgrid.net',
     port: 587,
-    secure: false, // TLS will be used via STARTTLS
+    secure: false, //TLS will be used via STARTTLS
     auth: {
       user: "apikey",
       pass: process.env.SENDGRID_API_KEY      
