@@ -149,7 +149,9 @@ For any issues, refer to the documentation or raise an issue in the repository.
 
 ---
 
-### 🔢 Deployment Steps
+### 🔢 Deployment Steps for Azure 
+
+Pre-requisites, install the Azure CLI SDK on your machine and make sure you can run the az commands from your terminal. You can also use the Azure shell if you have access to it.
 
 1️⃣ **Login & select subscription**
 
