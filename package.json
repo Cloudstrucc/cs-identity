@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@azure/arm-appservice": "^16.0.0",
-    "@azure/identity": "^4.8.0",
-    "@azure/storage-blob": "^12.27.0"
-  }
-}
