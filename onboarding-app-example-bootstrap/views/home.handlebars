@@ -103,19 +103,18 @@
   </div>
 </div>
 
-<!-- JavaScript: Face detection & matching -->
 <script>
+  // Load face-api.js models from the specified folders
   window.addEventListener('DOMContentLoaded', async () => {
-      // Load models from your /models folder
-      await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/models/tiny_face_detector_model'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('/models/face_landmark_68'),
-        faceapi.nets.faceRecognitionNet.loadFromUri('/models/face_recognition')
-      ]);
-      console.log("Face-api models loaded.");
-    });
+    await Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models/tiny_face_detector_model'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models/face_landmark_68'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models/face_recognition')
+    ]);
+    console.log("Face-api models loaded.");
+  });
 
-  // Step 1: Capture Face Descriptor
+  // Step 1: Capture Face Descriptor from live video
   const captureBtn = document.getElementById('capture-btn');
   captureBtn.addEventListener('click', async () => {
     const videoEl = document.getElementById('video');
@@ -123,25 +122,30 @@
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     context.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+    
     // Detect face and compute descriptor using TinyFaceDetector
-    const detection = await faceapi.detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+    const detection = await faceapi
+      .detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+    
     if (detection) {
-      // Save descriptor in localStorage as a JSON string
-      localStorage.setItem('faceDescriptor', JSON.stringify(detection.descriptor));
+      // Convert descriptor to an array and store it in localStorage
+      localStorage.setItem('faceDescriptor', JSON.stringify(Array.from(detection.descriptor)));
       alert("Face captured successfully.");
-      // Enable the Next button for Step 1
+      // Enable Next button for Step 1
       document.getElementById('step1-next-btn').disabled = false;
     } else {
       alert("No face detected. Please try again.");
     }
   });
 
-  // Enable navigation from Step 1 to Step 2 when Next is clicked
+  // Navigation: Step 1 to Step 2
   document.getElementById('step1-next-btn').addEventListener('click', () => {
     new bootstrap.Tab(document.querySelector('#wizard-step2-tab')).show();
   });
 
-  // Step 2: Verify ID Photo against Face Descriptor
+  // Step 2: Verify ID Photo against stored Face Descriptor
   document.getElementById('verify-id-btn').addEventListener('click', async () => {
     const fileInput = document.getElementById('upload-id');
     const file = fileInput.files[0];
@@ -149,27 +153,68 @@
       alert("Please upload an image for ID verification.");
       return;
     }
-    // Convert file to an Image element
-    const img = await faceapi.bufferToImage(file);
-    // Detect face in the ID image
-    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+    
+    // Helper: Convert file to an HTMLImageElement using FileReader
+    const loadImage = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error("Error loading image."));
+          img.src = reader.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    };
+    
+    let img;
+    try {
+      img = await loadImage(file);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to load image. Please try again.");
+      return;
+    }
+    
+    console.log("Image dimensions:", img.width, img.height);
+    
+    // Adjust detector options as needed for ID images
+    const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.7 });
+    
+    // Detect face in the ID image using the loaded image element
+    const detection = await faceapi
+      .detectSingleFace(img, detectorOptions)
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+    
     if (!detection) {
       alert("No face detected in the ID image.");
       return;
     }
-    const idDescriptor = detection.descriptor;
-    // Retrieve the stored face descriptor from Step 1
+    
+    // Convert the detected ID face descriptor to a standard array
+    const idDescriptor = Array.from(detection.descriptor);
+    
+    // Retrieve the stored face descriptor from Step 1 and convert it to an array
     const stored = localStorage.getItem('faceDescriptor');
     if (!stored) {
       alert("No face descriptor found from facial recognition. Please capture your face first.");
       return;
     }
     const faceDescriptor = JSON.parse(stored);
+    
+    // Log descriptor lengths for debugging
+    console.log("Stored descriptor length:", faceDescriptor.length);
+    console.log("ID descriptor length:", idDescriptor.length);
+    
     // Compute the Euclidean distance between the two descriptors
     const distance = faceapi.euclideanDistance(faceDescriptor, idDescriptor);
     console.log("Distance:", distance);
-    // Set a threshold for a match (adjust as needed; 0.6 is common)
-    if (distance < 0.6) {
+    
+    // Set a threshold for a match (0.6 is common; adjust as needed)
+    if (distance < 0.7) {
       alert("Face match successful!");
       // Enable Next button for Step 2
       document.getElementById('step2-next-btn').disabled = false;
@@ -179,11 +224,11 @@
     }
   });
 
-  // Enable navigation from Step 2 to Step 3 when Next is clicked
+  // Navigation: Step 2 to Step 3
   document.getElementById('step2-next-btn').addEventListener('click', () => {
     new bootstrap.Tab(document.querySelector('#wizard-step3-tab')).show();
   });
-  
 </script>
+
 
 

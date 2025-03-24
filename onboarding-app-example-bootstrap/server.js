@@ -55,16 +55,19 @@ app.post("/verify-id", upload.single("id_image"), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: "No ID image uploaded" });
     }
-
     try {
         // Simulating ID OCR and verification
         console.log("📸 Received ID image:", req.file.filename);
         res.json({ message: "✅ ID Verified Successfully" });
+         
     } catch (error) {
         console.error("❌ Error verifying ID:", error);
         res.status(500).json({ error: "ID Verification Failed" });
     }
 });
+
+
+  
 
 // ✅ DID Issuance Function
 async function issueDIDToken(did) {
