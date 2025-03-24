@@ -13,6 +13,7 @@
     "body-parser": "^1.20.3",
     "canvas": "^2.11.2",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
     "did-jwt": "^8.0.8",
     "did-resolver": "^4.1.0",
     "dotenv": "^16.4.7",
@@ -25,7 +26,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
     "tesseract.js": "^6.0.0"
-  }, 
+  },
   "scripts": {
     "start": "node index.js",
     "deploy": "npm ci --only=production && zip -r app.zip . -x \"node_modules/*\" \"tests/*\" && az webapp deployment source config-zip --resource-group CLIENT12 --name vbi-demo-dev --src ./app.zip"

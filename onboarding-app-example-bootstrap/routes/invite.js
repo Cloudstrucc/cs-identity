@@ -38,57 +38,29 @@ router.post('/', upload.none(), async (req, res) => {
 
   
 
-  // Create the HTML email template
-  const emailTemplate = `
-  <html>
-    <head>
-      <style>
-        body {
-          font-family: sans-serif;
-          background-color: #f8f9fa;
-          padding: 20px;
-        }
-        .container {
-          background: #ffffff;
-          padding: 20px;
-          border-radius: 8px;
-          max-width: 600px;
-          margin: auto;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-          font-size: 24px;
-          margin-bottom: 10px;
-          color: #343a40;
-        }
-        .code {
-          font-size: 20px;
-          color: #17a2b8;
-          font-weight: bold;
-          margin: 20px 0;
-        }
-        .footer {
-          font-size: 12px;
-          color: #6c757d;
-          margin-top: 20px;
-        }
-      </style>
-    </head>
+  const frontendUrl = process.env.FRONTEND_URL || 'https://vbi-demo-dev.azurewebsites.net';
+
+    const emailTemplate = `
+    <html>
+    <head>…</head>
     <body>
       <div class="container">
         <div class="header">Your Invitation Code</div>
         <p>Hi ${name},</p>
         <p>Your invitation code is:</p>
         <div class="code">${code}</div>
+        <p>
+          <a href="${frontendUrl}/redeem-invitation?code=${code}" target="_blank" rel="noopener noreferrer">
+            Follow this link to redeem your invitation
+          </a>
+        </p>
         <p>This code will expire in 24 hours.</p>
         <p>Thank you,<br>The Team</p>
-        <div class="footer">
-          If you did not request this invitation, please ignore this email.
-        </div>
+        <div class="footer">If you did not request this invitation, please ignore this email.</div>
       </div>
     </body>
-  </html>
-  `;
+    </html>`;
+
 
   // Set up mail options
   const mailOptions = {

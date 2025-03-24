@@ -49,6 +49,7 @@ if (!PRIVATE_KEY || PRIVATE_KEY.length !== 64) {
 
 // ✅ Serve Home Page
 app.get("/", (req, res) => res.render("home", { layout: false }));
+app.get("/redeem-invitation", (req, res) => res.render("redeem-invitation", { layout: false }));
 
 // ✅ ID Verification Route
 app.post("/verify-id", upload.single("id_image"), async (req, res) => {
@@ -118,6 +119,7 @@ app.get('/users', usersRouter);
 
 const usersDetailsRouter = require('./routes/user-details.js');
 app.get('/user-details', usersDetailsRouter);
+
 
 // ✅ Start the server
 // app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
