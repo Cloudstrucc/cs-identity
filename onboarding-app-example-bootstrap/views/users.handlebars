@@ -23,7 +23,7 @@
 </div>
 <div class="col-12 col-sm-auto mt-4 mt-sm-0">
 <!-- Action -->
-<a class="btn btn-secondary d-block" href="#!"> <span class="material-symbols-outlined me-1">add</span> New user </a>
+<a class="btn btn-secondary d-block" href="/invitation"> <span class="material-symbols-outlined me-1">add</span> New user </a>
 </div>
 </div>
 
@@ -492,3 +492,24 @@
 <!-- JAVASCRIPT -->
 <!-- Map JS -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('table.table-selectable tbody tr').forEach(row => {
+    row.style.cursor = 'pointer';
+
+    row.addEventListener('click', e => {
+      // Don’t override clicks on links or checkboxes
+      if (e.target.closest('a') || e.target.closest('input[type="checkbox"]')) return;
+
+      const emailLink = row.querySelector('td .text-reset');
+      if (!emailLink) return;
+
+      const email = emailLink.textContent.trim();
+      if (email) {
+        window.location.href = `/user-details?id=${encodeURIComponent(email)}`;
+      }
+    });
+  });
+});
+</script>

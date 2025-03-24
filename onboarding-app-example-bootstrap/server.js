@@ -110,11 +110,14 @@ app.get('/admin-dashboard', adminDashboard);
 const tickets = require('./routes/tickets.js');
 app.get('/tickets', tickets);
 
-const inviteRouter = require('./routes/invite');
+const inviteRouter = require('./routes/invite.js');
 app.get('/invite', inviteRouter);
 
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users.js');
 app.get('/users', usersRouter);
+
+const usersDetailsRouter = require('./routes/user-details.js');
+app.get('/user-details', usersDetailsRouter);
 
 // ✅ Start the server
 app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
