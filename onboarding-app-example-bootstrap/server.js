@@ -48,7 +48,7 @@ if (!PRIVATE_KEY || PRIVATE_KEY.length !== 64) {
 }
 
 // ✅ Serve Home Page
-app.get("/", (req, res) => res.render("home"));
+app.get("/", (req, res) => res.render("home", { layout: false }));
 
 // ✅ ID Verification Route
 app.post("/verify-id", upload.single("id_image"), async (req, res) => {

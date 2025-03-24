@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 // GET route for '/sign-in (home)'
-router.get('/', (req, res) => {
-  res.render('home', { layout:false, title: 'Setup identity' });
+router.get('/sign-in', (req, res) => {
+  res.render('sign-in', { layout:false, title: 'Sign in' });
 });
 
 module.exports = router;
