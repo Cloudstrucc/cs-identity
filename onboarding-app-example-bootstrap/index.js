@@ -120,4 +120,6 @@ const usersDetailsRouter = require('./routes/user-details.js');
 app.get('/user-details', usersDetailsRouter);
 
 // ✅ Start the server
-app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
+// app.listen(port, () => console.log(`🚀 Server running on http://localhost:${port}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

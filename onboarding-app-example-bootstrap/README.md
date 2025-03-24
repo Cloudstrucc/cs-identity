@@ -8,7 +8,7 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 
 ### Pre-requisites
 
-Ensrue that you are usnig Node 18, or 20.
+Ensrue that you are usnig Node 18, or 20. E.G install NVM and use command nvm use 20 before running the npm install
 
 #### 🖥️ Windows (PowerShell)
 

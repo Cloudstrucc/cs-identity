@@ -4,7 +4,7 @@
   "description": "VBI Node.js Onboarding App",
   "main": "index.js",
   "engines": {
-    "node": ">=18"
+    "node": "20"
   },
   "dependencies": {
     "@aws-sdk/client-rekognition": "^3.734.0",
