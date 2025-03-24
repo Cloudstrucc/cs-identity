@@ -1,4 +1,11 @@
 {
+  "name": "onboarding-app",
+  "version": "1.0.0",
+  "description": "VBI Node.js Onboarding App",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@aws-sdk/client-rekognition": "^3.734.0",
     "@tensorflow/tfjs-node": "^4.22.0",
@@ -20,6 +27,7 @@
     "tesseract.js": "^6.0.0"
   }, 
   "scripts": {
-      "start": "node index.js"
+    "start": "node index.js",
+    "deploy": "npm ci --only=production && zip -r app.zip . -x \"node_modules/*\" \"tests/*\" && az webapp deployment source config-zip --resource-group CLIENT12 --name vbi-demo-dev --src ./app.zip"
   }
 }
