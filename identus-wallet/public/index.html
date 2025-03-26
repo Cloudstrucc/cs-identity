@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DID Wallet</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; background: #f9f9f9; }
+    button { margin: 1em 0; padding: 10px; font-size: 1rem; }
+    pre { background: #eee; padding: 1em; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Identus DID Wallet UI</h1>
+  <button onclick="createDid()">Create DID</button>
+  <button onclick="storeCredential()">Store Credential</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function createDid() {
+      const res = await fetch('http://localhost:3001/did');
+      const data = await res.json();
+      document.getElementById('output').textContent = 'New DID: ' + data.did;
+    }
+
+    async function storeCredential() {
+      const vc = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential'],
+        issuer: 'did:example:issuer',
+        credentialSubject: {
+          id: 'did:example:user123',
+          name: 'Alice Doe',
+          role: 'Engineer'
+        },
+        issuanceDate: new Date().toISOString()
+      };
+      const res = await fetch('http://localhost:3001/credential', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(vc)
+      });
+      const data = await res.json();
+      document.getElementById('output').textContent = 'Credential Stored. ID: ' + data.credentialId;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "identus-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "cli": "ts-node src/index.ts --cli"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aries-framework/anoncreds": "^0.4.2",
+    "@aries-framework/anoncreds-rs": "^0.4.2",
+    "@aries-framework/askar": "^0.4.2",
+    "@aries-framework/core": "^0.4.2",
+    "@aries-framework/node": "^0.4.2",
+    "@hyperledger/anoncreds-nodejs": "^0.3.1",
+    "@hyperledger/aries-askar-nodejs": "^0.2.3",    
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ffi-napi": "^4.0.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17"
+  },
+  "overrides": {
+    "@hyperledger/anoncreds-shared": "0.3.1",
+    "@hyperledger/aries-askar-shared": "0.2.3"
+  }
+}
