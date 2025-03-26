@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xsi:type="MailApp">
+  <Id>12345678-abcd-4321-efgh-87654321abcd</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>DIDComm Labs</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName>DIDComm Email Encryptor</DisplayName>
+  <Description>Encrypt and decrypt emails using DIDComm + WebAuthn.</Description>
+  <IconUrl DefaultValue="https://yourdomain.com/assets/icon.png" />
+  <HighResolutionIconUrl DefaultValue="https://yourdomain.com/assets/icon-64.png" />
+  <SupportUrl DefaultValue="https://yourdomain.com/support" />
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1" />
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://yourdomain.com/taskpane.html" />
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+    <Form xsi:type="ItemCompose">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://yourdomain.com/taskpane.html" />
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <Rule xsi:type="RuleCollection">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit" />
+  </Rule>
+
+  <ExtensionPoint xsi:type="MessageReadCommandSurface">
+    <OfficeTab id="TabDefault">
+      <Group id="msgReadGroup">
+        <Label resid="groupLabel" />
+        <Control xsi:type="Button" id="decryptMessageButton">
+          <Label resid="buttonLabel" />
+          <Supertip>
+            <Title resid="buttonLabel" />
+            <Description resid="buttonDescription" />
+          </Supertip>
+          <Icon>
+            <bt:Image size="16" resid="icon16" />
+            <bt:Image size="32" resid="icon32" />
+            <bt:Image size="80" resid="icon80" />
+          </Icon>
+          <Action xsi:type="ShowTaskpane">
+            <SourceLocation resid="taskpaneUrl" />
+          </Action>
+        </Control>
+      </Group>
+    </OfficeTab>
+  </ExtensionPoint>
+
+  <Resources>
+    <bt:Images>
+      <bt:Image id="icon16" DefaultValue="https://yourdomain.com/assets/icon-16.png" />
+      <bt:Image id="icon32" DefaultValue="https://yourdomain.com/assets/icon-32.png" />
+      <bt:Image id="icon80" DefaultValue="https://yourdomain.com/assets/icon-80.png" />
+    </bt:Images>
+    <bt:Urls>
+      <bt:Url id="taskpaneUrl" DefaultValue="https://yourdomain.com/taskpane.html" />
+    </bt:Urls>
+    <bt:ShortStrings>
+      <bt:String id="groupLabel" DefaultValue="DIDComm Tools" />
+      <bt:String id="buttonLabel" DefaultValue="Decrypt DID Email" />
+    </bt:ShortStrings>
+    <bt:LongStrings>
+      <bt:String id="buttonDescription" DefaultValue="Decrypt and verify emails encrypted using DIDComm and WebAuthn." />
+    </bt:LongStrings>
+  </Resources>
+</OfficeApp>
