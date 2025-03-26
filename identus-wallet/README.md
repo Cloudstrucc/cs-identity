@@ -1,15 +1,38 @@
+## Identus DID Wallet - Setup Guide (REST API + CLI + UI)
 
-# Identus DID Wallet - Setup Guide (REST API + CLI + UI)
-
-This guide will help you set up a Hyperledger Identus (AFJ) DID wallet project with a REST API, CLI interface, and frontend UI integration.
+This guide helps you set up a Hyperledger Aries Framework JavaScript (AFJ) based DID wallet agent using the Identus stack, complete with a REST API and simple frontend UI.
 
 ---
 
-## 🧩 Features
+## 🚀 Features
 
-* REST API to create DIDs and store Verifiable Credentials (VCs)
-* CLI mode for direct terminal use
-* Frontend UI to interact with the wallet in the browser
+- Create DIDs via API or CLI
+- Store mock credentials (expandable to real anoncreds support)
+- View DID via simple web UI
+- Ready for full anoncreds, wallet import/export, and messaging
+
+---
+
+## ✅ Final Working Package Versions
+
+```json
+"@aries-framework/core": "^0.4.2",
+"@aries-framework/node": "^0.4.2",
+"@aries-framework/askar": "^0.4.2",
+"@aries-framework/anoncreds": "^0.4.2",
+"@aries-framework/anoncreds-rs": "^0.4.2",
+"@hyperledger/anoncreds-nodejs": "^0.3.1",
+"@hyperledger/aries-askar-nodejs": "^0.2.3"
+```
+
+### 🔧 Required Overrides in `package.json`
+
+```json
+"overrides": {
+  "@hyperledger/anoncreds-shared": "0.3.1",
+  "@hyperledger/aries-askar-shared": "0.2.3"
+}
+```
 
 ---
 
@@ -104,91 +127,139 @@ npm install --save-dev @types/cors
 ### 4. Create `src/index.ts`
 
 ```ts
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import { Agent, InitConfig } from '@aries-framework/core';
-import { agentDependencies } from '@aries-framework/node';
-import { HttpOutboundTransport } from '@aries-framework/core';
-import { AskarModule } from '@aries-framework/askar';
-import { AnonCredsModule, AnonCredsModuleConfigOptions } from '@aries-framework/anoncreds';
-import { IndyVdrAnonCredsRegistry } from '@aries-framework/anoncreds';
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
 
-let agent: Agent;
+import {
+  Agent,
+  InitConfig,
+  HttpOutboundTransport,
+} from '@aries-framework/core'
+import { agentDependencies } from '@aries-framework/node'
+import { AskarModule } from '@aries-framework/askar'
+import { ariesAskar } from '@hyperledger/aries-askar-nodejs'
+import { anoncreds } from '@hyperledger/anoncreds-nodejs'
+
+// import { ariesAskar } from '@hyperledger/aries-askar-nodejs'
+import {
+  AnonCredsModule,
+  AnonCredsRegistry,
+} from '@aries-framework/anoncreds'
+import { AnonCredsRsModule } from '@aries-framework/anoncreds-rs'
+
+
+
+let agent: Agent | undefined
 
 const initializeAgent = async () => {
   const config: InitConfig = {
-    label: 'DID Wallet Agent',
+    label: 'Identus DID Wallet',
     walletConfig: {
-      id: 'user-wallet',
-      key: 'super-secure-password',
+      id: 'wallet-id',
+      key: 'very-secure-password',
     },
     endpoints: ['http://localhost:3001'],
-  };
+  }
 
-  const anonCredsConfig: AnonCredsModuleConfigOptions = {
-    registries: [new IndyVdrAnonCredsRegistry()],
-  };
-
+  // ✅ Dummy registry that satisfies all required methods
+  const mockRegistry: AnonCredsRegistry = {
+    methodName: 'mock',
+    supportedIdentifier: /^did:key:.*/,
+    getSchema: async () => {
+      throw new Error('getSchema not implemented')
+    },
+    getCredentialDefinition: async () => {
+      throw new Error('getCredentialDefinition not implemented')
+    },
+    registerSchema: async () => {
+      throw new Error('registerSchema not implemented')
+    },
+    registerCredentialDefinition: async () => {
+      throw new Error('registerCredentialDefinition not implemented')
+    },
+    getRevocationRegistryDefinition: async () => {
+      throw new Error('getRevocationRegistryDefinition not implemented')
+    },
+    getRevocationStatusList: async () => {
+      throw new Error('getRevocationStatusList not implemented')
+    },
+  }
+  
   const newAgent = new Agent({
     config,
     dependencies: agentDependencies,
     modules: {
-      askar: new AskarModule(),
-      anoncreds: new AnonCredsModule(anonCredsConfig),
-    },
-  });
+      askar: new AskarModule({ ariesAskar }), // from @hyperledger/aries-askar-shared
+      anoncreds: new AnonCredsModule({
+        registries: [mockRegistry],
+      }),
+      anoncredsRs: new AnonCredsRsModule({
+        anoncreds, // from @hyperledger/anoncreds-nodejs
+      }),
+    },   
+  })
+  
 
-  newAgent.registerOutboundTransport(new HttpOutboundTransport());
-  await newAgent.initialize();
-  console.log('🎉 Agent initialized');
+  newAgent.registerOutboundTransport(new HttpOutboundTransport())
+  await newAgent.initialize()
+  console.log('🎉 Agent initialized')
+  agent = newAgent
+}
 
-  agent = newAgent;
-};
+// ---------------- Express Setup ----------------
 
-const app = express();
-const PORT = 3001;
+const app = express()
+const PORT = 3001
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(cors())
+app.use(bodyParser.json())
+app.use(express.static('public'))
 
-app.get('/did', async (req, res) => {
+app.get('/did', async (_req, res) => {
   try {
-    const { didState } = await agent.dids.create({ method: 'key' });
-    res.json({ did: didState.did });
+    if (!agent) throw new Error('Agent not initialized')
+    const { didState } = await agent.dids.create({ method: 'key' })
+    res.json({ did: didState.did })
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message })
   }
-});
+})
 
 app.post('/credential', async (req, res) => {
   try {
-    const credential = req.body;
-    // Simulate storage for demo purpose, replace with actual AnonCreds method when ready
-    const stored = { id: 'mock-credential-id' };
-    res.json({ credentialId: stored.id });
+    if (!agent) throw new Error('Agent not initialized')
+    const credential = req.body
+    // Placeholder — replace with real anoncreds logic later
+    const stored = { id: 'mock-credential-id' }
+    res.json({ credentialId: stored.id })
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message })
   }
-});
+})
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'DID wallet agent running.' });
-});
+app.get('/health', (_req, res) => {
+  res.json({ status: 'Identus wallet agent running.' })
+})
+
+// ---------------- CLI Mode ----------------
 
 if (process.argv.includes('--cli')) {
-  (async () => {
-    await initializeAgent();
-    const { didState } = await agent.dids.create({ method: 'key' });
-    console.log('✅ New DID:', didState.did);
-    await agent.shutdown?.();
-  })();
+  ;(async () => {
+    await initializeAgent()
+    if (!agent) throw new Error('Agent failed to initialize')
+    const { didState } = await agent.dids.create({ method: 'key' })
+    console.log('✅ DID created:', didState.did)
+    await agent.shutdown()
+  })()
 } else {
   initializeAgent().then(() => {
-    app.listen(PORT, () => console.log(`🚀 API running at http://localhost:${PORT}`));
-  });
+    app.listen(PORT, () =>
+      console.log(`🚀 Agent API running at http://localhost:${PORT}`)
+    )
+  })
 }
+
 ```
 
 ### 5. Start the Agent API Server
@@ -211,15 +282,42 @@ npm run cli
 
 * Creates a DID and prints it to terminal.
 
+## 🌐 Simple Frontend UI: `public/index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Identus Wallet UI</title>
+</head>
+<body>
+  <h1>🪪 Identus DID Wallet</h1>
+  <button onclick="createDID()">Create New DID</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function createDID() {
+      const res = await fetch('/did')
+      const data = await res.json()
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2)
+    }
+  </script>
+</body>
+</html>
+```
+
 ---
 
-## 🖥️ Frontend UI: `public/index.html`
+## 🔄 Run It
 
-(Create this file in the `public/` folder)
+### Dev mode:
 
-[...]
+```bash
+npm run dev
+```
 
----
+- Agent available at `http://localhost:3001`
+- UI available at `http://localhost:3001/index.html`
 
 ## ✅ Next Steps
 

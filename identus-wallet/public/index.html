@@ -1,47 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DID Wallet</title>
+  <title>Identus Wallet UI</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
-    body { font-family: sans-serif; margin: 2em; background: #f9f9f9; }
-    button { margin: 1em 0; padding: 10px; font-size: 1rem; }
-    pre { background: #eee; padding: 1em; white-space: pre-wrap; }
+    body { font-family: sans-serif; padding: 2rem; }
+    pre { background: #f4f4f4; padding: 1rem; }
+    #qrcode canvas { margin-top: 1rem; }
   </style>
 </head>
 <body>
-  <h1>Identus DID Wallet UI</h1>
-  <button onclick="createDid()">Create DID</button>
-  <button onclick="storeCredential()">Store Credential</button>
-  <pre id="output"></pre>
+  <h1>🪪 Identus DID Wallet</h1>
+
+  <button onclick="createDID()">Create New DID</button>
+  <button onclick="issueCredential()">Issue Credential</button>
+
+  <h3>📘 Latest Credential:</h3>
+  <pre id="output">No credential issued yet</pre>
+
+  <div id="qrcode"></div>
 
   <script>
-    async function createDid() {
-      const res = await fetch('http://localhost:3001/did');
-      const data = await res.json();
-      document.getElementById('output').textContent = 'New DID: ' + data.did;
+    let lastDid = ''
+
+    async function createDID() {
+      const res = await fetch('/did')
+      const data = await res.json()
+
+      if (!data.did) {
+        alert('Failed to create DID')
+        return
+      }
+
+      lastDid = data.did
+      document.getElementById('output').textContent = JSON.stringify({ did: lastDid }, null, 2)
+      // document.getElementById('qrcode').innerHTML = ''
+
+      // 🛡 Safely generate QR
+      QRCode.toCanvas(document.getElementById('qrcode'), lastDid, function (error) {
+        if (error) {
+          console.error('QR generation failed:', error)
+          alert('Could not generate QR code')
+        }
+      })
     }
 
-    async function storeCredential() {
-      const vc = {
-        '@context': ['https://www.w3.org/2018/credentials/v1'],
-        type: ['VerifiableCredential'],
-        issuer: 'did:example:issuer',
-        credentialSubject: {
-          id: 'did:example:user123',
-          name: 'Alice Doe',
-          role: 'Engineer'
-        },
-        issuanceDate: new Date().toISOString()
-      };
-      const res = await fetch('http://localhost:3001/credential', {
+
+    async function issueCredential() {
+      if (!lastDid) return alert('Please create a DID first.')
+
+      const res = await fetch('/issue', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vc)
-      });
-      const data = await res.json();
-      document.getElementById('output').textContent = 'Credential Stored. ID: ' + data.credentialId;
+        body: JSON.stringify({
+          credDefId: 'mock-cred-def',
+          subjectDid: lastDid,
+          values: {
+            name: 'Alice Example',
+            email: 'alice@example.com',
+            role: 'Pilot'
+          }
+        })
+      })
+
+      const data = await res.json()
+      document.getElementById('output').textContent = JSON.stringify(data.credential, null, 2)
     }
   </script>
 </body>
