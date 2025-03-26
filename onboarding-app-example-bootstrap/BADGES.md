@@ -13,6 +13,7 @@ While these systems have improved convenience and security, they still rely on c
 A **DID** is a cryptographically secure identifier that users fully control, typically stored in a digital wallet. It can carry **Verifiable Credentials (VCs)** issued by trusted organizations (like employers or governments) and used to prove access rights without revealing unnecessary personal data.
 
 This document explores how DID-based systems can enhance or replace traditional access methods by providing:
+
 - Greater privacy
 - Improved security
 - Seamless cross-org interoperability
@@ -77,11 +78,11 @@ sequenceDiagram
 
 | Feature                  | Traditional Badge | Biometric Combo | DID-Based                 |
 | ------------------------ | ----------------- | --------------- | ------------------------- |
-| User-Controlled Identity | No                | No              | **Yes**                   |
-| MFA with Biometrics      | Optional          | Yes             | **Yes (on-device)**       |
-| Remote Revocation        | Hard              | Hard            | **Easy**                  |
-| Privacy-Preserving       | No                | No              | **Yes**                   |
-| Interoperability         | Low               | Medium          | **High**                  |
+| User-Controlled Identity | No                | No              | **Yes**             |
+| MFA with Biometrics      | Optional          | Yes             | **Yes (on-device)** |
+| Remote Revocation        | Hard              | Hard            | **Easy**            |
+| Privacy-Preserving       | No                | No              | **Yes**             |
+| Interoperability         | Low               | Medium          | **High**            |
 
 ---
 
@@ -97,6 +98,8 @@ Create tamper-evident logs that record every access attempt and store it immutab
 - Each successful or failed DID proof is cryptographically signed and recorded.
 - The log is hashed and anchored to a blockchain (public or consortium) to ensure it hasn’t been altered.
 - Administrators can audit access history securely without exposing user identity.
+
+![DID Access Control Infographic](image/DID_Access_Control_Infographic.png)
 
 ---
 
@@ -197,13 +200,13 @@ A DID wallet isn't limited to physical access control. Its utility extends into 
 
 Implementing a unified DID system can significantly reduce operational and administrative overhead:
 
-| Cost Area                  | Legacy Systems                 | DID-Based Systems              |
-|---------------------------|--------------------------------|-------------------------------|
-| Badge/Card Issuance       | $$ Per Employee                | Included in digital wallet     |
-| Physical Badge Replacement| $25–$100 per incident          | Not applicable                |
-| Password Reset Tickets    | Helpdesk hours                 | Eliminated with passwordless  |
-| Infrastructure Maintenance| On-prem servers, card printers | Cloud-native, mobile-first    |
-| Federation Licensing      | Per-partner identity licenses  | VC/DID interoperability        |
+| Cost Area                  | Legacy Systems                 | DID-Based Systems            |
+| -------------------------- | ------------------------------ | ---------------------------- |
+| Badge/Card Issuance        | $$ Per Employee                | Included in digital wallet   |
+| Physical Badge Replacement | $25–$100 per incident         | Not applicable               |
+| Password Reset Tickets     | Helpdesk hours                 | Eliminated with passwordless |
+| Infrastructure Maintenance | On-prem servers, card printers | Cloud-native, mobile-first   |
+| Federation Licensing       | Per-partner identity licenses  | VC/DID interoperability      |
 
 ---
 
@@ -220,4 +223,3 @@ Implementing a unified DID system can significantly reduce operational and admin
 ## 8. Summary
 
 DID-based access control offers a privacy-first, highly secure, and user-owned alternative to traditional access systems. With features like temporary credentials, offline access, and cross-org interoperability, it represents the next evolution in building security and identity verification.
-
