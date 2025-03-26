@@ -1,64 +1,70 @@
-# Bifold Wallet — iOS Troubleshooting & Setup Guide
+# 🏃‍♂️ Bifold Wallet — iOS Setup & Troubleshooting Guide
+
+This single guide covers everything you need to  **install** ,  **run** , and **fix common build/runtime errors** when running Bifold on iOS Simulator.
 
 ---
 
 ## 📋 Prerequisites
 
-* macOS 12+ (Monterey or newer)
-* Xcode (latest version) installed via the App Store
-* Homebrew
-* Node.js (>= v18)
-* Yarn
-* CocoaPods (>= v1.16)
-* Android Studio (only if testing Android)
+* **macOS 12+** (Monterey or newer)
+* **Xcode** (latest from App Store)
+* **Homebrew**
+* **Node.js** (v18+)
+* **Yarn**
+* **CocoaPods** (v1.16+)
+* **Watchman** (for clearing Metro cache)
 
 ---
 
-## 🛠️ 1️⃣ Fix "requires Xcode" Error
+## ▶️ Official Bifold iOS Startup (from DEVELOPER.md)
 
-### Symptoms
+```bash
+git clone https://github.com/openwallet-foundation/bifold-wallet.git
+cd bifold-wallet/packages/legacy/app
+yarn install
+cd ios && pod install && cd ..
+yarn ios
+```
+
+> 🚨 If any errors occur during these steps, see the Troubleshooting section below.
+
+---
+
+## 🛠️ Troubleshooting
+
+### 1️⃣ "xcodebuild requires Xcode" Error
+
+**Symptom:**
 
 ```
 xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
 ```
 
-### Resolution
+**Fix:**
 
 ```bash
-# Point command‑line tools at full Xcode app
 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 sudo xcodebuild -runFirstLaunch
-
-# Verify correct path & version
-xcode-select -p      # should output /Applications/Xcode.app/Contents/Developer
-xcodebuild -version  # prints Xcode version
+xcode-select -p        # should output Xcode path
+xcodebuild -version    # prints Xcode version
 ```
 
 ---
 
-## 🛠️ 2️⃣ Fix CocoaPods "visionos" & "glog" Podspec Errors
+### 2️⃣ CocoaPods "visionos" & "glog" Podspec Errors
 
-### Symptoms
+**Symptoms:**
 
 ```
 Invalid `react-native-config.podspec` file: undefined method `visionos`
 Invalid `glog.podspec` file: undefined method '[]' for nil.
 ```
 
-### Resolution
-
-1️⃣ Upgrade CocoaPods to v1.16+:
+**Fix:**
 
 ```bash
-brew update
-brew install cocoapods
-brew upgrade cocoapods
-pod --version    # verify >= 1.16.0
-```
-
-2️⃣ Clean & reinstall pods:
-
-```bash
+brew update && brew install cocoapods && brew upgrade cocoapods
+pod --version        # should be >= 1.16.0
 cd packages/legacy/app/ios
 rm -rf Pods Podfile.lock
 pod cache clean --all
@@ -67,40 +73,60 @@ pod install --repo-update
 
 ---
 
-## ▶️ 3️⃣ Run Bifold Wallet on iOS (Official Developer Steps)
+### 3️⃣ Hermes Runtime Error: "ReactCurrentOwner" & "render" Undefined
 
-See the full Bifold Developer Guide for iOS here:
-[https://github.com/openwallet-foundation/bifold-wallet/blob/main/DEVELOPER.md](https://github.com/openwallet-foundation/bifold-wallet/blob/main/DEVELOPER.md)
+**Symptoms:**
+
+```
+TypeError: Cannot read property 'ReactCurrentOwner' of undefined, js engine: hermes
+TypeError: Cannot read property 'render' of undefined
+```
+
+**Fix:** Disable Hermes (and Fabric) for iOS in Podfile:
+
+```ruby
+use_react_native!(
+  :path => config[:reactNativePath],
+  :hermes_enabled => false,
+  :fabric_enabled => false
+)
+```
+
+Then:
 
 ```bash
-# Clone & navigate to the legacy app folder
-git clone https://github.com/openwallet-foundation/bifold-wallet.git
-cd bifold-wallet/packages/legacy/app
-
-# Install dependencies
-yarn install
-
-# iOS pod setup
-cd ios
-pod install
-cd ..
-
-# Launch in Simulator
+cd packages/legacy/app/ios
+rm -rf Pods Podfile.lock
+pod install --repo-update
+cd ../..
+watchman watch-del-all
+yarn cache clean
+rm -rf node_modules && yarn
+rm -rf ~/Library/Developer/Xcode/DerivedData/*
+yarn start --reset-cache
 yarn ios
+```
+
+---
+
+### 4️⃣ "watchman: command not found"
+
+**Fix:**
+
+```bash
+brew install watchman
 ```
 
 ---
 
 ## ⚠️ Common Warnings (Safe to Ignore)
 
-* **VisionCamera** : "react-native-worklets-core not found" → Frame Processors disabled. Install `react-native-worklets-core` only if you plan to use VisionCamera frame processors.
-* **React Native version notice** : You’ll see a message that v0.78.1 is available. Bifold targets v0.73.6 — you can safely ignore this.
+* **VisionCamera:** "react-native-worklets-core not found" → Frame Processors disabled (only needed if you use frame processors).
+* **React Native version notice:** RN v0.78.1 available; Bifold targets v0.73.6 — safe to ignore.
 
 ---
 
-🎉 You should now have Bifold running on iOS Simulator with all build errors resolved!
-
-# 🛠 Bifold Wallet Android Setup Guide
+🎉 After following these steps, Bifold should build and launch successfully in the iOS Simulator!
 
 This document walks you step‑by‑step through cloning, configuring, building, and troubleshooting the **Bifold Wallet** app on **macOS** for Android (emulator or physical device).
 
