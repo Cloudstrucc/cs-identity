@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-// GET route for '/newpage'
+// GET route for '/setup-identity'
 router.use('/setup-identity', (req, res) => {
   res.render('setup-identity', { title: 'Setup identity' });
 });
