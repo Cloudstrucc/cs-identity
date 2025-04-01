@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
+    
+    <!-- Settings -->
+
+    <script>
+      /*!
+       * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+       * Copyright 2011-2024 The Bootstrap Authors
+       * Licensed under the Creative Commons Attribution 3.0 Unported License.
+       * Modified by Simpleqode
+       */
+    
+      (() => {
+        'use strict';
+    
+        const getStoredTheme = () => localStorage.getItem('theme');
+        const setStoredTheme = (theme) => localStorage.setItem('theme', theme);
+    
+        const getStoredNavigationPosition = () => localStorage.getItem('navigationPosition');
+        const setStoredNavigationPosition = (navigationPosition) => localStorage.setItem('navigationPosition', navigationPosition);
+    
+        const getPreferredTheme = () => {
+          const storedTheme = getStoredTheme();
+          if (storedTheme) {
+            return storedTheme;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+    
+        const getPreferredNavigationPosition = () => {
+          const storedNavigationPosition = getStoredNavigationPosition();
+          if (storedNavigationPosition) {
+            return storedNavigationPosition;
+          }
+          return 'sidenav';
+        };
+    
+        const setTheme = (theme) => {
+          if (theme === 'auto') {
+            document.documentElement.setAttribute('data-bs-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          } else {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+          }
+        };
+    
+        const setNavigationPosition = (navigationPosition) => {
+          document.documentElement.setAttribute('data-bs-navigation-position', navigationPosition);
+        };
+    
+        setTheme(getPreferredTheme());
+        setNavigationPosition(getPreferredNavigationPosition());
+    
+        const showActiveTheme = (theme, settingsSwitcher) => {
+          document.querySelectorAll('[data-bs-theme-value]').forEach((element) => {
+            element.classList.remove('active');
+            element.setAttribute('aria-pressed', 'false');
+    
+            if (element.getAttribute('data-bs-theme-value') === theme) {
+              element.classList.add('active');
+              element.setAttribute('aria-pressed', 'true');
+            }
+          });
+          if (settingsSwitcher) {
+            settingsSwitcher.focus();
+          }
+        };
+    
+        const showActiveNavigationPosition = (navigationPosition, settingsSwitcher) => {
+          document.querySelectorAll('[data-bs-navigation-position-value]').forEach((element) => {
+            element.classList.remove('active');
+            element.setAttribute('aria-pressed', 'false');
+    
+            if (element.getAttribute('data-bs-navigation-position-value') === navigationPosition) {
+              element.classList.add('active');
+              element.setAttribute('aria-pressed', 'true');
+            }
+          });
+    
+          if (settingsSwitcher) {
+            settingsSwitcher.focus();
+          }
+        };
+    
+        const refreshCharts = () => {
+          const charts = document.querySelectorAll('.chart-canvas');
+    
+          charts.forEach((chart) => {
+            const chartId = chart.getAttribute('id');
+            const instance = Chart.getChart(chartId);
+    
+            if (!instance) {
+              return;
+            }
+    
+            if (instance.options.scales.y) {
+              instance.options.scales.y.grid.color = getComputedStyle(document.documentElement).getPropertyValue('--bs-border-color');
+              instance.options.scales.y.ticks.color = getComputedStyle(document.documentElement).getPropertyValue('--bs-secondary-color');
+            }
+    
+            if (instance.options.scales.x) {
+              instance.options.scales.x.ticks.color = getComputedStyle(document.documentElement).getPropertyValue('--bs-secondary-color');
+            }
+    
+            if (instance.options.elements.arc) {
+              instance.options.elements.arc.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-body-bg');
+              instance.options.elements.arc.hoverBorderColor = getComputedStyle(document.documentElement).getPropertyValue('--bs-body-bg');
+            }
+    
+            instance.update();
+          });
+        };
+    
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          const storedTheme = getStoredTheme();
+          if (storedTheme !== 'light' && storedTheme !== 'dark') {
+            setTheme(getPreferredTheme());
+          }
+        });
+    
+        window.addEventListener('DOMContentLoaded', () => {
+          showActiveTheme(getPreferredTheme());
+          showActiveNavigationPosition(getPreferredNavigationPosition());
+    
+          document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
+            toggle.addEventListener('click', (e) => {
+              e.preventDefault();
+              const theme = toggle.getAttribute('data-bs-theme-value');
+              const settingsSwitcher = toggle.closest('.nav-item').querySelector('[data-bs-settings-switcher]');
+              console.log(settingsSwitcher);
+              setStoredTheme(theme);
+              setTheme(theme);
+              showActiveTheme(theme, settingsSwitcher);
+              refreshCharts();
+            });
+          });
+    
+          document.querySelectorAll('[data-bs-navigation-position-value]').forEach((toggle) => {
+            toggle.addEventListener('click', (e) => {
+              e.preventDefault();
+              const navigationPosition = toggle.getAttribute('data-bs-navigation-position-value');
+              const settingsSwitcher = toggle.closest('.nav-item').querySelector('[data-bs-settings-switcher]');
+              setStoredNavigationPosition(navigationPosition);
+              setNavigationPosition(navigationPosition);
+              showActiveNavigationPosition(navigationPosition, settingsSwitcher);
+            });
+          });
+        });
+      })();
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon" />
+    
+    <!-- Fonts and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+    
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="./assets/css/libs.bundle.css" />
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+    
+    <!-- Title -->
+    <title>Vanguard Cloud Services</title>    
+  </head>
+<body>
+    <!-- Sidenav -->
+    <!-- Sidenav (sm) -->
+    <aside class="aside aside-sm d-none d-xl-flex" id="sidenav-sm" style="z-index: 1">
+      <nav class="navbar navbar-expand-xl navbar-vertical overflow-visible">
+        <div class="container-fluid">
+          <!-- Nav -->
+          <nav class="navbar-nav nav-pills h-100">
+            <div class="nav-item dropend">
+              <a href="#" role="button" data-bs-toggle="dropdown" data-bs-settings-switcher aria-expanded="false">
+                <div class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-trigger="hover" data-bs-title="Settings">
+                  <span class="material-symbols-outlined"> settings </span>
+                </div>
+              </a>
+              <div class="dropdown-menu">
+                <!-- Color mode -->
+                <h6 class="dropdown-header">Color mode</h6>
+                <a class="dropdown-item d-flex" data-bs-theme-value="light" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                </a>
+                <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"> <span class="material-symbols-outlined me-2"> dark_mode </span> Dark </a>
+                <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"> <span class="material-symbols-outlined me-2"> contrast </span> Auto </a>
+              
+                <!-- Divider -->
+                <hr class="dropdown-divider" />
+              
+                <!-- Navigation position -->
+                <h6 class="dropdown-header">Navigation position</h6>
+                <a class="dropdown-item d-flex" data-bs-navigation-position-value="sidenav" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                </a>
+                <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                </a>
+              </div>
+            </div>
+            <div class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-toggle="hover" data-bs-title="Go to product page">
+              <a class="nav-link" href="https://vanguardcs.ca" target="_blank">
+                <span class="material-symbols-outlined mx-auto"> local_mall </span>
+              </a>
+            </div>
+            <div class="nav-item mt-auto" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-toggle="hover" data-bs-title="Contact us">
+              <a class="nav-link" href="mailto:contact@vanguardcs.ca">
+                <span class="material-symbols-outlined mx-auto"> support </span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </nav>
+    </aside>
+    
+    <!-- Sidenav (lg) -->
+    <aside class="aside" id="sidenav-lg">
+      <nav class="navbar navbar-expand-xl navbar-vertical">
+        <div class="container-lg">
+<!-- Brand -->
+<a class="navbar-brand fs-5 fw-bold px-xl-3 mb-xl-4" href="/">
+  <i class="fs-4 me-1" style="padding: 2px; border-radius: 4px;" data-duoicon="box-2"></i> Vanguard Identity
+</a>
+
+
+    
+          <!-- User -->
+          <div class="ms-auto d-xl-none">
+            <div class="dropdown my-n2">
+              <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
+                  <img class="avatar-img" src="./assets/img/photos/photo-6.jpg" alt="..." />
+                </span>
+                Fred Pearson
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Account</a></li>
+                <li><a class="dropdown-item" href="#">Change password</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <!-- Toggler -->
+          <button
+            class="navbar-toggler ms-3"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#sidenavLargeCollapse"
+            aria-controls="sidenavLargeCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <!-- Collapse -->
+          <div class="collapse navbar-collapse" id="sidenavLargeCollapse">
+            <!-- Search -->
+            <div class="input-group d-xl-none my-4 my-xl-0">
+              <input
+                class="form-control"
+                id="topnavSearchInputMobile1"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="navbarSearchMobile"
+              />
+              <span class="input-group-text" id="navbarSearchMobile">
+                <span class="material-symbols-outlined"> search </span>
+              </span>
+            </div>
+    
+            <!-- Nav -->
+            <nav class="navbar-nav nav-pills mb-7">
+              <div class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#dashboards"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="dashboards"
+                >
+                  <span class="material-symbols-outlined me-3">space_dashboard</span> Dashboards
+                </a>
+                <div class="collapse show" id="dashboards">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./admin-dashboard">Tenant summary</a>
+                    <a class="nav-link " href="./tickets">Support</a>                    
+                  </nav>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a
+                  class="nav-link "
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#customers"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="customers"
+                >
+                  <span class="material-symbols-outlined me-3">group</span> User identities
+                </a>
+                <div class="collapse show" id="customers">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./users">All users</a>                    
+                    <a class="nav-link " href="./invitation">New user</a>
+                    <a class="nav-link " href="./setup-identity">Setup identity</a>
+                  </nav>
+                </div>
+              </div>
+              {{!-- <div class="nav-item">
+                <a
+                  class="nav-link "
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#projects"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="projects"
+                >
+                  <span class="material-symbols-outlined me-3">list_alt</span> Projects
+                </a>
+                <div class="collapse " id="projects">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./projects/projects.html">Projects</a>
+                    <a class="nav-link " href="./projects/project.html">Project overview</a>
+                    <a class="nav-link " href="./projects/project-new.html">New project</a>
+                  </nav>
+                </div>
+              </div> --}}
+              <div class="nav-item">
+                <a
+                  class="nav-link "
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#account"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="account"
+                >
+                  <span class="material-symbols-outlined me-3">person</span> Account
+                </a>
+                <div class="collapse " id="account">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./account/account.html">Account overview</a>
+                    <a class="nav-link " href="./account/account-settings.html">Account settings</a>
+                  </nav>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a
+                  class="nav-link "
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#orders"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="orders"
+                >
+                  <span class="material-symbols-outlined me-3">shopping_cart</span> Billing
+                </a>
+                <div class="collapse " id="orders">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./orders/orders.html">Licensing</a>
+                    <a class="nav-link " href="./orders/invoice.html">Invoices</a>
+                    {{!-- <a class="nav-link " href="./orders/pricing.html">Pricing</a> --}}
+                  </nav>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a
+                  class="nav-link "
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#posts"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="posts"
+                >
+                  <span class="material-symbols-outlined me-3">text_fields</span> Alerts
+                </a>
+                <div class="collapse " id="posts">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link " href="./posts/categories.html">Categories</a>
+                    <a class="nav-link " href="./posts/posts.html">Alerts</a>
+                    <a class="nav-link " href="./posts/post-new.html">New post</a>
+                  </nav>
+                </div>
+              </div>
+              {{!-- <div class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#authentication"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="authentication"
+                >
+                  <span class="material-symbols-outlined me-3">login</span> Authentication
+                </a>
+                <div class="collapse" id="authentication">
+                  <nav class="nav nav-pills">
+                    <a class="nav-link" href="./auth/sign-in.html">Sign in</a>
+                    <a class="nav-link" href="./auth/sign-up.html">Sign up</a>
+                    <a class="nav-link" href="./auth/password-reset.html">Password reset</a>
+                    <a class="nav-link" href="./auth/error.html">Error</a>
+                  </nav>
+                </div>
+              </div> --}}
+            </nav>
+    
+            <!-- Heading -->
+            <h3 class="fs-base px-3 mb-4">Documentation</h3>
+    
+            <!-- Nav -->
+            <nav class="navbar-nav nav-pills mb-xl-7">
+              <div class="nav-item">
+                <a class="nav-link " href="./docs/getting-started.html">
+                  <span class="material-symbols-outlined me-3">sticky_note_2</span> Getting started
+                </a>
+              </div>
+              <div class="nav-item">
+                <a class="nav-link " href="./docs/components.html">
+                  <span class="material-symbols-outlined me-3">deployed_code</span> Integration
+                </a>
+              </div>
+              <div class="nav-item">
+                <a class="nav-link " href="./docs/changelog.html">
+                  <span class="material-symbols-outlined me-3">list_alt</span> Changelog
+                  <span class="badge text-bg-primary ms-auto">1.0.4</span>
+                </a>
+              </div>
+            </nav>
+    
+            <!-- Divider -->
+            <hr class="my-4 d-xl-none" />
+    
+            <!-- Nav -->
+            <nav class="navbar-nav nav-pills d-xl-none mb-7">
+              <div class="nav-item dropdown">
+                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" data-bs-settings-switcher aria-expanded="false">
+                  <span class="material-symbols-outlined"> settings </span> <span class="d-xl-none ms-3">Settings</span>
+                </a>
+                <div class="dropdown-menu">
+                  <!-- Color mode -->
+                  <h6 class="dropdown-header">Color mode</h6>
+                  <a class="dropdown-item d-flex" data-bs-theme-value="light" href="#" role="button">
+                    <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                  </a>
+                  <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"> <span class="material-symbols-outlined me-2"> dark_mode </span> Dark </a>
+                  <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"> <span class="material-symbols-outlined me-2"> contrast </span> Auto </a>
+                
+                  <!-- Divider -->
+                  <hr class="dropdown-divider" />
+                
+                  <!-- Navigation position -->
+                  <h6 class="dropdown-header">Navigation position</h6>
+                  <a class="dropdown-item d-flex" data-bs-navigation-position-value="sidenav" href="#" role="button">
+                    <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                  </a>
+                  <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#" role="button">
+                    <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                  </a>
+                </div>
+              </div>
+              <div class="nav-item">
+                <a class="nav-link" href="https://vanguardcs.ca" target="_blank">
+                  <span class="material-symbols-outlined me-3">local_mall</span> Go to product page
+                </a>
+              </div>
+              <div class="nav-item">
+                <a class="nav-link" href="mailto:contact@vanguardcs.ca">
+                  <span class="material-symbols-outlined me-3">alternate_email</span> Contact us
+                </a>
+              </div>
+            </nav>
+    
+            <!-- Card -->
+            <div class="card mt-auto">
+              <div class="card-body">
+                <!-- Heading -->
+                <h6>Need help?</h6>
+    
+                <!-- Text -->
+                <p class="text-body-secondary mb-0">Feel free to reach out to us should you have any questions or suggestions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Topnav -->
+    <!-- Topnav (lg) -->
+    <nav class="navbar navbar-expand-xl" id="topnav-lg">
+      <div class="container-lg">
+        <!-- Brand -->
+        <a class="navbar-brand fs-5 fw-bold" href="/"> <i class="fs-4 text-secondary me-1" data-duoicon="box-2"></i> VBI </a>
+    
+        <!-- User -->
+        <div class="ms-auto d-xl-none">
+          <div class="dropdown my-n2">
+            <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
+                <img class="avatar-img" src="./assets/img/photos/photo-6.jpg" alt="..." />
+              </span>
+              Fred Pearson
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Account</a></li>
+              <li><a class="dropdown-item" href="#">Change password</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+          </div>
+        </div>
+    
+        <!-- Toggler -->
+        <button
+          class="navbar-toggler ms-3"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#topnavLargeCollapse"
+          aria-controls="topnavLargeCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="topnavLargeCollapse">
+          <!-- Search -->
+          <div class="input-group d-xl-none my-4 my-xl-0">
+            <input class="form-control" id="topnavSearchInputMobile" type="search" placeholder="Search" aria-label="Search" aria-describedby="navbarSearchMobile" />
+            <span class="input-group-text" id="navbarSearchMobile">
+              <span class="material-symbols-outlined"> search </span>
+            </span>
+          </div>
+    
+          <!-- Nav -->
+          <nav class="navbar-nav nav-pills mx-auto">
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dashboards
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item active" href="./index.html">Default</a>
+                <a class="dropdown-item " href="./dashboards/crypto.html">Crypto</a>
+                <a class="dropdown-item " href="./dashboards/saas.html">SaaS</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                User identities
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./customers/customers.html">User identities</a>
+                <a class="dropdown-item " href="./customers/customer.html">User identity details</a>
+                <a class="dropdown-item " href="./customers/customer-new.html">New user identity</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Projects
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./projects/projects.html">Projects</a>
+                <a class="dropdown-item " href="./projects/project.html">Project overview</a>
+                <a class="dropdown-item " href="./projects/project-new.html">New project</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Account
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./account/account.html">Account overview</a>
+                <a class="dropdown-item " href="./account/account-settings.html">Account settings</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Orders
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./orders/orders.html">Orders</a>
+                <a class="dropdown-item " href="./orders/invoice.html">Invoice</a>
+                <a class="dropdown-item " href="./orders/pricing.html">Pricing</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Posts
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./posts/categories.html">Categories</a>
+                <a class="dropdown-item " href="./posts/posts.html">Posts</a>
+                <a class="dropdown-item " href="./posts/post-new.html">New post</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Authentication </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="./auth/sign-in.html">Sign in</a>
+                <a class="dropdown-item" href="./auth/sign-up.html">Sign up</a>
+                <a class="dropdown-item" href="./auth/password-reset.html">Password reset</a>
+                <a class="dropdown-item" href="./auth/error.html">Error</a>
+              </div>
+            </div>
+            <div class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle "
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Documentation
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item " href="./docs/getting-started.html"> Getting started </a>
+                <a class="dropdown-item " href="./docs/components.html"> Components </a>
+                <a class="dropdown-item d-flex " href="./docs/changelog.html">
+                  Changelog
+                  <span class="badge text-bg-primary ms-auto">1.0.4</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+    
+          <!-- Divider -->
+          <hr class="my-4 d-xl-none" />
+    
+          <!-- Nav -->
+          <nav class="navbar-nav nav-pills">
+            <div class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" data-bs-settings-switcher aria-expanded="false">
+                <span class="material-symbols-outlined"> settings </span> <span class="d-xl-none ms-3">Settings</span>
+              </a>
+              <div class="dropdown-menu">
+                <!-- Color mode -->
+                <h6 class="dropdown-header">Color mode</h6>
+                <a class="dropdown-item d-flex" data-bs-theme-value="light" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                </a>
+                <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"> <span class="material-symbols-outlined me-2"> dark_mode </span> Dark </a>
+                <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"> <span class="material-symbols-outlined me-2"> contrast </span> Auto </a>
+              
+                <!-- Divider -->
+                <hr class="dropdown-divider" />
+              
+                <!-- Navigation position -->
+                <h6 class="dropdown-header">Navigation position</h6>
+                <a class="dropdown-item d-flex" data-bs-navigation-position-value="sidenav" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                </a>
+                <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#" role="button">
+                  <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                </a>
+              </div>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link" href="https://vanguardcs.ca" target="_blank">
+                <span class="material-symbols-outlined">local_mall</span> <span class="d-xl-none ms-3">Go to company page</span>
+              </a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link" href="mailto:contact@vanguardcs.ca">
+                <span class="material-symbols-outlined">alternate_email</span> <span class="d-xl-none ms-3">Contact us</span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Topnav (sm) -->
+    <nav class="navbar d-none d-xl-flex px-xl-6" id="topnav-sm">
+      <div class="container flex-column align-items-stretch">
+        <div class="row">
+          <div class="col">
+            <!-- Search -->
+            <div class="input-group" style="max-width: 400px">
+              <input class="form-control" id="topnavSearchInput" type="search" placeholder="Search" aria-label="Search" aria-describedby="navbarSearch" />
+              <span class="input-group-text" id="navbarSearch">
+                <kbd class="badge bg-body-secondary text-body">⌘</kbd>
+                <kbd class="badge bg-body-secondary text-body ms-1">K</kbd>
+              </span>
+            </div>
+          </div>
+          <div class="col-auto">
+            <!-- User -->
+            <div class="dropdown my-n2">
+              <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
+                  <img class="avatar-img" src="./assets/img/photos/photo-6.jpg" alt="..." />
+                </span>
+                Fred Pearson
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/">Account</a></li>
+                <li><a class="dropdown-item" href="/">Change password</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="/">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+        <!-- Main Content -->
+        <main class="main px-lg-6">
+            {{{body}}}
+        </main>
+    <!-- JAVASCRIPT -->
+    <!-- Map JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    
+    <!-- Vendor JS -->
+    <script src="./assets/js/vendor.bundle.js"></script>
+    
+    <!-- Theme JS -->
+    <script src="./assets/js/theme.bundle.js"></script>
+     
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!-- Content -->
+<div class="container-lg">
+  <!-- Page header -->
+  <div class="row align-items-center mb-7">
+    <div class="col-auto">
+      <!-- Avatar -->
+      <div class="avatar avatar-xl rounded text-primary">
+        <i class="fs-2" data-duoicon="user"></i>
+      </div>
+    </div>
+    <div class="col">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-2">
+          <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Customers</a></li>
+          <li class="breadcrumb-item active" aria-current="page">New user identity</li>
+        </ol>
+      </nav>
+      <!-- Heading -->
+      <h1 class="fs-4 mb-0">New user identity</h1>
+    </div>
+    <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+      <!-- Action -->
+      <a class="btn btn-light d-block" href="#!">
+        Save draft
+      </a>
+    </div>
+  </div>
+
+  <!-- Page content -->
+  <div class="row">
+    <div class="col">
+      <!-- Form -->
+      <form id="inviteForm">
+        <!-- Added an email field so we know where to send the invitation -->
+        <div class="mb-4">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control" id="email" name="email" type="email" required />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="name">Full name</label>
+          <input class="form-control" id="name" name="name" type="text" required />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="company">Company</label>
+          <input class="form-control" id="company" name="company" type="text" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="phone">Phone</label>
+          <input type="text" class="form-control mb-3" id="phone" name="phone" placeholder="(___)___-____" data-inputmask="'mask': '(999)999-9999'">
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" id="location" name="location" type="text" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="about">About</label>          
+          <textarea
+            class="form-control"
+            id="about"
+            name="about"
+            rows="4"
+            placeholder="Enter a brief description…"            
+          ></textarea>
+        </div>
+        <div class="mb-7">
+          <label for="dropzone">Files</label>
+          <div class="form-text mt-0 mb-3">Attach files to this user identity.</div>
+          <div class="dropzone" id="dropzone"></div>
+        </div>
+      
+        <div class="text-center">
+  <div class="d-flex flex-column align-items-center gap-2">
+    <button type="submit" class="btn btn-secondary" id="submitBtn">
+      Save identity
+    </button>
+    <button type="reset" class="btn btn-dark">
+      Reset form
+    </button>
+  </div>
+</div>
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Inline JavaScript to handle the form submission and UI transitions -->
+<script>
+  document.getElementById('inviteForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Create form data from the form
+    const formData = new FormData(form);
+
+    // Send the form data to the /invite route (adjust the URL if needed)
+    fetch('/invite', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.success) {
+        // Change the button to a confirmation message
+        submitBtn.classList.remove('btn-secondary');
+        submitBtn.classList.add('btn-success');
+        submitBtn.textContent = 'Invitation code sent!';
+        
+        // After one second, append a new button to navigate to /admin-dashboard
+        setTimeout(() => {
+          const dashboardBtn = document.createElement('a');
+          dashboardBtn.href = '/admin-dashboard';
+          dashboardBtn.className = 'btn btn-primary w-100 mt-3';
+          dashboardBtn.textContent = 'Go to Dashboard';
+          submitBtn.parentNode.appendChild(dashboardBtn);
+        }, 1000);
+      } else {
+        // Handle error as needed
+        submitBtn.textContent = 'Error sending invitation. Try again.';
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      submitBtn.textContent = 'Error sending invitation. Try again.';
+    });
+  });
+</script>

@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, "public/bootstrap-theme")));
 app.use(express.static(path.join(__dirname, "assets"))); // Ensure the logo loads
 app.use("/css", express.static(path.join(__dirname, "public/css")));
 app.use('/models', express.static(path.join(__dirname, 'models')));
-
+//const credentialRoutes = require('./routes/credential');	
+//app.use('/api', credentialRoutes);
 
 // ✅ Middleware for handling form data
 app.use(bodyParser.urlencoded({ extended: false }));

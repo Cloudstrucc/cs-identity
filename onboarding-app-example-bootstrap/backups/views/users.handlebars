@@ -1,0 +1,515 @@
+
+<!-- Content -->
+<div class="container-lg">
+<!-- Page header -->
+<div class="row align-items-center mb-7">
+<div class="col-auto">
+<!-- Avatar -->
+<div class="avatar avatar-xl rounded text-primary">
+    <i class="fs-2" data-duoicon="user"></i>
+</div>
+</div>
+<div class="col">
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-2">
+    <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Users</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+</nav>
+
+<!-- Heading -->
+<h1 class="fs-4 mb-0">Users</h1>
+</div>
+<div class="col-12 col-sm-auto mt-4 mt-sm-0">
+<!-- Action -->
+<a class="btn btn-secondary d-block" href="/invitation"> <span class="material-symbols-outlined me-1">add</span> New user </a>
+</div>
+</div>
+
+<!-- Page content -->
+<div class="row">
+<div class="col-12">
+<!-- Filters -->
+<div class="card card-line bg-body-tertiary border-transparent mb-7">
+    <div class="card-body p-4">
+    <div class="row align-items-center">
+        <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+        <div class="row align-items-center">
+            <div class="col-auto">
+            <div class="text-body-secondary">3 contacts selected</div>
+            </div>
+            <div class="col-auto border-start border-dark">
+            <a class="badge text-bg-danger" href="#"> Delete </a>
+            </div>
+        </div>
+        </div>
+        <div class="col-12 col-lg">
+        <div class="row gx-3">
+            <div class="col col-lg-auto ms-auto">
+            <div class="input-group bg-body">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search" />
+                <span class="input-group-text" id="search">
+                <span class="material-symbols-outlined">search</span>
+                </span>
+            </div>
+            </div>
+            <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <span class="material-symbols-outlined">filter_list</span>
+                </button>
+                <div class="dropdown-menu rounded-3 p-6">
+                <h4 class="fs-lg mb-4">Filter</h4>
+                <form style="width: 350px" id="filterForm">
+                    <div class="row align-items-center mb-3">
+                    <div class="col-3">
+                        <label class="form-label mb-0" for="filterUser">User</label>
+                    </div>
+                    <div class="col-9">
+                        <select
+                        class="form-select"
+                        id="filterUser"
+                        data-choices='{"searchEnabled": false, "choices": [
+                        {
+                        "value": "Emily Thompson",
+                        "label": "Emily Thompson",
+                        "customProperties": {
+                            "avatarSrc": "../assets/img/photos/photo-1.jpg"
+                        }
+                        },
+                        {
+                        "value": "Michael Johnson",
+                        "label": "Michael Johnson",
+                        "customProperties": {
+                            "avatarSrc": "../assets/img/photos/photo-2.jpg"
+                        }
+                        },
+                        {
+                        "value": "Robert Garcia",
+                        "label": "Robert Garcia",
+                        "customProperties": {
+                            "avatarSrc": "../assets/img/photos/photo-3.jpg"
+                        }
+                        },
+                        {
+                        "value": "Jessica Miller",
+                        "label": "Jessica Miller",
+                        "customProperties": {
+                            "avatarSrc": "../assets/img/photos/photo-4.jpg"
+                        }
+                        }
+                    ]}'
+                        ></select>
+                    </div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                    <div class="col-3">
+                        <label class="form-label mb-0" for="filterCompany">Company</label>
+                    </div>
+                    <div class="col-9">
+                        <select class="form-select" id="filterCompany" data-choices='{"placeholder": "some"}'>
+                        <option value="TechPinnacle Solutions">TechPinnacle Solutions</option>
+                        <option value="Quantum Dynamics">Quantum Dynamics</option>
+                        <option value="Pinnacle Technologies">Pinnacle Technologies</option>
+                        <option value="Apex Innovations">Apex Innovations</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="row align-items-center">
+                    <div class="col-3">
+                        <label class="form-label mb-0" for="filterLocation">Location</label>
+                    </div>
+                    <div class="col-9">
+                        <select class="form-select" id="filterLocation" data-choices>
+                        <option value="San Francisco, CA">San Francisco, CA</option>
+                        <option value="Austin, TX">Austin, TX</option>
+                        <option value="Miami, FL">Miami, FL</option>
+                        <option value="Seattle, WA">Seattle, WA</option>
+                        </select>
+                    </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+            <div class="col-auto ms-n2">
+            <div class="dropdown">
+                <button class="btn btn-dark px-3" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <span class="material-symbols-outlined">sort_by_alpha</span>
+                </button>
+                <div class="dropdown-menu rounded-3 p-6">
+                <h4 class="fs-lg mb-4">Sort</h4>
+                <form style="width: 350px" id="filterForm">
+                    <div class="row gx-3">
+                    <div class="col">
+                        <select class="form-select" id="sort" data-choices='{"searchEnabled": false}'>
+                        <option value="user">User</option>
+                        <option value="company">Company</option>
+                        <option value="phone">Phone</option>
+                        <option value="location">Location</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="sortRadio" id="sortAsc" autocomplete="off" checked />
+                        <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip" data-bs-title="Ascending">
+                            <span class="material-symbols-outlined">arrow_upward</span>
+                        </label>
+                        <input type="radio" class="btn-check" name="sortRadio" id="sortDesc" autocomplete="off" />
+                        <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip" data-bs-title="Descending">
+                            <span class="material-symbols-outlined">arrow_downward</span>
+                        </label>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Table -->
+<div class="table-responsive mb-7">
+    <table class="table table-selectable align-middle mb-0">
+    <thead>
+        <th style="width: 0px">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckAll" />
+            <label class="form-check-label" for="tableCheckAll"></label>
+        </div>
+        </th>
+        <th>User</th>
+        <th>Company</th>
+        <th>Phone</th>
+        <th>Location</th>
+    </thead>
+    <tbody>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckOne" />
+            <label class="form-check-label" for="tableCheckOne"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-6.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>John Williams</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:james.smith@example.com">james.smith@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>TechPinnacle Solutions</td>
+        <td>
+            <a class="text-muted" href="tel:(202) 555-0126">(202) 555-0126</a>
+        </td>
+        <td>San Francisco, CA</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckTwo" checked="checked" />
+            <label class="form-check-label" for="tableCheckTwo"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-2.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Michael Johnson</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:michael.johnson@example.com">michael.johnson@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Quantum Dynamics</td>
+        <td>
+            <a class="text-muted" href="tel:(202) 555-0181">(202) 555-0181</a>
+        </td>
+        <td>San Francisco, CA</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckThree" checked="checked" />
+            <label class="form-check-label" for="tableCheckThree"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-1.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Emily Thompson</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:emily.thompson@example.com">emily.thompson@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Pinnacle Technologies</td>
+        <td>
+            <a class="text-muted" href="tel:(415) 555-0192">(415) 555-0192</a>
+        </td>
+        <td>Austin, TX</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckFour" />
+            <label class="form-check-label" for="tableCheckFour"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-3.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Robert Garcia</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:robert.garcia@example.com">robert.garcia@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Apex Innovations</td>
+        <td>
+            <a class="text-muted" href="tel:(312) 555-0324">(312) 555-0324</a>
+        </td>
+        <td>Miami, FL</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckFive" checked="checked" />
+            <label class="form-check-label" for="tableCheckFive"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-5.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Jessica Miller</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:jessica.Miller@example.com">jessica.Miller@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Vertex Solutions</td>
+        <td>
+            <a class="text-muted" href="tel:(213) 555-0456">(213) 555-0456</a>
+        </td>
+        <td>Seattle, WA</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckSix" />
+            <label class="form-check-label" for="tableCheckSix"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-6.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>John Williams</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:james.smith@example.com">james.smith@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>TechPinnacle Solutions</td>
+        <td>
+            <a class="text-muted" href="tel:(202) 555-0126">(202) 555-0126</a>
+        </td>
+        <td>San Francisco, CA</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckSeven" />
+            <label class="form-check-label" for="tableCheckSeven"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-2.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Michael Johnson</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:michael.johnson@example.com">michael.johnson@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Quantum Dynamics</td>
+        <td>
+            <a class="text-muted" href="tel:(202) 555-0181">(202) 555-0181</a>
+        </td>
+        <td>San Francisco, CA</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckEight" />
+            <label class="form-check-label" for="tableCheckEight"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-1.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Emily Thompson</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:emily.thompson@example.com">emily.thompson@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Pinnacle Technologies</td>
+        <td>
+            <a class="text-muted" href="tel:(415) 555-0192">(415) 555-0192</a>
+        </td>
+        <td>Austin, TX</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckNine" />
+            <label class="form-check-label" for="tableCheckNine"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-3.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Robert Garcia</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:robert.garcia@example.com">robert.garcia@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Apex Innovations</td>
+        <td>
+            <a class="text-muted" href="tel:(312) 555-0324">(312) 555-0324</a>
+        </td>
+        <td>Miami, FL</td>
+        </tr>
+        <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="tableCheckTen" />
+            <label class="form-check-label" for="tableCheckTen"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+            <div class="avatar">
+                <img class="avatar-img" src="../assets/img/photos/photo-5.jpg" alt="..." />
+            </div>
+            <div class="ms-4">
+                <div>Jessica Miller</div>
+                <div class="fs-sm text-body-secondary">
+                <a class="text-reset" href="mailto:jessica.Miller@example.com">jessica.Miller@example.com</a>
+                </div>
+            </div>
+            </div>
+        </td>
+        <td>Vertex Solutions</td>
+        <td>
+            <a class="text-muted" href="tel:(213) 555-0456">(213) 555-0456</a>
+        </td>
+        <td>Seattle, WA</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+</div>
+</div>
+<div class="row align-items-center">
+<div class="col">
+<!-- Text -->
+<p class="text-body-secondary mb-0">1 – 10 (2550 total)</p>
+</div>
+<div class="col-auto">
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination mb-0">
+    <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+    </li>
+    <li class="page-item">
+        <a class="page-link active" href="#">1</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#">3</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+    </ul>
+</nav>
+</div>
+</div>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<!-- Map JS -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('table.table-selectable tbody tr').forEach(row => {
+    row.style.cursor = 'pointer';
+
+    row.addEventListener('click', e => {
+      // Don’t override clicks on links or checkboxes
+      if (e.target.closest('a') || e.target.closest('input[type="checkbox"]')) return;
+
+      const emailLink = row.querySelector('td .text-reset');
+      if (!emailLink) return;
+
+      const email = emailLink.textContent.trim();
+      if (email) {
+        window.location.href = `/user-details?id=${encodeURIComponent(email)}`;
+      }
+    });
+  });
+});
+</script>
