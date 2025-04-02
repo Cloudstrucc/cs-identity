@@ -4,7 +4,7 @@
   "description": "Minimal working Identus wallet agent",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
+    "start": "ts-node-dev src/index.ts",
     "cli": "ts-node src/index.ts --cli"
   },
   "dependencies": {
