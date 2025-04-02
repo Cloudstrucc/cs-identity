@@ -1,5 +1,4 @@
-
-  <title>Identity Verification Wizard</title>
+<title>Identity Verification Wizard</title>
   <!-- Bootstrap CSS (via CDN) -->
 
   <style>
@@ -26,6 +25,17 @@
     #retry-face-btn, #retry-id-btn {
       margin-top: 20px;
     }
+    /* QR code container styling */
+    .qr-card {
+      transition: transform 0.3s ease;
+    }
+    .qr-card:hover {
+      transform: scale(1.03);
+    }
+    .qr-label {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
   </style>
 
   <!-- Flash Message Container (fixed, top-right as before) -->
@@ -47,7 +57,7 @@
       <div class="col-12 col-md text-center text-md-start">
         <h1>Hello, Fred</h1>
         <p class="fs-lg text-body-secondary mb-0">
-          Ready to confirm your identity and unlock your immunitable security ID? Let’s get started on your digital journey!
+          Ready to confirm your identity and unlock your immunitable security ID? Let's get started on your digital journey!
         </p>
       </div>
     </div>
@@ -130,6 +140,32 @@
                 <span class="visually-hidden">Loading...</span>
               </div>
               <div id="credential-output" class="mt-4"></div>
+              
+              <!-- QR Code Container - Added for dual QR codes -->
+              <div id="qr-container" class="row justify-content-center mt-4 d-none">
+                <div class="col-md-5 mb-3">
+                  <div class="card qr-card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                      <h5 class="card-title mb-0 fs-6">Identity QR Code</h5>
+                    </div>
+                    <div class="card-body text-center p-4">
+                      <div id="identity-qr"></div>
+                      <p class="qr-label mt-3 mb-0">Scan to verify your identity</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 mb-3">
+                  <div class="card qr-card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                      <h5 class="card-title mb-0 fs-6">Credential QR Code</h5>
+                    </div>
+                    <div class="card-body text-center p-4">
+                      <div id="credential-qr"></div>
+                      <p class="qr-label mt-3 mb-0">Scan to view your credential</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="d-flex justify-content-start mt-4">
               <button type="button" class="btn btn-dark" onclick="new bootstrap.Tab(document.querySelector('#wizard-step2-tab')).show()">Back</button>
@@ -169,6 +205,14 @@
         }, 500);
       }, 3000);
     }
+
+    // Global state to store user data
+    const userData = {
+      did: null,
+      credential: null,
+      name: "Fred", // Default from page, could be set dynamically
+      email: null
+    };
 
     // Load face-api.js models from the specified folders and start camera
     window.addEventListener('DOMContentLoaded', async () => {
@@ -354,6 +398,10 @@
           wizardStep2Tab.innerHTML += ' <span class="ms-2 text-success">&#10004;</span>';
         }
         retryIdBtn.classList.remove('d-none');
+
+        // Extract email from ID if possible
+        // In a real app, this would use OCR to extract email from the ID
+        userData.email = "fred@example.com";
       } else {
         showFlashMessage("Face match unsuccessful. Please try again.", "danger");
         step2NextBtn.disabled = true;
@@ -385,28 +433,156 @@
       new bootstrap.Tab(document.querySelector('#wizard-step3-tab')).show();
     });
 
+    // NEW FUNCTIONS FOR STEP 3: DID and Credential Generation
+
+    // Generate a secure, random DID
+    function generateDID() {
+      const randomBytes = new Uint8Array(16);
+      window.crypto.getRandomValues(randomBytes);
+      const hexString = Array.from(randomBytes)
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+      return `did:example:${hexString}`;
+    }
+
+    // Generate a verifiable credential object
+    function generateCredential(did) {
+      const now = new Date();
+      const expiry = new Date();
+      expiry.setFullYear(now.getFullYear() + 1);
+      
+      return {
+        "@context": ["https://www.w3.org/2018/credentials/v1"],
+        "id": "urn:uuid:" + crypto.randomUUID(),
+        "type": ["VerifiableCredential", "DecentralizedIdentityCredential"],
+        "issuer": "did:example:issuer123",
+        "issuanceDate": now.toISOString(),
+        "expirationDate": expiry.toISOString(),
+        "credentialSubject": {
+          "id": did,
+          "name": userData.name,
+          "email": userData.email || "unknown@example.com"
+        }
+      };
+    }
+
+    // Generate both QR codes for identity and credential
+    function generateQRCodes(did, credential) {
+      // Clear previous QR codes
+      document.getElementById('identity-qr').innerHTML = '';
+      document.getElementById('credential-qr').innerHTML = '';
+      
+      // Generate Identity QR Code
+      QRCode.toCanvas(
+        document.getElementById('identity-qr'), 
+        did, 
+        {
+          width: 180,
+          margin: 1,
+          color: {
+            dark: '#000000',
+            light: '#ffffff'
+          }
+        },
+        function(error) {
+          if (error) {
+            console.error('Error generating identity QR code:', error);
+            showFlashMessage('Failed to generate identity QR code', 'danger');
+          }
+        }
+      );
+      
+      // Generate Credential QR Code with detailed credential information
+      const credentialData = JSON.stringify(credential);
+      const credentialUrl = `https://example.com/verify?data=${encodeURIComponent(credentialData)}`;
+      
+      QRCode.toCanvas(
+        document.getElementById('credential-qr'), 
+        credentialUrl, 
+        {
+          width: 180,
+          margin: 1,
+          color: {
+            dark: '#198754', // Bootstrap success color
+            light: '#ffffff'
+          }
+        },
+        function(error) {
+          if (error) {
+            console.error('Error generating credential QR code:', error);
+            showFlashMessage('Failed to generate credential QR code', 'danger');
+          }
+        }
+      );
+      
+      // Show the QR container
+      document.getElementById('qr-container').classList.remove('d-none');
+    }
+
     // STEP 3: Issue Verifiable Credential Elements
     const issueVcBtn = document.getElementById('issue-vc-btn');
     const spinner = document.getElementById('vc-spinner');
     const output = document.getElementById('credential-output');
+    
     issueVcBtn.addEventListener('click', async () => {
-      // Add spinner to Issue VC button
-      const originalText = issueVcBtn.innerHTML;
-      issueVcBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...`;
-      issueVcBtn.disabled = true;
-
+      // Show spinner and disable button
       issueVcBtn.classList.add('d-none');
       spinner.classList.remove('d-none');
 
-      setTimeout(async () => {
-        spinner.classList.add('d-none');
-        const did = localStorage.getItem('did') || 'did:example:123';
-        const qrDataUrl = await QRCode.toDataURL(did, { width: 200 });
-        output.innerHTML = `<img src="${qrDataUrl}" alt="Scan to import DID" class="img-fluid" />`;
+      // Simulate server processing
+      setTimeout(() => {
+        try {
+          // Generate DID
+          userData.did = generateDID();
+          localStorage.setItem('did', userData.did);
+          
+          // Generate verifiable credential
+          userData.credential = generateCredential(userData.did);
+          
+          // Display credential info in the credential output area
+          output.innerHTML = `
+            <div class="alert alert-success">
+              <h5>Credential Issued Successfully!</h5>
+              <p><strong>Your DID:</strong> ${userData.did}</p>
+              <p><strong>Issued:</strong> ${new Date(userData.credential.issuanceDate).toLocaleDateString()}</p>
+              <p><strong>Expires:</strong> ${new Date(userData.credential.expirationDate).toLocaleDateString()}</p>
+            </div>
+          `;
+          
+          // Generate both QR codes
+          generateQRCodes(userData.did, userData.credential);
+          
+          // Update instructions
+          document.getElementById('vc-instructions').innerHTML = `
+            <p class="mb-1">Your decentralized identity has been issued successfully!</p>
+            <p class="text-body-secondary">Scan either QR code to import your credential into a digital wallet.</p>
+          `;
+          
+          // Add checkmark to step 3 tab
+          const wizardStep3Tab = document.getElementById('wizard-step3-tab');
+          if (!wizardStep3Tab.innerHTML.includes('&#10004;')) {
+            wizardStep3Tab.innerHTML += ' <span class="ms-2 text-success">&#10004;</span>';
+          }
+          
+          // Show success message
+          showFlashMessage('Verifiable credential issued successfully!', 'success');
+        } catch (error) {
+          console.error('Error issuing credential:', error);
+          showFlashMessage('Failed to issue credential. Please try again.', 'danger');
+          issueVcBtn.classList.remove('d-none');
+        } finally {
+          // Hide spinner
+          spinner.classList.add('d-none');
+        }
+      }, 1500);
+    });
 
-        document.getElementById('vc-instructions').textContent =
-          'Scanning the RFID code will prompt you to download the wallet application (or leverage an existing one). Go through the process with the wallet and you will be prompted for a "mock" sign in which will challenge your wallet for permission. Once granted, you now have your security identity.';
-        showFlashMessage("Credential issued successfully!", "success");
-      }, 500);
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hide QR container initially
+      const qrContainer = document.getElementById('qr-container');
+      if (qrContainer) {
+        qrContainer.classList.add('d-none');
+      }
     });
   </script>
