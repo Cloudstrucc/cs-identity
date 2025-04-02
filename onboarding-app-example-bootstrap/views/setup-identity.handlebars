@@ -486,10 +486,6 @@
 
     // Generate both QR codes for identity and credential (MS Authenticator compatible)
     function generateQRCodes(did, credential) {
-      // Clear previous QR codes
-      document.getElementById('identity-qr').innerHTML = '';
-      document.getElementById('credential-qr').innerHTML = '';
-      
       // Generate MS Authenticator compatible Identity QR Code
       // Format: otpauth://totp/[issuer]:[accountName]?secret=[secret]&issuer=[issuer]
       const secret = generateBase32Secret(32);
@@ -497,8 +493,11 @@
       const accountName = userData.email || userData.name || "user@example.com";
       const identityUri = `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(accountName)}?secret=${secret}&issuer=${encodeURIComponent(issuer)}`;
       
-      QRCode.toCanvas(
-        document.getElementById('identity-qr'), 
+      // Log for debugging
+      console.log("Identity QR Code URI:", identityUri);
+      
+      // Use toDataURL instead of toCanvas
+      QRCode.toDataURL(
         identityUri, 
         {
           width: 180,
@@ -508,23 +507,31 @@
             light: '#ffffff'
           }
         },
-        function(error) {
+        function(error, url) {
           if (error) {
             console.error('Error generating identity QR code:', error);
             showFlashMessage('Failed to generate identity QR code', 'danger');
+          } else {
+            // Display the QR code as an image
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = "Identity QR Code";
+            img.classList.add("img-fluid");
+            document.getElementById('identity-qr').innerHTML = '';
+            document.getElementById('identity-qr').appendChild(img);
           }
         }
       );
-      
-      // Save for debugging
-      console.log("Identity QR Code URI:", identityUri);
       
       // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
       const credentialSecret = generateBase32Secret(32);
       const credentialUri = `otpauth://totp/${encodeURIComponent("Microsoft")}:${encodeURIComponent(accountName)}?secret=${credentialSecret}&issuer=${encodeURIComponent("Microsoft")}`;
       
-      QRCode.toCanvas(
-        document.getElementById('credential-qr'), 
+      // Log for debugging
+      console.log("Credential QR Code URI:", credentialUri);
+      
+      // Use toDataURL instead of toCanvas
+      QRCode.toDataURL(
         credentialUri, 
         {
           width: 180,
@@ -534,16 +541,21 @@
             light: '#ffffff'
           }
         },
-        function(error) {
+        function(error, url) {
           if (error) {
             console.error('Error generating credential QR code:', error);
             showFlashMessage('Failed to generate credential QR code', 'danger');
+          } else {
+            // Display the QR code as an image
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = "Credential QR Code";
+            img.classList.add("img-fluid");
+            document.getElementById('credential-qr').innerHTML = '';
+            document.getElementById('credential-qr').appendChild(img);
           }
         }
       );
-      
-      // Save for debugging
-      console.log("Credential QR Code URI:", credentialUri);
       
       // Show the QR container
       document.getElementById('qr-container').classList.remove('d-none');
