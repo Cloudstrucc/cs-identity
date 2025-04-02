@@ -496,69 +496,40 @@
       // Log for debugging
       console.log("Identity QR Code URI:", identityUri);
       
-      // Use toDataURL instead of toCanvas
-      QRCode.toDataURL(
-        identityUri, 
-        {
-          width: 180,
-          margin: 1,
-          color: {
-            dark: '#000000',
-            light: '#ffffff'
-          }
-        },
-        function(error, url) {
-          if (error) {
-            console.error('Error generating identity QR code:', error);
-            showFlashMessage('Failed to generate identity QR code', 'danger');
-          } else {
-            // Display the QR code as an image
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = "Identity QR Code";
-            img.classList.add("img-fluid");
-            document.getElementById('identity-qr').innerHTML = '';
-            document.getElementById('identity-qr').appendChild(img);
-          }
-        }
-      );
-      
-      // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
-      const credentialSecret = generateBase32Secret(32);
-      const credentialUri = `otpauth://totp/${encodeURIComponent("Microsoft")}:${encodeURIComponent(accountName)}?secret=${credentialSecret}&issuer=${encodeURIComponent("Microsoft")}`;
-      
-      // Log for debugging
-      console.log("Credential QR Code URI:", credentialUri);
-      
-      // Use toDataURL instead of toCanvas
-      QRCode.toDataURL(
-        credentialUri, 
-        {
-          width: 180,
-          margin: 1,
-          color: {
-            dark: '#0078D4', // Microsoft blue
-            light: '#ffffff'
-          }
-        },
-        function(error, url) {
-          if (error) {
-            console.error('Error generating credential QR code:', error);
-            showFlashMessage('Failed to generate credential QR code', 'danger');
-          } else {
-            // Display the QR code as an image
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = "Credential QR Code";
-            img.classList.add("img-fluid");
-            document.getElementById('credential-qr').innerHTML = '';
-            document.getElementById('credential-qr').appendChild(img);
-          }
-        }
-      );
-      
-      // Show the QR container
-      document.getElementById('qr-container').classList.remove('d-none');
+      try {
+        // Use a direct method to generate the QR code
+        // Create an iframe with the Google Charts API QR code generator
+        const identityQrContainer = document.getElementById('identity-qr');
+        identityQrContainer.innerHTML = '';
+        
+        const identityImg = document.createElement('img');
+        identityImg.src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(identityUri)}&chld=H|0`;
+        identityImg.alt = "Identity QR Code";
+        identityImg.classList.add("img-fluid");
+        identityQrContainer.appendChild(identityImg);
+        
+        // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
+        const credentialSecret = generateBase32Secret(32);
+        const credentialUri = `otpauth://totp/${encodeURIComponent("Microsoft")}:${encodeURIComponent(accountName)}?secret=${credentialSecret}&issuer=${encodeURIComponent("Microsoft")}`;
+        
+        // Log for debugging
+        console.log("Credential QR Code URI:", credentialUri);
+        
+        const credentialQrContainer = document.getElementById('credential-qr');
+        credentialQrContainer.innerHTML = '';
+        
+        const credentialImg = document.createElement('img');
+        credentialImg.src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(credentialUri)}&chld=H|0`;
+        credentialImg.alt = "Microsoft Credential QR Code";
+        credentialImg.classList.add("img-fluid");
+        credentialQrContainer.appendChild(credentialImg);
+        
+        // Show the QR container
+        document.getElementById('qr-container').classList.remove('d-none');
+      } catch (err) {
+        console.error("Error generating QR codes:", err);
+        showFlashMessage("Failed to generate QR codes. Please try again.", "danger");
+      }
     }
 
     // STEP 3: Issue Verifiable Credential Elements
