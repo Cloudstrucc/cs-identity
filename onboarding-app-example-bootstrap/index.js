@@ -18,14 +18,15 @@ app.use(cors());
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// ✅ Serve static files (Ensures Bootstrap theme, CSS, and Logo load properly)
+// ✅ Serve static files Ensures Bootstrap theme, CSS, and Logo load properly
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/bootstrap-theme")));
 app.use(express.static(path.join(__dirname, "assets"))); // Ensure the logo loads
 app.use("/css", express.static(path.join(__dirname, "public/css")));
 app.use('/models', express.static(path.join(__dirname, 'models')));
-//const credentialRoutes = require('./routes/credential');	
-//app.use('/api', credentialRoutes);
+app.use(express.static('public'));
+const credentialRoutes = require('./routes/credential');	
+app.use('/api', credentialRoutes);
 
 // ✅ Middleware for handling form data
 app.use(bodyParser.urlencoded({ extended: false }));
