@@ -18,7 +18,7 @@ app.use(cors());
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// ✅ Serve static files (Ensures Bootstrap theme, CSS, and Logo load properly)
+// ✅ Serve static files Ensures Bootstrap theme, CSS, and Logo load properly
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/bootstrap-theme")));
 app.use(express.static(path.join(__dirname, "assets"))); // Ensure the logo loads
