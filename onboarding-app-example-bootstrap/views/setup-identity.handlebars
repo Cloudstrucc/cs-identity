@@ -1,4 +1,4 @@
-x<title>Identity Verification Wizard</title>
+<title>Identity Verification Wizard</title>
   <!-- Bootstrap CSS (via CDN) -->
 
   <style>
@@ -467,71 +467,79 @@ x<title>Identity Verification Wizard</title>
         }
       };
     }
-    // Generate both QR codes for identity and credential (MS Authenticator compatible)
-    function generateQRCodes(did, credential) {
-      // Clear previous QR codes
-      document.getElementById('identity-qr').innerHTML = '';
-      document.getElementById('credential-qr').innerHTML = '';
-      
-      // Generate MS Authenticator compatible Identity QR Code
-      // Format: otpauth://totp/[issuer]:[accountName]?secret=[secret]&issuer=[issuer]&algorithm=SHA1&digits=6&period=30
-      const secret = btoa(did).replace(/=/g, '').substring(0, 32); // Create a base64 secret from DID
-      const issuer = "SecureID";
-      const accountName = userData.email || userData.name || "user@example.com";
-      const identityUri = `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(accountName)}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&algorithm=SHA1&digits=6&period=30`;
-      
-      QRCode.toCanvas(
-        document.getElementById('identity-qr'), 
-        identityUri, 
-        {
-          width: 180,
-          margin: 1,
-          color: {
-            dark: '#000000',
-            light: '#ffffff'
-          }
-        },
-        function(error) {
-          if (error) {
-            console.error('Error generating identity QR code:', error);
-            showFlashMessage('Failed to generate identity QR code', 'danger');
-          }
-        }
-      );
-      
-      // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
-      // We'll create a mock Microsoft account format
-      const credentialSecret = btoa(JSON.stringify({
-        id: credential.id,
-        subject: credential.credentialSubject.id,
-        name: credential.credentialSubject.name,
-        exp: credential.expirationDate
-      })).replace(/=/g, '').substring(0, 32);
-      
-      const credentialUri = `otpauth://totp/${encodeURIComponent("Microsoft")}:${encodeURIComponent(accountName)}?secret=${credentialSecret}&issuer=${encodeURIComponent("Microsoft")}&algorithm=SHA1&digits=6&period=30`;
-      
-      QRCode.toCanvas(
-        document.getElementById('credential-qr'), 
-        credentialUri, 
-        {
-          width: 180,
-          margin: 1,
-          color: {
-            dark: '#0078D4', // Microsoft blue
-            light: '#ffffff'
-          }
-        },
-        function(error) {
-          if (error) {
-            console.error('Error generating credential QR code:', error);
-            showFlashMessage('Failed to generate credential QR code', 'danger');
-          }
-        }
-      );
-      
-      // Show the QR container
-      document.getElementById('qr-container').classList.remove('d-none');
 
+    // Generate a proper BASE32 secret for TOTP
+    function generateBase32Secret(length = 32) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+      let result = '';
+      // Create random values
+      const values = [];
+      for (let i = 0; i < length; i++) {
+        values.push(Math.floor(Math.random() * chars.length));
+      }
+      // Convert to BASE32
+      for (let i = 0; i < length; i++) {
+        result += chars[values[i]];
+      }
+      return result;
+    }
+
+    // Generate QR Codes using QRServer.com API (works with MS Authenticator)
+    function generateQRCodes(did, credential) {
+      try {
+        // Generate MS Authenticator compatible Identity QR Code
+        // Format: otpauth://totp/[issuer]:[accountName]?secret=[secret]&issuer=[issuer]
+        const identitySecret = generateBase32Secret(32);
+        const identityIssuer = "SecureID";
+        const accountName = userData.name || "User";
+        const email = userData.email || "user@example.com";
+        const accountIdentifier = email;
+        
+        // Format exactly as Microsoft Authenticator expects
+        const identityUri = `otpauth://totp/${encodeURIComponent(identityIssuer)}:${encodeURIComponent(accountIdentifier)}?secret=${identitySecret}&issuer=${encodeURIComponent(identityIssuer)}`;
+        
+        // Log for debugging
+        console.log("Identity QR Code URI:", identityUri);
+        
+        // Use QRServer.com API for direct QR code image
+        const identityQrContainer = document.getElementById('identity-qr');
+        identityQrContainer.innerHTML = '';
+        
+        const identityImg = document.createElement('img');
+        identityImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(identityUri)}`;
+        identityImg.alt = "Identity QR Code";
+        identityImg.classList.add("img-fluid");
+        identityQrContainer.appendChild(identityImg);
+        
+        // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
+        const credentialSecret = generateBase32Secret(32);
+        const msIssuer = "Microsoft";
+        const credentialUri = `otpauth://totp/${encodeURIComponent(msIssuer)}:${encodeURIComponent(accountIdentifier)}?secret=${credentialSecret}&issuer=${encodeURIComponent(msIssuer)}`;
+        
+        // Log for debugging
+        console.log("Credential QR Code URI:", credentialUri);
+        
+        const credentialQrContainer = document.getElementById('credential-qr');
+        credentialQrContainer.innerHTML = '';
+        
+        const credentialImg = document.createElement('img');
+        credentialImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(credentialUri)}`;
+        credentialImg.alt = "Microsoft Credential QR Code";
+        credentialImg.classList.add("img-fluid");
+        credentialQrContainer.appendChild(credentialImg);
+        
+        // Show the QR container
+        document.getElementById('qr-container').classList.remove('d-none');
+        
+        // Set this flag for success message
+        window.qrCodesGenerated = true;
+        
+        return true;
+      } catch (err) {
+        console.error("Error generating QR codes:", err);
+        showFlashMessage("Failed to generate QR codes. Please try again.", "danger");
+        return false;
+      }
     }
 
     // STEP 3: Issue Verifiable Credential Elements
@@ -539,7 +547,7 @@ x<title>Identity Verification Wizard</title>
     const spinner = document.getElementById('vc-spinner');
     const output = document.getElementById('credential-output');
     
-    issueVcBtn.addEventListener('click', async () => {
+    issueVcBtn.addEventListener('click', function() {
       // Show spinner and disable button
       issueVcBtn.classList.add('d-none');
       spinner.classList.remove('d-none');
@@ -562,21 +570,25 @@ x<title>Identity Verification Wizard</title>
               <p><strong>Issued:</strong> ${new Date(userData.credential.issuanceDate).toLocaleDateString()}</p>
               <p><strong>Expires:</strong> ${new Date(userData.credential.expirationDate).toLocaleDateString()}</p>
             </div>
+            <div class="alert alert-info mt-3">
+              <h5>Scan with Microsoft Authenticator</h5>
+              <ol class="text-start mb-0">
+                <li>Open Microsoft Authenticator app</li>
+                <li>Tap + icon</li>
+                <li>Select "Work or school account"</li>
+                <li>Choose "Scan a QR code"</li>
+                <li>Point camera at either QR code</li>
+              </ol>
+            </div>
           `;
           
           // Generate both QR codes
-          generateQRCodes(userData.did, userData.credential);
+          const qrSuccess = generateQRCodes(userData.did, userData.credential);
           
-          // Update instructions for MS Authenticator
+          // Update instructions
           document.getElementById('vc-instructions').innerHTML = `
             <p class="mb-1">Your decentralized identity has been issued successfully!</p>
-            <p class="text-body-secondary">Scan either QR code with Microsoft Authenticator:</p>
-            <ol class="text-start small mt-2">
-              <li>Open Microsoft Authenticator app</li>
-              <li>Tap + icon > Work or school account</li>
-              <li>Choose "Scan a QR code"</li>
-              <li>Scan either QR code above</li>
-            </ol>
+            <p class="text-body-secondary">Scan either QR code with Microsoft Authenticator.</p>
           `;
           
           // Add checkmark to step 3 tab
@@ -586,7 +598,9 @@ x<title>Identity Verification Wizard</title>
           }
           
           // Show success message
-          showFlashMessage('Verifiable credential issued successfully!', 'success');
+          if (qrSuccess) {
+            showFlashMessage('Verifiable credential issued successfully!', 'success');
+          }
         } catch (error) {
           console.error('Error issuing credential:', error);
           showFlashMessage('Failed to issue credential. Please try again.', 'danger');
