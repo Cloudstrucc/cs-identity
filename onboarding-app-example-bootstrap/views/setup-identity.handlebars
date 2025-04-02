@@ -150,20 +150,18 @@
                     </div>
                     <div class="card-body text-center p-4">
                       <div id="identity-qr"></div>
-                      <p class="qr-label mt-3 mb-0">Scan with MS Authenticator</p>
-                      <span class="badge bg-primary mt-2">SecureID Account</span>
+                      <p class="qr-label mt-3 mb-0">Scan to verify your identity</p>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-5 mb-3">
                   <div class="card qr-card shadow-sm">
-                    <div class="card-header" style="background-color: #0078D4; color: white;">
+                    <div class="card-header bg-success text-white">
                       <h5 class="card-title mb-0 fs-6">Credential QR Code</h5>
                     </div>
                     <div class="card-body text-center p-4">
                       <div id="credential-qr"></div>
-                      <p class="qr-label mt-3 mb-0">Scan with MS Authenticator</p>
-                      <span class="badge" style="background-color: #0078D4;">Microsoft Account</span>
+                      <p class="qr-label mt-3 mb-0">Scan to view your credential</p>
                     </div>
                   </div>
                 </div>
@@ -468,22 +466,16 @@
       };
     }
 
-    // Generate both QR codes for identity and credential (MS Authenticator compatible)
+    // Generate both QR codes for identity and credential
     function generateQRCodes(did, credential) {
       // Clear previous QR codes
       document.getElementById('identity-qr').innerHTML = '';
       document.getElementById('credential-qr').innerHTML = '';
       
-      // Generate MS Authenticator compatible Identity QR Code
-      // Format: otpauth://totp/[issuer]:[accountName]?secret=[secret]&issuer=[issuer]&algorithm=SHA1&digits=6&period=30
-      const secret = btoa(did).replace(/=/g, '').substring(0, 32); // Create a base64 secret from DID
-      const issuer = "SecureID";
-      const accountName = userData.email || userData.name || "user@example.com";
-      const identityUri = `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(accountName)}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&algorithm=SHA1&digits=6&period=30`;
-      
+      // Generate Identity QR Code
       QRCode.toCanvas(
         document.getElementById('identity-qr'), 
-        identityUri, 
+        did, 
         {
           width: 180,
           margin: 1,
@@ -500,25 +492,18 @@
         }
       );
       
-      // Generate MS Authenticator compatible Credential QR Code (as a Microsoft account)
-      // We'll create a mock Microsoft account format
-      const credentialSecret = btoa(JSON.stringify({
-        id: credential.id,
-        subject: credential.credentialSubject.id,
-        name: credential.credentialSubject.name,
-        exp: credential.expirationDate
-      })).replace(/=/g, '').substring(0, 32);
-      
-      const credentialUri = `otpauth://totp/${encodeURIComponent("Microsoft")}:${encodeURIComponent(accountName)}?secret=${credentialSecret}&issuer=${encodeURIComponent("Microsoft")}&algorithm=SHA1&digits=6&period=30`;
+      // Generate Credential QR Code with detailed credential information
+      const credentialData = JSON.stringify(credential);
+      const credentialUrl = `https://example.com/verify?data=${encodeURIComponent(credentialData)}`;
       
       QRCode.toCanvas(
         document.getElementById('credential-qr'), 
-        credentialUri, 
+        credentialUrl, 
         {
           width: 180,
           margin: 1,
           color: {
-            dark: '#0078D4', // Microsoft blue
+            dark: '#198754', // Bootstrap success color
             light: '#ffffff'
           }
         },
@@ -567,16 +552,10 @@
           // Generate both QR codes
           generateQRCodes(userData.did, userData.credential);
           
-          // Update instructions for MS Authenticator
+          // Update instructions
           document.getElementById('vc-instructions').innerHTML = `
             <p class="mb-1">Your decentralized identity has been issued successfully!</p>
-            <p class="text-body-secondary">Scan either QR code with Microsoft Authenticator:</p>
-            <ol class="text-start small mt-2">
-              <li>Open Microsoft Authenticator app</li>
-              <li>Tap + icon > Work or school account</li>
-              <li>Choose "Scan a QR code"</li>
-              <li>Scan either QR code above</li>
-            </ol>
+            <p class="text-body-secondary">Scan either QR code to import your credential into a digital wallet.</p>
           `;
           
           // Add checkmark to step 3 tab
