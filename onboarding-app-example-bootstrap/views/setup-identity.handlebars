@@ -467,7 +467,6 @@ x<title>Identity Verification Wizard</title>
         }
       };
     }
-
     // Generate both QR codes for identity and credential (MS Authenticator compatible)
     function generateQRCodes(did, credential) {
       // Clear previous QR codes
@@ -532,6 +531,7 @@ x<title>Identity Verification Wizard</title>
       
       // Show the QR container
       document.getElementById('qr-container').classList.remove('d-none');
+
     }
 
     // STEP 3: Issue Verifiable Credential Elements
