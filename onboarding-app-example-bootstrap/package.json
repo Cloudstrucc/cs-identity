@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-rekognition": "^3.734.0",
+    "@sendgrid/mail": "^8.1.5",
     "@tensorflow/tfjs-node": "^4.22.0",
     "axios": "^1.8.4",
     "body-parser": "^1.20.3",

@@ -6,140 +6,102 @@ Follow the steps below to **clone, configure, and run** the onboarding app.
 
 ### ⚡ Quick Setup (One-Line Commands)
 
-### Pre-requisites
+#### Pre-requisites
 
-Ensrue that you are usnig Node 18, or 20. **E.G install NVM and use command nvm use 20 before running the npm install**
+Ensure that you are using Node 18 or 20. **E.g., install NVM and use the command `nvm use 20` before running `npm install`.**
 
 #### 🖥️ Windows (PowerShell)
 
-This command works only if you are using Node 20
+This command works only if you are using Node 20:
 
 ```powershell
 git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; cat .env | tr -d '\r' ; dos2unix .env ; node index.js
 ```
 
-#### 🐧 macOS / Linux (Terminal)
+#### 🐗 macOS / Linux (Terminal)
 
-This command works only if you are using Node 20
-
-```sh
+```bash
 git clone https://github.com/Cloudstrucc/cs-identity.git && cd ./cs-identity && cd ./onboarding-app-example-bootstrap && npm install && touch .env && ETHERIUM_ADDRESS=$(node genwallet.js | grep -o '0x[a-fA-F0-9]*' | head -1) && echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env && echo "PRIVATE_KEY=$(openssl rand -hex 32)" >> .env && node index.js
 ```
 
-### 📥 Clone the Repository (follow this step if opting to not use the useful commands above)
+---
 
-```sh
+## 📥 Manual Setup
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/Cloudstrucc/cs-identity.git
+cd cs-identity/onboarding-app-example-bootstrap
 ```
 
-### 📂 Navigate to the Project Directory
+### 2. Install dependencies
 
-```sh
-cd cs-identity
-cd onboarding-app-example-bootstrap
-```
-
-### 📦 Install Dependencies
-
-```sh
+```bash
 npm install
 ```
 
-### 🔧 Create and Configure Environment File
+### 3. Create and configure .env
 
-1. Create a new `.env` file in the root directory:
-   ```sh
-   touch .env
-   ```
-2. Generate a secure private key:
-   ```sh
-   openssl rand -hex 32
-   ```
-3. Copy the output of the command and update `.env`:
-   ```sh
-   PRIVATE_KEY=your_generated_key
-   ```
-
-### 🔑 Generate Ethereum Wallet
-
-1. Run the wallet generation script:
-
-   ```sh
-   node genwallet.js
-   ```
-2. Copy the Ethereum address from the output and update `.env`:
-
-   ```sh
-   ETHEREUM_ADDRESS=your_generated_ethereum_address
-   ```
-
-   *NOTE - In a Windows environment make sure there are no leading or trailing spaces in your .env file otherwise the server.js will not run. You can run the following command in PowerShell to ensure this*
-
-```powershell
-cat .env | tr -d '\r'
+```bash
+touch .env
+openssl rand -hex 32 # Copy the output
 ```
 
-    *NOTE If your `.env` file was saved with Windows-style line endings (`\r\n`), you to convert it to Unix format using the following command in your shell enviornment*
+Add this to `.env`:
 
-```powershell
-dos2unix .env
+```env
+PRIVATE_KEY=your_generated_key
 ```
 
-### ▶️ Start the Application
+Generate Ethereum address:
 
-```sh
-node server.js OR npm start
+```bash
+node genwallet.js
 ```
 
-## 🛠️ Troubleshooting
+Add to `.env`:
 
-If you encounter errors such as `MODULE_NOT_FOUND`, follow these steps:
-
-### 🔍 Verify Required Files Exist
-
-Run:
-
-```sh
-ls
+```env
+ETHEREUM_ADDRESS=your_generated_eth_address
+FRONTEND_URL=http://localhost:3000
 ```
 
-Ensure the following files exist:
+### 4. Run the application
 
-* `genwallet.js`
-* `server.js`
-
-If missing, try re-cloning the repository:
-
-```sh
-git clone https://github.com/Cloudstrucc/cs-identity.git
-cd cs-identity
-cd onboarding-app-example-bootstrap
+```bash
+node server.js
+# or
+npm start
 ```
 
-### 🔧 Manually Create Missing Files
+---
 
-If the files are not in the repository, create them manually:
+## 🚀 Deploy to Heroku (Free Tier)
 
-```powershell
-New-Item -ItemType File genwallet.js
-New-Item -ItemType File server.js
+### 📋 Prerequisites
+
+* A Heroku account
+* Heroku CLI installed
+
+### 🔢 Deployment Steps
+
+```bash
+heroku login
+heroku create your-app-name
+git remote add heroku https://git.heroku.com/your-app-name.git
+
+# Deploy
+
+git push heroku main
+
+# Set environment variables
+heroku config:set PRIVATE_KEY=your_generated_key
+heroku config:set ETHEREUM_ADDRESS=your_generated_ethereum_address
+heroku config:set FRONTEND_URL=https://your-app-name.herokuapp.com
 ```
 
-Then, open them and add the necessary content.
-
-### 🔄 Check Node.js Installation
-
-Run:
-
-```sh
-node -v
-```
-
-Ensure Node.js is correctly installed. If not, reinstall it from [Node.js official site](https://nodejs.org/).
-
-## ✅ Application is now running! 🎉
-
-For any issues, refer to the documentation or raise an issue in the repository.
+Visit: `https://your-app-name.herokuapp.com`
 
 ---
 
@@ -147,115 +109,211 @@ For any issues, refer to the documentation or raise an issue in the repository.
 
 ### 📋 Prerequisites
 
-* An Azure subscription
-* Azure CLI installed (or open Azure Cloud Shell via portal.azure.com)
-* A ZIP of your built app (e.g. `app.zip`)
+* Azure account
+* Azure CLI installed
+* Node.js 18 or 20
 
----
-
-### 🔢 Deployment Steps for Azure
-
-Pre-requisites, install the Azure CLI SDK on your machine and make sure you can run the az commands from your terminal. You can also use the Azure shell if you have access to it.
-
-1️⃣ **Login & select subscription**
+### 🔢 Deployment Steps
 
 ```bash
 az login
 az account set --subscription "<YOUR_SUBSCRIPTION_NAME_OR_ID>"
-```
-
-2️⃣ **Create Resource Group & Free App Service Plan**
-
-```bash
 az group create --name myResourceGroup --location eastus
-az appservice plan create \
-  --name myAppPlan \
-  --resource-group myResourceGroup \
-  --sku F1 \
-  --is-linux
-```
-
-3️⃣ **Create the Web App**
-
-*(Choose a globally‑unique name — no spaces)*
-
-```bash
-az webapp create \
-  --resource-group myResourceGroup \
-  --plan myAppPlan \
-  --name <YOUR-UNIQUE-APP-NAME> \
-  --runtime "NODE|18-lts"
-```
-
-4️⃣ **ZIP Deploy your app**
-
-```bash
+az appservice plan create --name myAppPlan --resource-group myResourceGroup --sku F1 --is-linux
+az webapp create --resource-group myResourceGroup --plan myAppPlan --name <YOUR-UNIQUE-APP-NAME> --runtime "NODE|18-lts"
 npm ci --only=production
-zip -r app.zip . -x node_modules/\* tests/\*
-
-# if you have issues with npm ci you can zip by excluding node_modules
-zip -r app.zip . -x "*.git*" "tests/*"
-
-#This will produce an app.zip file at the root of your project that you will then upload to the azure shell files via the #Manage Files menu on the shell ribbon.
+zip -r app.zip . -x node_modules/* tests/*
+az webapp deployment source config-zip --resource-group myResourceGroup --name <YOUR-UNIQUE-APP-NAME> --src app.zip
+az webapp config appsettings set --resource-group myResourceGroup --name <YOUR-UNIQUE-APP-NAME> --settings \
+PRIVATE_KEY=your_generated_key \
+ETHEREUM_ADDRESS=your_generated_ethereum_address \
+FRONTEND_URL=https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
 ```
 
-You will need to ensure to explicitly tell Azure to build during the deploy (so running npm install). If you keep the node modules in your zip file the zip file is over the limit of 150mb that uploads are allowed directly via the azure shell. If you want to upload files larger with the app including the node_modules, you can do so using azure storage (but not documneted here).
+Visit: `https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net`
+
+---
+
+## 🚀 Deploy to AWS (Free Tier EC2 Ubuntu Server)
+
+### 📋 Prerequisites
+
+* AWS account
+* SSH key pair
+* EC2 instance (Ubuntu 22.04 LTS)
+
+### 🔢 Steps
 
 ```bash
-az webapp config appsettings set   --resource-group CLIENT13   --name vbi-demo-dev   --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+# SSH into EC2
+ssh -i key.pem ubuntu@your-ec2-ip
+
+# Install dependencies
+sudo apt update
+sudo apt install nodejs npm git nginx -y
+
+# Clone repo and install
+cd /var/www
+git clone https://github.com/Cloudstrucc/cs-identity.git
+cd cs-identity/onboarding-app-example-bootstrap
+npm install
+
+# Setup .env
+cat <<EOF > .env
+PRIVATE_KEY=...
+ETHEREUM_ADDRESS=...
+FRONTEND_URL=http://yourdomain.com
+EOF
 ```
 
-Change into the directory containing your ZIP (e.g. Cloud Shell’s `clouddrive`), then:
+### Configure Nginx
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
 
 ```bash
-az webapp deployment source config-zip \
-  --resource-group myResourceGroup \
-  --name <YOUR-UNIQUE-APP-NAME> \
-  --src app.zip
+sudo ln -s /etc/nginx/sites-available/onboarding-app /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl restart nginx
 ```
 
-✅ **Done!** Your app is live at:
-
-```
-https://<YOUR-UNIQUE-APP-NAME>.azurewebsites.net
-```
-
-## Steps to redeploy
-
-Before deploying to azure, set up your project to only include what is required. Its also recommented that your purge the package-lock.json file
+### Use PM2
 
 ```bash
-npm ci --only=production ; zip -r app.zip . -x ".git" "tests/*"
+sudo npm install -g pm2
+pm2 start server.js
+pm2 startup
+pm2 save
 ```
 
-Next run the following az command in the azure shell whcih will re-deploy the application:
+### 🔐 HTTPS Setup with Let's Encrypt
 
 ```bash
-
-
-az webapp config appsettings set \
-  --resource-group CLIENT13 \
-  --name vbi-demo-dev \
-  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true &&
-
-az webapp deploy \
-  --resource-group CLIENT13 \
-  --name vbi-demo-dev \
-  --src-path app.zip \
-  --type zip &&
-
-az webapp config appsettings set \
-  --resource-group CLIENT13 \
-  --name vbi-demo-dev \
-  --settings FRONTEND_URL="https://vbi-demo-dev.azurewebsites.net"
-
-
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+sudo certbot renew --dry-run
 ```
 
 ---
 
-### 💡 Notes
+## 🚀 Deploy to Linode or DigitalOcean (Cheapest Tiers)
 
-* Deployment via ZIP on the **F1 (Free)** tier does **not** rebuild your code.
-* If you run into size limits (>150 MB), upload the ZIP to Azure Blob Storage and deploy via its SAS URL instead.
-* You can configure an identity provider in the web app in azure so that the app isnt just being accessed anonymously.
+### 📋 Prerequisites
+
+* Account on [Linode](https://www.linode.com) or [DigitalOcean](https://www.digitalocean.com)
+* SSH key pair or root password
+* Choose the smallest instance (e.g. 1GB RAM, shared CPU, \~\$4-5/mo)
+
+### 🔢 Steps
+
+1. **Create a new Ubuntu 22.04 LTS instance**
+2. **SSH into your server**
+
+```bash
+ssh root@your-server-ip
+```
+
+3. **Install dependencies**
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install nodejs npm git nginx -y
+```
+
+4. **Clone and set up the app**
+
+```bash
+cd /var/www
+sudo git clone https://github.com/Cloudstrucc/cs-identity.git
+cd cs-identity/onboarding-app-example-bootstrap
+npm install
+```
+
+5. **Set up environment variables**
+
+```bash
+echo "PRIVATE_KEY=your_private_key" > .env
+echo "ETHEREUM_ADDRESS=your_eth_address" >> .env
+echo "FRONTEND_URL=http://yourdomain.com" >> .env
+```
+
+6. **Configure Nginx as reverse proxy** (same config as AWS above)
+
+7. **Install and use PM2**
+
+```bash
+sudo npm install -g pm2
+pm2 start server.js
+pm2 save
+pm2 startup
+```
+
+8. **(Optional) Setup SSL**
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com
+```
+
+Visit: `http://yourdomain.com`
+
+---
+
+## ⚙️ GitHub Actions CI/CD
+
+### `.github/workflows/deploy.yml`
+
+```yaml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build and zip app
+      run: |
+        npm ci --only=production
+        zip -r app.zip . -x "node_modules/*" "tests/*"
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: <YOUR-UNIQUE-APP-NAME>
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: app.zip
+```
+
+Upload your Azure publish profile to:
+
+**Settings → Secrets → Actions → AZURE\_WEBAPP\_PUBLISH\_PROFILE**
+
+---
+
