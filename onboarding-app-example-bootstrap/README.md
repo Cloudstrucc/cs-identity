@@ -317,3 +317,67 @@ Upload your Azure publish profile to:
 
 ---
 
+## Use Ethereal Email (Zero Sign-up Fake SMTP)
+
+Ethereal provides disposable SMTP credentials for testing — no emails are delivered, but you can view them in a browser. It's ideal for realistic dev testing.
+
+### 🔧 Install Nodemailer
+
+```bash
+npm install nodemailer
+```
+
+### 🛠️ Update Your Transporter Setup
+
+Add this logic where you handle email sending:
+
+```js
+const nodemailer = require('nodemailer');
+
+// This creates a test account automatically
+nodemailer.createTestAccount((err, account) => {
+  if (err) {
+    console.error('Failed to create test account:', err);
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: account.smtp.host,
+    port: account.smtp.port,
+    secure: account.smtp.secure,
+    auth: {
+      user: account.user,
+      pass: account.pass
+    }
+  });
+
+  const mailOptions = {
+    from: 'DevApp <no-reply@example.com>',
+    to: email,
+    subject: 'Your Invitation Code',
+    html: emailTemplate
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error('Error sending mail:', err);
+      return res.status(500).json({ success: false });
+    }
+
+    console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
+    res.json({ success: true });
+  });
+});
+```
+
+### 🔎 View the Email
+
+The console will output a link like:
+
+```text
+Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+```
+
+Open that link in your browser to view the email content as it would appear in a real inbox.
+
+---
