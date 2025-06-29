@@ -15,11 +15,40 @@ Ensure that you are using Node 18 or 20. **E.g., install NVM and use the command
 This command works only if you are using Node 20:
 
 ```powershell
-git clone https://github.com/Cloudstrucc/cs-identity.git; cd .\cs-identity\; cd .\onboarding-app-example-bootstrap\; npm install; New-Item -ItemType File .env; $PRIVATE_KEY=$(openssl rand -hex 32); $ETHERIUM_ADDRESS=$(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value }); echo "ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS" > .env; echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env; cat .env | tr -d '\r' ; dos2unix .env ; node index.js
+# Clone the repository
+git clone https://github.com/Cloudstrucc/cs-identity.git
+
+# Navigate to the project directory
+cd .\cs-identity\onboarding-app-example-bootstrap
+
+# Install Node.js dependencies
+npm install
+
+# Fix permissions for node-gyp cache (optional but recommended for macOS/Linux users)
+# For Windows, this is not required
+
+# Create the .env file
+New-Item -ItemType File -Name ".env" -Force | Out-Null
+
+# Generate private key
+$PRIVATE_KEY = $(openssl rand -hex 32)
+
+# Generate Ethereum address from wallet
+$ETHERIUM_ADDRESS = $(node genwallet.js | Select-String -Pattern "0x[a-fA-F0-9]+" | Select-Object -First 1 | ForEach-Object { $_.Matches.Value })
+
+# Write variables to .env file
+@"
+ETHEREUM_ADDRESS=$ETHERIUM_ADDRESS
+PRIVATE_KEY=$PRIVATE_KEY
+"@ | Set-Content -NoNewline .env
+
+# Convert file to Unix line endings (only if WSL/gitbash is used; optional in PowerShell)
+# dos2unix .env
+
+# Run the app
+node index.js
+
 ```
-
-
-
 
 #### 🐗 macOS / Linux (Terminal)
 
@@ -40,7 +69,6 @@ git clone https://github.com/Cloudstrucc/cs-identity.git \
 <div style="position: relative; padding-bottom: 64.86486486486486%; height: 0;"><iframe src="https://www.loom.com/embed/6dbe818420a942e6ace77b72350861c6?sid=86eefb4a-3833-4da5-80ff-82e59c8a52d5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ---
-
 
 ## 📥 Manual Setup
 
@@ -266,7 +294,6 @@ echo "FRONTEND_URL=http://yourdomain.com" >> .env
 ```
 
 6. **Configure Nginx as reverse proxy** (same config as AWS above)
-
 7. **Install and use PM2**
 
 ```bash
